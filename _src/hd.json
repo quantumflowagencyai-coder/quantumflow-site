@@ -1,0 +1,23 @@
+{
+ "repo": "quantumflowagencyai-coder/quantumflow-site",
+ "rev": "0f1dba68c395f457f249042177ac40f967825293",
+ "files": {
+  "img/agent-galaxy.webp": "8f4a51d904c0801cb44051ade2aa12aff7c2654b",
+  "img/agent-robot.webp": "95e4802752e57dbf45b8702e0aa3ccfa68a1d2d6",
+  "img/case-aura.avif": "4e9a80c56d0b0bfc857eef7632663c7bf800d9a3",
+  "img/case-aurum.avif": "0fc857723842b9e8cf1eacb3e22d9775a36f3dcf",
+  "img/case-medora.avif": "2b205f2220b7b4eb858a9b93c7c2cab78830ae45",
+  "img/case-nova.avif": "38b96e04461bb35ef5dfeb3703e61a967de01402",
+  "img/case-ogien.avif": "19a2ecac5e74af6221037c6faf724db45d256b68",
+  "img/case-volt.avif": "67e4191809e2505be73c56ab8e688e3afef49022",
+  "img/pak-bg.avif": "da2e15a9bc7b0e44a3f941a303ae7b8303411bec",
+  "img/pak-cards.avif": "32aa3cf943c98eed39731cab9414d2b2b47a85a9",
+  "img/pak-sprites.avif": "7a553b29ebefeea7a8ac1796033ed2cbda3f87ef",
+  "img/scena1.avif": "63a999c35f32b63e9db2b209c3ac8fe350f428d3",
+  "img/scena2.avif": "9d4f464eb4900f14bc060a682e64fd1856bd4ea4",
+  "img/scena3.avif": "46d5c5a5b6886ef4472c24f5e0fb5a621ad5bac1",
+  "img/scena4.avif": "3d3d02461057dad87423480341d721a3624d52cc",
+  "img/svc-a.webp": "95b93bae17e19356101fbf51d2a7df49822bf4a7",
+  "img/svc-b.webp": "5d2038ab43c696675e717e67731c7b14fdf51232"
+ }
+}

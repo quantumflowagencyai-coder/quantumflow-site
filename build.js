@@ -77,4 +77,17 @@ for (const n of fs.readdirSync(OUT)) if (n.endsWith('.html') && n !== 'index.htm
   const p = path.join(OUT, n);
   fs.writeFileSync(p, rd(p).replace(', max-snippet:-1', '').replaceAll('"#tresc"', '"#main-content"').replaceAll('id="tresc"', 'id="main-content"'));
 }
-console.log('build ok', fs.readdirSync(OUT).length, 'plików');
+// 10) grafiki HD: pobierane z repozytorium GitHub (przypięty commit, sprawdzane sha1), bo pliki >100 KB nie przechodzą przez narzędzie deployu
+const HD = JSON.parse(rd('_src/hd.json'));
+(async () => {
+  const crypto = require('crypto');
+  for (const [name, sha] of Object.entries(HD.files)) {
+    const url = `https://raw.githubusercontent.com/${HD.repo}/${HD.rev}/${name}`;
+    let buf = null;
+    for (let i = 0; i < 4 && !buf; i++) { try { const r = await fetch(url); if (r.ok) buf = Buffer.from(await r.arrayBuffer()); } catch (e) { } if (!buf) await new Promise(r => setTimeout(r, 1500 * (i + 1))); }
+    must(buf, 'pobieranie ' + url);
+    must(crypto.createHash('sha1').update(buf).digest('hex') === sha, 'sha1 ' + name);
+    fs.writeFileSync(path.join(OUT, name), buf);
+  }
+  console.log('build ok', fs.readdirSync(OUT).length, 'plików, HD:', Object.keys(HD.files).length);
+})().catch(e => { console.error(e); process.exit(1); });
