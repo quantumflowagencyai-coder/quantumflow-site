@@ -1,6 +1,6 @@
 {
  "repo": "quantumflowagencyai-coder/quantumflow-site",
- "rev": "0f1dba68c395f457f249042177ac40f967825293",
+ "rev": "d07bfba991e42992467802b2d74690367e8a9201",
  "files": {
   "img/agent-galaxy.webp": {
    "sha": "8f4a51d904c0801cb44051ade2aa12aff7c2654b",
@@ -51,11 +51,11 @@
    "base": "8240c7d9898dfbbe537ae4d9eda806799e05196e"
   },
   "img/scena2.avif": {
-   "sha": "9d4f464eb4900f14bc060a682e64fd1856bd4ea4",
+   "sha": "58195e5b1765d5c61126646b9744aeddc2ec2042",
    "base": "d4db96b890cd375f14f248f0f18673efecf96a14"
   },
   "img/scena3.avif": {
-   "sha": "46d5c5a5b6886ef4472c24f5e0fb5a621ad5bac1",
+   "sha": "7edf4977a81744b9a55f92a215b1ab07bbfeaaf7",
    "base": "b2fed8799dd2b3ef26472168f1bc63e97abb1dc3"
   },
   "img/scena4.avif": {
