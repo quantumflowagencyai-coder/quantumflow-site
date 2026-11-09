@@ -1,5 +1,5 @@
 // Sekcja „Pakiety”: scena 1:1 z grafiki (tło kosmosu, szklane karty, ilustracje) ożywiona na canvasie i w CSS.
-// Grafiki: img/pak-bg.avif (tło 1479×704), img/pak-cards.avif (3 karty 315×378), img/pak-sprites.avif (satelita, miasto, dron).
+// Grafiki: img/pak-bg.avif (tło HD 2958×1408, układ współrzędnych 1479×704), img/pak-cards.avif (3 karty 315×378), img/pak-sprites.avif (satelita, miasto, dron).
 (() => {
   const sec = document.getElementById('pakiety');
   if (!sec || sec.dataset.pk) return;
@@ -158,14 +158,15 @@
   const GX = 737, GY = 225, GA = 250, GB = 90, GR = -.1;
   let gal = null, sat = null;
   const prep = () => {
-    gal = document.createElement('canvas'); gal.width = GA * 2 + 20; gal.height = GA * 2 + 20;
-    const g = gal.getContext('2d'); g.drawImage(bgImg, GX - GA - 10, GY - GA - 10, gal.width, gal.height, 0, 0, gal.width, gal.height);
-    g.globalCompositeOperation = 'destination-in';
+    const K = bgImg.naturalWidth / IW; // grafika HD: współrzędne w układzie 1479×704 mnożone przez K
+    gal = document.createElement('canvas'); gal.width = Math.round((GA * 2 + 20) * K); gal.height = gal.width;
+    const g = gal.getContext('2d'); g.drawImage(bgImg, (GX - GA - 10) * K, (GY - GA - 10) * K, gal.width, gal.height, 0, 0, gal.width, gal.height);
+    g.scale(K, K); g.globalCompositeOperation = 'destination-in';
     g.save(); g.translate(GA + 10, GA + 10); g.rotate(GR); g.scale(1, GB / GA);
     const rg = g.createRadialGradient(0, 0, 0, 0, 0, GA); rg.addColorStop(0, '#000'); rg.addColorStop(.5, '#000'); rg.addColorStop(1, 'rgba(0,0,0,0)');
     g.fillStyle = rg; g.beginPath(); g.arc(0, 0, GA, 0, 6.29); g.fill(); g.restore();
     sat = document.createElement('canvas'); sat.width = 540; sat.height = 196;
-    const sg = sat.getContext('2d'); sg.drawImage(bgImg, 940, 0, 540, 196, 0, 0, 540, 196);
+    const sg = sat.getContext('2d'); sg.drawImage(bgImg, 940 * K, 0, 540 * K, 196 * K, 0, 0, 540, 196);
     try {
       const id = sg.getImageData(0, 0, 540, 196), d = id.data;
       for (let y = 0; y < 196; y++) for (let x = 0; x < 540; x++) {
@@ -204,7 +205,7 @@
       // wir galaktyki
       const ph = .045 * Math.sin(t * .16) + .02 * Math.sin(t * .057);
       g.save(); g.translate(GX, GY); g.rotate(GR); g.scale(1, GB / GA); g.rotate(ph); g.scale(1, GA / GB); g.rotate(-GR);
-      g.drawImage(gal, -GA - 10, -GA - 10); g.restore();
+      g.drawImage(gal, -GA - 10, -GA - 10, GA * 2 + 20, GA * 2 + 20); g.restore();
       // oddech jądra galaktyk
       g.globalCompositeOperation = 'lighter';
       dot(GX, GY, 120, `rgba(255,200,160,${(.10 + .07 * Math.sin(t * .7)).toFixed(3)})`);

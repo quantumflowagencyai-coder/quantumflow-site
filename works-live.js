@@ -263,6 +263,8 @@ const LIVE = {
   }
 };
 
+// efekty są we współrzędnych pierwotnych plików; pliki HD mają 2× więcej pikseli
+const BASE = { ogien: [820, 406], medora: [820, 400], nova: [720, 352], volt: [720, 352], aura: [720, 352], aurum: [720, 352] };
 const KEYS_LIVE = { 'case-ogien': 'ogien', 'case-medora': 'medora', 'case-nova': 'nova', 'case-volt': 'volt', 'case-aura': 'aura', 'case-aurum': 'aurum' };
 const keyOf = img => { const m = /\/img\/(case-[a-z]+)\.avif/.exec(img.src || ''); return m ? KEYS_LIVE[m[1]] : null; };
 const origDraw = CanvasRenderingContext2D.prototype.drawImage;
@@ -271,6 +273,6 @@ CanvasRenderingContext2D.prototype.drawImage = function (img, ...a) {
   if (a.length !== 4 || !(img instanceof HTMLImageElement)) return;
   const key = keyOf(img); if (!key || !LIVE[key]) return;
   const [dx, dy, dw, dh] = a;
-  this.save(); this.translate(dx, dy); this.scale(dw / img.naturalWidth, dh / img.naturalHeight);
+  const [bw, bh] = BASE[key]; this.save(); this.translate(dx, dy); this.scale(dw / bw, dh / bh);
   try { LIVE[key](this, performance.now() / 1000, img); } finally { this.restore(); }
 };

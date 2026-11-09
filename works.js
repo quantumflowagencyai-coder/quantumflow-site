@@ -38,7 +38,7 @@ const P = [
 ];
 const N = P.length;
 const KEYS = [0, ...P.map((_, i) => .1 + i * .13), .94]; // ogół, 6 projektów, wezwanie
-const SW = 960, SH = 600, BAR = 34, PH = 1720; // ekran, pasek przeglądarki, wysokość podstrony
+const SQ = 1.5; const SW = 960, SH = 600, BAR = 34, PH = 1720; // ekran, pasek przeglądarki, wysokość podstrony
 
 const rr = (g, x, y, w, h, r) => { g.beginPath(); g.moveTo(x + r, y); g.arcTo(x + w, y, x + w, y + h, r); g.arcTo(x + w, y + h, x, y + h, r); g.arcTo(x, y + h, x, y, r); g.arcTo(x, y, x + w, y, r); g.closePath(); };
 const lines = (g, x, y, w, n, c, gap = 16) => { g.fillStyle = c; for (let i = 0; i < n; i++) { rr(g, x, y + i * gap, w * (i === n - 1 ? .6 : 1), 6, 3); g.fill(); } };
@@ -200,7 +200,8 @@ function drawArt(g, p, t, oy) {
 
 // Ekran: pasek przeglądarki + przewijana podstrona + kursor
 function makeScreen(p, i) {
-  const c = document.createElement('canvas'); c.width = SW; c.height = SH; const g = c.getContext('2d');
+  // ekran w 1,5× rozdzielczości (grafiki projektów HD); rysowanie dalej we współrzędnych 960×600
+  const c = document.createElement('canvas'); c.width = SW * SQ; c.height = SH * SQ; const g = c.getContext('2d'); g.scale(SQ, SQ);
   const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = 8; tex.generateMipmaps = true;
   let page = null;
   const build = () => { page = drawPage(p); };
