@@ -1,0 +1,10 @@
+{
+  "name": "quantumflow-site",
+  "private": true,
+  "scripts": { "build": "node build.js" },
+  "dependencies": {
+    "three": "0.160.0",
+    "@fontsource-variable/inter": "5.2.8",
+    "@fontsource-variable/space-grotesk": "5.2.10"
+  }
+}

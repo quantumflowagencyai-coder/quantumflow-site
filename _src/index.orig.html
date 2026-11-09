@@ -1,0 +1,1130 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>QuantumFlow — strony 3D premium i automatyzacje AI</title>
+<link rel="icon" type="image/webp" href="/emblem.webp">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="canonical" href="https://quantumflow.agency/">
+<meta name="description" content="Animowane strony 3D premium i automatyzacje AI w n8n. Nowe strony, redesign starych witryn i agenci AI, którzy pracują dla Twojej firmy 24/7.">
+<meta property="og:title" content="QuantumFlow — Strony 3D premium i automatyzacje AI">
+<meta property="og:description" content="Animowane strony internetowe 3D i automatyzacje AI w n8n, które zatrzymują klientów i oszczędzają czas.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://quantumflow.agency/">
+<meta property="og:locale" content="pl_PL">
+<meta property="og:image" content="https://quantumflow.agency/apple-touch-icon.png">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#05050c">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#05050c; --bg2:#0b0b18; --line:rgba(255,255,255,.08); --text:#eef0ff; --muted:#9aa0c3;
+  --violet:#3b82f6; --cyan:#22d3ee; --pink:#2dd4bf;
+  --grad:linear-gradient(120deg,#3b82f6 0%,#22d3ee 55%,#2dd4bf 100%);
+  --radius:22px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,.h3,.brand{font-family:"Space Grotesk",Inter,sans-serif;letter-spacing:-.02em}
+#gl{position:fixed;inset:0;width:100%;height:100%;z-index:0;display:block}
+.fallback-bg{position:fixed;inset:0;z-index:0;background:radial-gradient(circle at 70% 30%,rgba(59,130,246,.35),transparent 50%),radial-gradient(circle at 20% 80%,rgba(34,211,238,.25),transparent 50%),var(--bg)}
+.noise{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.05;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+main,header,footer{position:relative;z-index:2}
+.wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+
+/* NAV */
+header{position:fixed;top:0;left:0;right:0;z-index:50;transition:background .4s,backdrop-filter .4s,border-color .4s;border-bottom:1px solid transparent}
+header.scrolled{background:rgba(5,5,12,.6);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-color:var(--line)}
+nav{display:flex;align-items:center;justify-content:space-between;height:76px}
+.brand{display:flex;align-items:center;gap:12px;font-weight:700;font-size:1.4rem}
+@media(max-width:760px){header .brand .logo-img{width:50px;height:47px}header .brand{font-size:1.2rem}}
+.logo{width:34px;height:34px;border-radius:10px;background:var(--grad);position:relative;box-shadow:0 0 24px rgba(59,130,246,.6)}
+.logo::after{content:"";position:absolute;inset:7px;border-radius:50%;border:2px solid rgba(5,5,12,.85);border-right-color:transparent;animation:spin 3s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.logo-img{width:64px;height:60px;object-fit:contain;filter:drop-shadow(0 0 16px rgba(34,211,238,.55));transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+.brand:hover .logo-img{transform:rotate(-12deg) scale(1.08)}
+.brand-text{display:flex;flex-direction:column;line-height:1.05}
+.brand-text small{font-family:Inter,sans-serif;font-size:.62rem;letter-spacing:.32em;text-transform:uppercase;color:var(--cyan);font-weight:500;margin-top:3px}
+.menu{display:flex;gap:28px;font-size:.92rem;color:var(--muted)}
+.menu a:hover{color:var(--text)}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:13px 24px;border-radius:999px;font-weight:600;font-size:.95rem;transition:transform .25s,box-shadow .25s,background .25s;cursor:pointer;border:0;font-family:inherit}
+.btn-primary{background:var(--grad);color:#05050c;box-shadow:0 10px 40px -10px rgba(59,130,246,.8)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 16px 50px -10px rgba(34,211,238,.8)}
+.btn-ghost{border:1px solid rgba(255,255,255,.18);color:var(--text);background:rgba(255,255,255,.03);backdrop-filter:blur(10px)}
+.btn-ghost:hover{background:rgba(255,255,255,.08)}
+.burger{display:none;background:none;border:0;color:var(--text);font-size:1.6rem;cursor:pointer}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;padding-top:76px}
+.hero-inner{max-width:720px}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;padding:7px 16px;border:1px solid var(--line);border-radius:999px;font-size:.8rem;color:var(--muted);background:rgba(255,255,255,.03);backdrop-filter:blur(10px);margin-bottom:28px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--cyan);box-shadow:0 0 12px var(--cyan);animation:pulse 2s infinite}
+@keyframes pulse{50%{opacity:.35}}
+.hero h1{text-shadow:0 4px 40px rgba(5,5,12,.6);font-size:clamp(2.6rem,7vw,5.6rem);line-height:1.02;font-weight:700;margin-bottom:26px}
+.grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;background-size:200% auto;animation:shine 6s linear infinite}
+@keyframes shine{to{background-position:200% center}}
+.hero p.lead{text-shadow:0 2px 18px rgba(5,5,12,.9);font-size:clamp(1.05rem,1.6vw,1.25rem);color:var(--muted);max-width:560px;margin-bottom:40px}
+.cta-row{display:flex;gap:14px;flex-wrap:wrap}
+.stats{display:flex;gap:48px;margin-top:64px;flex-wrap:wrap}
+.stat b{display:block;font-family:"Space Grotesk";font-size:1.9rem}
+.stat span{color:var(--muted);font-size:.85rem}
+.scroll-hint{position:absolute;bottom:34px;left:50%;transform:translateX(-50%);font-size:.72rem;letter-spacing:.25em;color:var(--muted);text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:10px}
+.scroll-hint i{width:1px;height:44px;background:linear-gradient(var(--cyan),transparent);animation:drop 2s infinite}
+@keyframes drop{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* SECTIONS */
+section{padding:130px 0}
+.sec-head{max-width:700px;margin-bottom:64px}
+.kicker{font-size:.78rem;letter-spacing:.25em;text-transform:uppercase;color:var(--cyan);margin-bottom:16px;display:block}
+.sec-head h2{font-size:clamp(2rem,4.5vw,3.4rem);line-height:1.08;margin-bottom:18px}
+.sec-head p{color:var(--muted);font-size:1.08rem}
+
+.glass{background:linear-gradient(160deg,rgba(255,255,255,.06),rgba(255,255,255,.015));border:1px solid var(--line);border-radius:var(--radius);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+
+.marquee{border-block:1px solid var(--line);padding:22px 0;overflow:hidden;background:rgba(5,5,12,.5);backdrop-filter:blur(8px)}
+.marquee-track{display:flex;gap:60px;width:max-content;animation:marq 30s linear infinite;font-family:"Space Grotesk";font-size:1.4rem;color:rgba(255,255,255,.35);white-space:nowrap}
+.marquee-track span::after{content:"✦";margin-left:60px;color:var(--violet)}
+@keyframes marq{to{transform:translateX(-50%)}}
+
+.services{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.card{padding:36px 30px;position:relative;overflow:hidden;transition:transform .5s cubic-bezier(.2,.8,.2,1),border-color .4s;transform-style:preserve-3d}
+.card:hover{border-color:rgba(59,130,246,.5)}
+.card::before{content:"";position:absolute;inset:0;background:radial-gradient(400px circle at var(--mx,50%) var(--my,50%),rgba(59,130,246,.18),transparent 40%);opacity:0;transition:opacity .4s}
+.card:hover::before{opacity:1}
+.icon{width:54px;height:54px;border-radius:16px;display:grid;place-items:center;background:rgba(59,130,246,.12);border:1px solid rgba(59,130,246,.3);margin-bottom:24px}
+.icon svg{width:26px;height:26px;stroke:var(--cyan);fill:none;stroke-width:1.6}
+.card h3{font-size:1.35rem;margin-bottom:12px}
+.card p{color:var(--muted);font-size:.96rem}
+.card ul{list-style:none;margin-top:18px;display:grid;gap:8px;font-size:.9rem;color:#c8cbe6}
+.card li::before{content:"→ ";color:var(--violet)}
+
+/* PROCESS */
+.process{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;counter-reset:s}
+.step{padding:32px 26px;position:relative}
+.step .num{font-family:"Space Grotesk";font-size:3.2rem;font-weight:700;line-height:1;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;opacity:.9;margin-bottom:18px;display:block}
+.h3{font-weight:700}
+.step .h3{font-size:1.15rem;margin-bottom:8px}
+.step p{color:var(--muted);font-size:.92rem}
+
+/* PORTFOLIO */
+.works{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
+.work{overflow:hidden;cursor:pointer}
+.work .art{height:320px;position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+.work .art canvas{width:100%;height:100%;display:block}
+.work .meta{padding:26px 28px;display:flex;justify-content:space-between;align-items:end;gap:16px}
+.work h3{font-size:1.3rem}
+.work small{color:var(--muted);font-size:.85rem}
+.tag{font-size:.72rem;padding:5px 12px;border-radius:999px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.work.wide{grid-column:span 2}
+.work.wide .art{height:380px}
+
+/* PACKAGES */
+.packages{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:stretch}
+.pkg{padding:38px 32px;display:flex;flex-direction:column}
+.pkg.featured{border-color:rgba(59,130,246,.6);box-shadow:0 30px 80px -30px rgba(59,130,246,.6);position:relative}
+.pkg.featured::after{content:"Najczęściej wybierany";position:absolute;top:18px;right:18px;font-size:.7rem;padding:5px 12px;border-radius:999px;background:var(--grad);color:#05050c;font-weight:600}
+.pkg h3{font-size:1.5rem;margin-bottom:6px}
+.pkg .for{color:var(--muted);font-size:.92rem;margin-bottom:24px;min-height:48px}
+.pkg ul{list-style:none;display:grid;gap:12px;margin-bottom:32px;font-size:.94rem;flex:1}
+.pkg li{display:flex;gap:10px}
+.pkg li::before{content:"✓";color:var(--cyan);font-weight:700}
+.pkg .btn{justify-content:center}
+
+/* CTA / CONTACT */
+.contact{display:grid;grid-template-columns:1fr 1fr;gap:28px;padding:56px}
+.contact h2{font-size:clamp(2rem,4vw,3rem);line-height:1.08;margin-bottom:18px}
+.contact p{color:var(--muted)}
+form{display:grid;gap:14px}
+label{font-size:.82rem;color:var(--muted);display:grid;gap:6px}
+input,textarea,select{width:100%;padding:14px 16px;border-radius:14px;border:1px solid var(--line);background:rgba(5,5,12,.6);color:var(--text);font-family:inherit;font-size:.95rem;transition:border-color .3s}
+input:focus,textarea:focus,select:focus{outline:none;border-color:var(--violet)}
+textarea{min-height:110px;resize:vertical}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-note{font-size:.85rem;color:var(--cyan);min-height:1.2em}
+
+footer{border-top:1px solid var(--line);padding:40px 0;color:var(--muted);font-size:.85rem;background:rgba(5,5,12,.7)}
+footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(40px);transition:opacity 1s cubic-bezier(.2,.8,.2,1),transform 1s cubic-bezier(.2,.8,.2,1)}
+.reveal.in{opacity:1;transform:none}
+
+/* cursor glow */
+.cursor{position:fixed;width:340px;height:340px;border-radius:50%;pointer-events:none;z-index:1;background:radial-gradient(circle,rgba(59,130,246,.14),transparent 60%);transform:translate(-50%,-50%);transition:opacity .3s}
+
+
+/* IMMERSJA 3D */
+#immersja{position:relative;height:520vh;padding:0;background:#05050c}
+.imm-sticky{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
+#imm-gl{position:absolute;inset:0;width:100%;height:100%;display:block}
+.imm-shade{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at center,transparent 45%,rgba(5,5,12,.75) 100%),linear-gradient(180deg,rgba(5,5,12,.9) 0%,transparent 16%,transparent 70%,rgba(5,5,12,.92) 100%)}
+.imm-top{position:absolute;top:96px;left:0;right:0;display:flex;justify-content:space-between;align-items:center;pointer-events:none}
+.imm-top .kicker{margin:0}
+.imm-count{font-family:"Space Grotesk";font-size:.9rem;color:var(--muted);letter-spacing:.2em}
+.imm-count .cn{color:var(--text);font-size:1.4rem;margin-right:6px}
+.imm-chapter{position:absolute;left:0;right:0;bottom:8vh;opacity:0;will-change:transform,opacity}
+.imm-chapter .wrap>div{max-width:500px;padding:26px 28px;border-radius:var(--radius);background:linear-gradient(160deg,rgba(5,5,12,.72),rgba(5,5,12,.45));border:1px solid var(--line);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.imm-chapter .h3{font-size:clamp(1.7rem,3.6vw,2.8rem);line-height:1.05;margin:6px 0 12px}
+.imm-chapter p{color:#c8cbe6;font-size:1rem}
+.imm-chapter .num{font-family:"Space Grotesk";font-size:.8rem;letter-spacing:.3em;color:var(--cyan)}
+.imm-chapter.right .wrap>div{margin-left:auto}
+.imm-dots{position:absolute;right:28px;top:50%;transform:translateY(-50%);display:grid;gap:12px}
+.imm-dots i{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.2);transition:all .4s}
+.imm-dots i.on{background:var(--cyan);box-shadow:0 0 12px var(--cyan);height:26px;border-radius:6px}
+.imm-progress{position:absolute;left:0;right:0;bottom:0;height:2px;background:rgba(255,255,255,.06)}
+.imm-progress span{display:block;height:100%;background:var(--grad);transform-origin:left;transform:scaleX(0)}
+#immersja.no-gl .imm-sticky{background:url(/img/scena1.avif) center/cover}
+@media (max-width:760px){
+  #immersja{height:440vh}
+  .imm-top{top:88px}
+  .imm-chapter{bottom:7vh}
+  .imm-chapter .wrap>div{padding:20px}
+  .imm-dots{right:10px}
+  .hero{padding-top:300px;align-items:flex-start;padding-bottom:40px}
+}
+
+/* USŁUGI 3D */
+#uslugi{padding:0}
+#svc-pin{position:relative;height:620vh;background:#05050c}
+.svc-sticky{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
+#svc-gl{position:absolute;inset:0;width:100%;height:100%;display:block}
+.svc-shade{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at center,transparent 55%,rgba(5,5,12,.6) 100%),linear-gradient(180deg,rgba(5,5,12,.95) 0%,transparent 16%,transparent 74%,rgba(5,5,12,.95) 100%)}
+#svc-tags{position:absolute;inset:0;pointer-events:none}
+.svc-tag{position:absolute;left:0;top:0;translate:-50% -100%;text-align:center;opacity:0;white-space:nowrap;will-change:transform,opacity}
+.svc-tag small{display:block;font-family:"Space Grotesk";font-size:.7rem;letter-spacing:.3em;color:var(--c)}
+.svc-tag b{font-family:"Space Grotesk";font-size:1.02rem;text-shadow:0 0 18px rgba(34,211,238,.45)}
+.svc-top{position:absolute;top:96px;left:0;right:0;pointer-events:none;z-index:2}
+.svc-top .wrap{display:flex;justify-content:space-between;align-items:center}
+.svc-top .kicker{margin:0}
+.svc-intro{position:absolute;left:0;right:0;top:150px;z-index:3;text-align:center;will-change:transform,opacity}
+.svc-intro h2{font-size:clamp(2rem,4.6vw,3.9rem);line-height:1.04;max-width:900px;margin:0 auto 18px;letter-spacing:-.02em}
+.svc-intro p{color:#c8cbe6;max-width:620px;margin:0 auto;font-size:1.05rem}
+.svc-step{position:absolute;left:0;right:0;top:50%;opacity:0;z-index:3;will-change:transform,opacity;pointer-events:none}
+.svc-step .wrap>div{max-width:440px;padding:30px 30px 28px;border-radius:var(--radius);background:linear-gradient(160deg,rgba(16,22,42,.86),rgba(6,8,18,.8));border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(18px) saturate(140%);-webkit-backdrop-filter:blur(18px) saturate(140%);box-shadow:0 40px 90px -40px rgba(34,211,238,.45),inset 0 1px 0 rgba(255,255,255,.12)}
+.svc-step.right .wrap>div{margin-left:auto}
+.svc-step h3{font-size:clamp(1.8rem,3.4vw,2.7rem);line-height:1.04;margin:8px 0 12px}
+.svc-step p{color:#c8cbe6;font-size:.98rem}
+.svc-step .num{font-family:"Space Grotesk";font-size:.78rem;letter-spacing:.3em;color:var(--cyan)}
+.svc-step ul{list-style:none;margin-top:16px;display:grid;gap:8px;font-size:.92rem;color:#dfe3ff}
+.svc-step li{display:flex;gap:10px;align-items:center}
+.svc-step li::before{content:"";width:16px;height:1px;background:var(--cyan);box-shadow:0 0 8px var(--cyan);flex:none}
+.svc-dots{position:absolute;right:28px;top:50%;transform:translateY(-50%);display:grid;gap:12px;z-index:2}
+.svc-dots i{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.2);transition:all .4s}
+.svc-dots i.on{background:var(--cyan);box-shadow:0 0 12px var(--cyan);height:26px;border-radius:6px}
+.svc-progress{position:absolute;left:0;right:0;bottom:0;height:2px;background:rgba(255,255,255,.06)}
+.svc-progress span{display:block;height:100%;background:var(--grad);transform-origin:left;transform:scaleX(0)}
+#svc-pin.no-gl{height:auto}
+#svc-pin.no-gl .svc-sticky{position:relative;height:auto;padding:140px 0 60px;display:grid;gap:18px}
+#svc-pin.no-gl .svc-intro,#svc-pin.no-gl .svc-step{position:relative;top:auto;opacity:1;transform:none;pointer-events:auto}
+#svc-pin.no-gl #svc-gl,#svc-pin.no-gl .svc-dots,#svc-pin.no-gl .svc-progress,#svc-pin.no-gl .svc-top{display:none}
+@media (max-width:760px){
+  #svc-pin{height:560vh}
+  .svc-top{top:88px}
+  .svc-intro{top:130px}
+  .svc-intro p{font-size:.95rem;padding:0 6px}
+  .svc-step{top:auto;bottom:4vh}
+  .svc-step .wrap>div{padding:20px 20px 18px}
+  .svc-step h3{font-size:1.6rem;margin:4px 0 8px}
+  .svc-step p{font-size:.9rem}
+  .svc-step ul{margin-top:10px;gap:5px;font-size:.84rem}
+  .svc-dots{right:10px}
+  .svc-tag b{display:none}
+  .svc-tag small{font-size:.8rem}
+}
+
+/* AUTOMATYZACJE n8n */
+#automatyzacje{padding:0}
+#aut-pin{position:relative;height:560vh;background:#05050c}
+.aut-sticky{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
+#aut-gl{position:absolute;inset:0;width:100%;height:100%;display:block}
+.aut-shade{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(5,5,12,.95) 0%,transparent 18%,transparent 72%,rgba(5,5,12,.95) 100%)}
+#aut-labels{position:absolute;inset:0;pointer-events:none}
+.aut-node{position:absolute;left:0;top:0;will-change:transform,opacity;opacity:0;isolation:isolate}
+.aut-node>*{display:block;position:relative;white-space:nowrap}
+.aut-node b{font-family:"Space Grotesk";font-size:.95rem;color:var(--text)}
+.aut-node span{color:var(--muted);font-size:.72rem}
+.aut-node::before{content:"";position:absolute;inset:-8px -12px;border-radius:12px;background:rgba(8,10,24,.72);border:1px solid var(--line);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:-1;transition:border-color .4s,box-shadow .4s}
+.aut-node.on::before{border-color:rgba(34,211,238,.55);box-shadow:0 0 24px -4px rgba(34,211,238,.45)}
+.aut-L{translate:calc(-100% - 28px) -50%}.aut-L>*{text-align:right}
+.aut-R{translate:28px -50%}
+.aut-T{translate:-50% calc(-100% - 30px)}.aut-T>*{text-align:center}
+.aut-B{translate:-50% 30px}.aut-B>*{text-align:center}
+.aut-core-label{position:absolute;left:0;top:0;translate:-50% 10px;text-align:center;pointer-events:none;opacity:0}
+.aut-core-label small{display:block;font-size:.66rem;letter-spacing:.35em;text-transform:uppercase;color:var(--cyan)}
+.aut-core-label b{font-family:"Space Grotesk";font-size:1.25rem;text-shadow:0 0 18px rgba(34,211,238,.6)}
+.aut-top{position:absolute;top:96px;left:0;right:0;pointer-events:none;z-index:2}
+.aut-top .wrap{display:flex;justify-content:space-between;align-items:center}
+.aut-top .kicker{margin:0}
+.aut-step{position:absolute;left:0;right:0;bottom:7vh;opacity:0;z-index:3;will-change:transform,opacity}
+.aut-step .wrap>div{max-width:470px;padding:24px 26px;border-radius:var(--radius);background:linear-gradient(160deg,rgba(5,5,12,.82),rgba(5,5,12,.55));border:1px solid var(--line);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.aut-step.right .wrap>div{margin-left:auto}
+.aut-step .h3{font-size:clamp(1.6rem,3.2vw,2.5rem);line-height:1.05;margin:6px 0 12px}
+.aut-step p{color:#c8cbe6;font-size:.98rem}
+.aut-step .num{font-family:"Space Grotesk";font-size:.8rem;letter-spacing:.3em;color:var(--cyan)}
+.aut-dots{position:absolute;right:28px;top:50%;transform:translateY(-50%);display:grid;gap:12px;z-index:2}
+.aut-dots i{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.2);transition:all .4s}
+.aut-dots i.on{background:var(--cyan);box-shadow:0 0 12px var(--cyan);height:26px;border-radius:6px}
+.aut-progress{position:absolute;left:0;right:0;bottom:0;height:2px;background:rgba(255,255,255,.06)}
+.aut-progress span{display:block;height:100%;background:var(--grad);transform-origin:left;transform:scaleX(0)}
+#aut-pin.no-gl{height:auto}
+#aut-pin.no-gl .aut-sticky{position:relative;height:auto;padding:140px 0 40px;display:grid;gap:16px}
+#aut-pin.no-gl .aut-step{position:relative;bottom:auto;opacity:1}
+#aut-pin.no-gl #aut-gl,#aut-pin.no-gl .aut-dots,#aut-pin.no-gl .aut-progress{display:none}
+/* ORKIESTRACJA n8n */
+#orc-pin{position:relative;height:760vh;background:#04050b}
+.orc-sticky{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
+#orc-gl{position:absolute;inset:0;width:100%;height:100%;display:block}
+.orc-shade{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at center,transparent 55%,rgba(4,5,11,.55) 100%),linear-gradient(180deg,rgba(4,5,11,.95) 0%,transparent 15%,transparent 62%,rgba(4,5,11,.9) 100%)}
+#orc-tags{position:absolute;inset:0;pointer-events:none}
+.orc-tag{position:absolute;left:0;top:0;translate:-50% -100%;white-space:nowrap;opacity:0;font-family:"Space Grotesk";font-size:.78rem;letter-spacing:.08em;color:#eef0ff;padding:5px 11px;border-radius:999px;background:rgba(6,9,20,.72);border:1px solid color-mix(in srgb,var(--c) 55%,transparent);box-shadow:0 0 18px -4px var(--c);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.orc-top{position:absolute;top:96px;left:0;right:0;pointer-events:none;z-index:2}
+.orc-top .wrap{display:flex;justify-content:space-between;align-items:center}
+.orc-top .kicker{margin:0}
+.orc-panel{position:absolute;left:0;right:0;z-index:3;opacity:0;visibility:hidden;will-change:transform,opacity}
+.orc-intro{top:150px}
+.orc-intro h2{font-size:clamp(2rem,4vw,3.4rem);line-height:1.05;max-width:560px;margin:0 0 16px;text-shadow:0 4px 30px rgba(4,5,11,.8)}
+.orc-intro p{color:#c8cbe6;max-width:480px;margin:0;font-size:1.05rem;text-shadow:0 2px 14px rgba(4,5,11,.9)}
+.orc-intro a{color:var(--cyan);text-decoration:underline}
+.orc-svc{bottom:6vh}
+.orc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.orc-card{position:relative;padding:22px 22px 20px;border-radius:20px;background:linear-gradient(160deg,rgba(16,22,42,.84),rgba(6,8,18,.78));border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(16px) saturate(140%);-webkit-backdrop-filter:blur(16px) saturate(140%);box-shadow:0 30px 70px -40px var(--c),inset 0 1px 0 rgba(255,255,255,.1);overflow:hidden}
+.orc-card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--c);box-shadow:0 0 18px var(--c)}
+.orc-card .num{font-family:"Space Grotesk";font-size:.74rem;letter-spacing:.28em;color:var(--c)}
+.orc-card h3{font-size:1.22rem;margin:6px 0 8px}
+.orc-card p{color:#c8cbe6;font-size:.92rem;line-height:1.5}
+.orc-step{bottom:7vh}
+.orc-box{max-width:460px;padding:28px 30px 26px;border-radius:var(--radius);background:linear-gradient(160deg,rgba(16,22,42,.86),rgba(6,8,18,.8));border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(18px) saturate(140%);-webkit-backdrop-filter:blur(18px) saturate(140%);box-shadow:0 40px 90px -40px rgba(34,211,238,.45),inset 0 1px 0 rgba(255,255,255,.12)}
+.orc-step.right .orc-box{margin-left:auto}
+.orc-step .num{font-family:"Space Grotesk";font-size:.76rem;letter-spacing:.3em;color:var(--cyan)}
+.orc-step .h3{font-size:clamp(1.8rem,3.3vw,2.6rem);line-height:1.05;margin:8px 0 12px}
+.orc-step p:last-child{color:#c8cbe6;font-size:1rem}
+.orc-cta{bottom:7vh}
+.orc-cta-box{max-width:none;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;padding:34px 40px;border-color:rgba(34,211,238,.4)}
+.orc-cta-box h3{font-size:clamp(1.4rem,2.6vw,2rem);line-height:1.15;max-width:620px}
+.orc-cta-box p{color:var(--muted);margin-top:8px}
+.orc-dots{position:absolute;right:28px;top:50%;transform:translateY(-50%);display:grid;gap:12px;z-index:2}
+.orc-dots i{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.2);transition:all .4s}
+.orc-dots i.on{background:var(--cyan);box-shadow:0 0 12px var(--cyan);height:26px;border-radius:6px}
+.orc-progress{position:absolute;left:0;right:0;bottom:0;height:2px;background:rgba(255,255,255,.06)}
+.orc-progress span{display:block;height:100%;background:var(--grad);transform-origin:left;transform:scaleX(0)}
+#orc-pin.no-gl{height:auto}
+#orc-pin.no-gl .orc-sticky{position:relative;height:auto;padding:120px 0 60px;display:grid;gap:22px}
+#orc-pin.no-gl .orc-panel{position:relative;inset:auto;margin:0;opacity:1;visibility:visible;transform:none}
+#orc-pin.no-gl #orc-gl,#orc-pin.no-gl .orc-dots,#orc-pin.no-gl .orc-progress,#orc-pin.no-gl .orc-top{display:none}
+@media (max-width:960px){.orc-grid{grid-template-columns:1fr;gap:10px}}
+@media (max-width:760px){
+  #orc-pin{height:700vh}
+  .orc-top{top:88px}
+  .orc-intro{top:128px;text-align:center}
+  .orc-intro h2,.orc-intro p{margin-left:auto;margin-right:auto}
+  .orc-intro p{font-size:.95rem}
+  .orc-svc{bottom:3vh}
+  .orc-card{padding:13px 16px 12px 18px;border-radius:16px}
+  .orc-card .num{display:none}
+  .orc-card h3{font-size:1rem;margin:0 0 3px}
+  .orc-card p{font-size:.8rem;line-height:1.4}
+  .orc-step{bottom:4vh}
+  .orc-box{padding:20px 20px 18px}
+  .orc-step .h3{font-size:1.6rem;margin:4px 0 8px}
+  .orc-step p:last-child{font-size:.92rem}
+  .orc-cta{bottom:4vh}
+  .orc-cta-box{padding:24px 20px}
+  .orc-dots{right:10px}
+}
+@media (max-width:760px){
+  #aut-pin{height:480vh}
+  .aut-top{top:88px}
+  .aut-step{bottom:5vh}
+  .aut-step .wrap>div{padding:18px 20px}
+  .aut-step p{font-size:.92rem}
+  .aut-dots{right:10px}
+  .aut-node b{font-size:.78rem}
+  .aut-node span{display:none}
+  .aut-B{translate:-50% 22px}
+  .aut-node::before{inset:-5px -8px}
+}
+
+/* PROCES 3D */
+#proces{padding:0}
+#prc-pin{position:relative;height:660vh;background:#04050b}
+.prc-sticky{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
+#prc-gl{position:absolute;inset:0;width:100%;height:100%;display:block}
+.prc-shade{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at center,transparent 55%,rgba(4,5,11,.55) 100%),linear-gradient(180deg,rgba(4,5,11,.95) 0%,transparent 15%,transparent 80%,rgba(4,5,11,.9) 100%)}
+#prc-tags{position:absolute;inset:0;pointer-events:none}
+.prc-tag{position:absolute;left:0;top:0;translate:-50% -100%;white-space:nowrap;opacity:0;font-family:"Space Grotesk";font-size:.78rem;letter-spacing:.06em;color:#e0f2fe;padding:5px 12px;border-radius:999px;background:rgba(6,9,20,.72);border:1px solid rgba(125,211,252,.45);box-shadow:0 0 18px -4px rgba(34,211,238,.6);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.prc-top{position:absolute;top:96px;left:0;right:0;pointer-events:none;z-index:2}
+.prc-top .wrap{display:flex;justify-content:space-between;align-items:center}
+.prc-top .kicker{margin:0}
+.prc-panel{position:absolute;left:0;right:0;z-index:3;opacity:0;visibility:hidden;will-change:transform,opacity}
+.prc-intro{top:138px;text-align:center}
+.prc-intro h2{font-size:clamp(2rem,4vw,3.4rem);line-height:1.05;max-width:860px;margin:0 auto 14px;text-shadow:0 4px 30px rgba(4,5,11,.8)}
+.prc-intro p{color:#c8cbe6;max-width:560px;margin:0 auto;font-size:1.05rem;text-shadow:0 2px 14px rgba(4,5,11,.9)}
+.prc-step{top:50%;margin-top:-150px}
+.prc-box{max-width:430px;padding:28px 30px 26px;border-radius:var(--radius);background:linear-gradient(160deg,rgba(16,22,42,.86),rgba(6,8,18,.8));border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(18px) saturate(140%);-webkit-backdrop-filter:blur(18px) saturate(140%);box-shadow:0 40px 90px -40px rgba(34,211,238,.45),inset 0 1px 0 rgba(255,255,255,.12)}
+.prc-step.right .prc-box{margin-left:auto}
+.prc-step .num{font-family:"Space Grotesk";font-size:.76rem;letter-spacing:.3em;color:var(--cyan)}
+.prc-step h3{font-size:clamp(1.7rem,3vw,2.4rem);line-height:1.05;margin:8px 0 12px}
+.prc-step p{color:#c8cbe6;font-size:.98rem}
+.prc-step ul{list-style:none;margin-top:14px;display:grid;gap:7px;font-size:.92rem;color:#dfe3ff}
+.prc-step li{display:flex;gap:10px;align-items:center}
+.prc-step li::before{content:"";width:16px;height:1px;background:var(--cyan);box-shadow:0 0 8px var(--cyan);flex:none}
+.prc-cta{bottom:7vh}
+.prc-cta-box{max-width:none;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;padding:32px 40px;border-color:rgba(34,211,238,.4)}
+.prc-cta-box h3{font-size:clamp(1.4rem,2.6vw,2rem);line-height:1.15}
+.prc-cta-box p{color:var(--muted);margin-top:8px}
+.prc-dots{position:absolute;right:28px;top:50%;transform:translateY(-50%);display:grid;gap:12px;z-index:2}
+.prc-dots i{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.2);transition:all .4s}
+.prc-dots i.on{background:var(--cyan);box-shadow:0 0 12px var(--cyan);height:26px;border-radius:6px}
+.prc-progress{position:absolute;left:0;right:0;bottom:0;height:2px;background:rgba(255,255,255,.06)}
+.prc-progress span{display:block;height:100%;background:var(--grad);transform-origin:left;transform:scaleX(0)}
+#prc-pin.no-gl{height:auto}
+#prc-pin.no-gl .prc-sticky{position:relative;height:auto;padding:120px 0 60px;display:grid;gap:22px}
+#prc-pin.no-gl .prc-panel{position:relative;inset:auto;margin:0;opacity:1;visibility:visible;transform:none}
+#prc-pin.no-gl #prc-gl,#prc-pin.no-gl .prc-dots,#prc-pin.no-gl .prc-progress,#prc-pin.no-gl .prc-top{display:none}
+@media (max-width:760px){
+  #prc-pin{height:600vh}
+  .prc-top{top:88px}
+  .prc-intro{top:128px}
+  .prc-intro p{font-size:.95rem}
+  .prc-step{top:auto;bottom:4vh;margin:0}
+  .prc-box{padding:20px 20px 18px}
+  .prc-step h3{font-size:1.5rem;margin:4px 0 8px}
+  .prc-step p{font-size:.9rem}
+  .prc-step ul{margin-top:10px;gap:5px;font-size:.84rem}
+  .prc-cta{bottom:4vh}
+  .prc-cta-box{padding:24px 20px}
+  .prc-dots{right:10px}
+}
+
+/* REALIZACJE 3D */
+#wrk-pin{position:relative;height:900vh;background:#03040a}
+.wrk-sticky{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
+#wrk-gl{position:absolute;inset:0;width:100%;height:100%;display:block}
+.wrk-shade{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at center,transparent 58%,rgba(3,4,10,.6) 100%),linear-gradient(180deg,rgba(3,4,10,.95) 0%,transparent 14%,transparent 82%,rgba(3,4,10,.9) 100%)}
+.wrk-top{position:absolute;top:96px;left:0;right:0;pointer-events:none;z-index:2}
+.wrk-top .wrap{display:flex;justify-content:space-between;align-items:center}
+.wrk-top .kicker{margin:0}
+.wrk-panel{position:absolute;left:0;right:0;z-index:3;opacity:0;visibility:hidden;pointer-events:none;will-change:transform,opacity}
+.wrk-panel.live .wrk-box,.wrk-panel.live .btn{pointer-events:auto}
+.wrk-intro{top:138px;text-align:center}
+.wrk-intro h2{font-size:clamp(2rem,4vw,3.4rem);line-height:1.05;max-width:900px;margin:0 auto 14px;text-shadow:0 4px 30px rgba(3,4,10,.8)}
+.wrk-intro p{color:#c8cbe6;max-width:600px;margin:0 auto;font-size:1.05rem;text-shadow:0 2px 14px rgba(3,4,10,.9)}
+.wrk-case{top:50%}
+.wrk-case>.wrap{transform:translateY(-50%)}
+.wrk-box{max-width:420px;padding:26px 28px 24px;border-radius:var(--radius);background:linear-gradient(160deg,rgba(14,20,40,.93),rgba(5,7,16,.9));border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(18px) saturate(140%);-webkit-backdrop-filter:blur(18px) saturate(140%);box-shadow:0 40px 90px -40px rgba(34,211,238,.45),inset 0 1px 0 rgba(255,255,255,.12)}
+.wrk-case.right .wrk-box{margin-left:auto}
+.wrk-case .num{font-family:"Space Grotesk";font-size:.74rem;letter-spacing:.28em;color:var(--cyan)}
+.wrk-case h3{font-size:clamp(1.7rem,3vw,2.3rem);line-height:1.05;margin:8px 0 4px}
+.wrk-case .lead{color:var(--muted);font-size:.92rem;margin-bottom:14px}
+.wrk-case dl{display:grid;gap:10px}
+.wrk-case dl div{display:grid;grid-template-columns:96px 1fr;gap:12px;padding-top:10px;border-top:1px solid rgba(255,255,255,.08)}
+.wrk-case dt{font-family:"Space Grotesk";font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:#7dd3fc;padding-top:3px}
+.wrk-case dd{color:#dfe3ff;font-size:.9rem;line-height:1.45}
+.wrk-case dl div:last-child dt{color:var(--teal,#2dd4bf)}
+.wrk-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px}
+.wrk-chips span{font-size:.74rem;padding:4px 10px;border-radius:999px;border:1px solid rgba(125,211,252,.35);color:#cfefff;background:rgba(34,211,238,.06)}
+.wrk-cta{bottom:7vh}
+.wrk-cta-box{max-width:none;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;padding:32px 40px;border-color:rgba(34,211,238,.4)}
+.wrk-cta-box h3{font-size:clamp(1.4rem,2.6vw,2.1rem);line-height:1.15}
+.wrk-cta-box p{color:var(--muted);margin-top:8px;max-width:560px}
+.wrk-dots{position:absolute;right:28px;top:50%;transform:translateY(-50%);display:grid;gap:12px;z-index:2}
+.wrk-dots i{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.2);transition:all .4s}
+.wrk-dots i.on{background:var(--cyan);box-shadow:0 0 12px var(--cyan);height:26px;border-radius:6px}
+.wrk-progress{position:absolute;left:0;right:0;bottom:0;height:2px;background:rgba(255,255,255,.06)}
+.wrk-progress span{display:block;height:100%;background:var(--grad);transform-origin:left;transform:scaleX(0)}
+#wrk-pin.no-gl{height:auto}
+#wrk-pin.no-gl .wrk-sticky{position:relative;height:auto;padding:120px 0 60px;display:grid;gap:22px}
+#wrk-pin.no-gl .wrk-panel{position:relative;inset:auto;margin:0;opacity:1;visibility:visible;transform:none}
+#wrk-pin.no-gl .wrk-case>.wrap{transform:none}
+#wrk-pin.no-gl .wrk-box{pointer-events:auto}
+#wrk-pin.no-gl #wrk-gl,#wrk-pin.no-gl .wrk-dots,#wrk-pin.no-gl .wrk-progress,#wrk-pin.no-gl .wrk-top{display:none}
+@media (max-width:760px){
+  #wrk-pin{height:820vh}
+  .wrk-top{top:88px}
+  .wrk-intro{top:128px}
+  .wrk-intro p{font-size:.95rem}
+  .wrk-case{top:auto;bottom:3vh}
+  .wrk-case>.wrap{transform:none}
+  .wrk-box{padding:18px 18px 16px}
+  .wrk-case h3{font-size:1.45rem;margin:4px 0 2px}
+  .wrk-case .lead{font-size:.82rem;margin-bottom:8px}
+  .wrk-case dl{gap:6px}
+  .wrk-case dl div{grid-template-columns:78px 1fr;gap:8px;padding-top:6px}
+  .wrk-case dt{font-size:.62rem}
+  .wrk-case dd{font-size:.8rem;line-height:1.35}
+  .wrk-chips{display:none}
+  .wrk-cta{bottom:4vh}
+  .wrk-cta-box{padding:24px 20px}
+  .wrk-dots{right:10px}
+}
+/* FAQ */
+.faq{display:grid;gap:14px;max-width:900px}
+.faq-item{padding:0;border-radius:18px}
+.faq-item summary{cursor:pointer;list-style:none;padding:22px 26px;font-family:"Space Grotesk";font-size:1.1rem;display:flex;justify-content:space-between;gap:16px;align-items:center}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-item summary::after{content:"+";color:var(--cyan);font-size:1.5rem;line-height:1;transition:transform .3s}
+.faq-item[open] summary::after{transform:rotate(45deg)}
+.faq-item p{padding:0 26px 24px;color:var(--muted)}
+
+@media (max-width:960px){
+  .services,.packages{grid-template-columns:1fr}
+  .process{grid-template-columns:1fr 1fr}
+  .works{grid-template-columns:1fr}
+  .work.wide{grid-column:auto}
+  .contact{grid-template-columns:1fr;padding:32px 24px}
+  .menu{position:fixed;top:76px;left:0;right:0;flex-direction:column;gap:0;background:rgba(5,5,12,.96);backdrop-filter:blur(18px);border-bottom:1px solid var(--line);max-height:0;overflow:hidden;transition:max-height .4s}
+  .menu.open{max-height:460px}
+  .menu a{padding:18px 24px;border-top:1px solid var(--line)}
+  .burger{display:block}
+  nav .btn-primary{display:none}
+  .cursor{display:none}
+}
+@media (max-width:560px){
+  .wrap{padding:0 16px}
+  section{padding:90px 0}
+  .process{grid-template-columns:1fr}
+  .row2{grid-template-columns:1fr}
+  .stats{gap:28px}
+  .work .art,.work.wide .art{height:240px}
+  .work .meta{flex-direction:column;align-items:flex-start}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  .reveal{opacity:1;transform:none}
+}
+</style>
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@graph": [{"@type": "ProfessionalService", "@id": "https://quantumflow.agency/#org", "name": "QuantumFlow AI Agency", "url": "https://quantumflow.agency/", "logo": "https://quantumflow.agency/apple-touch-icon.png", "email": "kontakt@quantumflow.agency", "description": "Animowane strony 3D premium i automatyzacje AI w n8n dla firm.", "areaServed": "PL", "knowsAbout": ["Strony 3D", "WebGL", "Three.js", "Redesign stron", "Automatyzacje AI", "n8n", "Agenci AI"]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Ile kosztuje strona 3D premium?", "acceptedAnswer": {"@type": "Answer", "text": "Każdą wycenę przygotowujemy indywidualnie, bo zależy od liczby podstron, złożoności scen 3D i tekstów. Po krótkiej, bezpłatnej konsultacji dostajesz konkretną ofertę z zakresem prac i terminem."}}, {"@type": "Question", "name": "Ile trwa zaprojektowanie i wdrożenie strony?", "acceptedAnswer": {"@type": "Answer", "text": "Prosta strona typu landing page z animowanym hero 3D zajmuje zwykle 2–3 tygodnie. Pełna strona firmowa z autorskimi scenami 3D to najczęściej 4–8 tygodni, w zależności od liczby podstron i szybkości akceptacji projektu."}}, {"@type": "Question", "name": "Czy animacje 3D nie spowalniają strony?", "acceptedAnswer": {"@type": "Answer", "text": "Nie musi tak być. Optymalizujemy modele, tekstury i kod, ładujemy sceny dopiero wtedy, gdy są potrzebne, a na słabszych telefonach upraszczamy efekty. Celem jest ładowanie poniżej 2 sekund i płynne działanie na urządzeniach mobilnych."}}, {"@type": "Question", "name": "Czy strona 3D jest dobra dla SEO i Google?", "acceptedAnswer": {"@type": "Answer", "text": "Tak. Treść, nagłówki i opisy są zwykłym tekstem HTML, który Google czyta bez problemu. Dodajemy meta dane, dane strukturalne, mapę strony i dbamy o szybkość, a przy redesignie zachowujemy dotychczasowe pozycje w wyszukiwarce."}}, {"@type": "Question", "name": "Czym jest n8n i co można zautomatyzować?", "acceptedAnswer": {"@type": "Answer", "text": "n8n to platforma do budowy automatyzacji, która łączy setki aplikacji: CRM, pocztę, sklepy, arkusze i komunikatory. Z agentem AI automatyzujemy obsługę zapytań, przekazywanie leadów do CRM, odczytywanie danych z faktur i umów, raporty oraz chatboty z wiedzą firmy."}}, {"@type": "Question", "name": "Czy automatyzacje AI są bezpieczne dla danych mojej firmy?", "acceptedAnswer": {"@type": "Answer", "text": "n8n można uruchomić na własnym serwerze, więc dane nie muszą opuszczać Twojej infrastruktury. Dostępy ograniczamy do niezbędnego minimum, a dla danych wrażliwych dobieramy modele AI i ustawienia zgodne z RODO."}}, {"@type": "Question", "name": "Czy zajmujecie się stroną po wdrożeniu?", "acceptedAnswer": {"@type": "Answer", "text": "Tak. Oferujemy opiekę: aktualizacje treści, monitoring, kopie zapasowe, raporty odwiedzin oraz rozwój automatyzacji, gdy firma rośnie. Możesz też przejąć stronę samodzielnie, bo przekazujemy pełny kod i dostępy."}}]}]}
+</script>
+<script type="importmap">
+{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}
+</script>
+</head>
+<body>
+<div class="fallback-bg"></div>
+<canvas id="gl" aria-hidden="true"></canvas>
+<div class="noise"></div>
+<div class="cursor" id="cursor"></div>
+
+<header id="top">
+  <div class="wrap">
+    <nav>
+      <a href="#" class="brand"><img class="logo-img" src="/logo-mark.webp" alt="Logo QuantumFlow AI Agency" width="64" height="60"><span class="brand-text">QuantumFlow<small>AI Agency</small></span></a>
+      <div class="menu" id="menu">
+        <a href="#immersja">Rdzeń 3D</a>
+        <a href="#uslugi">Usługi</a>
+        <a href="#automatyzacje">Automatyzacje AI</a>
+        <a href="#proces">Proces</a>
+        <a href="#realizacje">Realizacje</a>
+        <a href="#pakiety">Pakiety</a>
+        <a href="#kontakt">Kontakt</a>
+      </div>
+      <a href="#kontakt" class="btn btn-primary">Bezpłatna wycena</a>
+      <button class="burger" id="burger" aria-label="Menu">☰</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-inner">
+        <span class="eyebrow"><span class="dot"></span>Studio stron 3D · przyjmujemy nowe projekty</span>
+        <h1>Strony 3D premium, które <span class="grad">płyną</span>.</h1>
+        <p class="lead">Projektujemy animowane strony 3D premium, które płyną przy każdym przewinięciu, i wdrażamy automatyzacje AI. Nowa strona od zera, redesign tej, która przestała sprzedawać, albo agent AI, który przejmie powtarzalną pracę.</p>
+        <div class="cta-row">
+          <a href="#kontakt" class="btn btn-primary">Umów bezpłatną konsultację →</a>
+          <a href="#realizacje" class="btn btn-ghost">Zobacz realizacje</a>
+        </div>
+        <div class="stats">
+          <div class="stat"><b>3D</b><span>interaktywne sceny WebGL</span></div>
+          <div class="stat"><b>&lt; 2 s</b><span>cel czasu ładowania</span></div>
+          <div class="stat"><b>100%</b><span>responsywność na telefonach</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="scroll-hint">Przewiń<i></i></div>
+  </section>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span>Three.js</span><span>WebGL</span><span>Animacje scroll</span><span>Redesign</span><span>Landing page</span><span>E-commerce 3D</span><span>SEO</span><span>Vercel</span>
+      <span>Three.js</span><span>WebGL</span><span>Animacje scroll</span><span>Redesign</span><span>Landing page</span><span>E-commerce 3D</span><span>SEO</span><span>Vercel</span>
+    </div>
+  </div>
+
+
+  <section id="immersja" aria-label="Rdzeń QuantumFlow">
+    <div class="imm-sticky">
+      <canvas id="imm-gl" aria-hidden="true"></canvas>
+      <div class="imm-shade"></div>
+      <div class="imm-top"><div class="wrap" style="display:flex;justify-content:space-between;width:100%"><span class="kicker">Wejdź do rdzenia</span><span class="imm-count"><span class="cn" id="imm-count">01</span>/ 04</span></div></div>
+      <div class="imm-chapter"><div class="wrap"><div><span class="num">01 · ZNAK</span><p class="h3">Twoja marka jako <span class="grad">obiekt 3D</span>.</p><p>Zamieniamy logo i identyfikację w trójwymiarowy obiekt, który odwiedzający mogą obejrzeć z każdej strony.</p></div></div></div>
+      <div class="imm-chapter right"><div class="wrap"><div><span class="num">02 · ENERGIA</span><p class="h3">Ruch, który <span class="grad">przyciąga wzrok</span>.</p><p>Światło, cząsteczki i animacje reagują na przewijanie i kursor. Strona żyje, zamiast tylko wyświetlać tekst.</p></div></div></div>
+      <div class="imm-chapter"><div class="wrap"><div><span class="num">03 · LABORATORIUM</span><p class="h3">Projekt oparty na <span class="grad">danych</span>.</p><p>Zanim powstanie pierwsza scena, analizujemy Twoją branżę, klientów i konkurencję.</p></div></div></div>
+      <div class="imm-chapter right"><div class="wrap"><div><span class="num">04 · AUTOMATYZACJA</span><p class="h3">Strona, która <span class="grad">pracuje za Ciebie</span>.</p><p>Łączymy stronę z automatyzacjami AI, na przykład w n8n, które przyjmują zapytania i odpowiadają klientom.</p><a href="#kontakt" class="btn btn-primary" style="margin-top:18px">Zaplanujmy Twoją stronę →</a></div></div></div>
+      <div class="imm-dots" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i></div>
+      <div class="imm-progress"><span id="imm-bar"></span></div>
+    </div>
+  </section>
+
+  <section id="uslugi" aria-label="Usługi">
+    <div id="svc-pin">
+      <div class="svc-sticky">
+        <canvas id="svc-gl" aria-hidden="true"></canvas>
+        <div id="svc-tags" aria-hidden="true"></div>
+        <div class="svc-shade"></div>
+        <div class="svc-top"><div class="wrap"><span class="kicker">Usługi</span><span class="imm-count"><span class="cn" id="svc-count">00</span>/ 04</span></div></div>
+        <div class="svc-intro"><div class="wrap">
+          <h2>Twoja firma zasługuje na stronę, <span class="grad">której się nie zapomina.</span></h2>
+          <p>Łączymy design klasy premium z technologią 3D, żeby odwiedzający zostali dłużej, zapamiętali markę i wysłali zapytanie.</p>
+        </div></div>
+        <article class="svc-step right"><div class="wrap"><div>
+          <span class="num">01 · NOWA STRONA</span>
+          <h3>Nowa strona <span class="grad">3D</span></h3>
+          <p>Dla firm bez strony internetowej. Od strategii i tekstów po gotową, animowaną witrynę online.</p>
+          <ul><li>Unikalna scena 3D dopasowana do marki</li><li>Teksty sprzedażowe i SEO</li><li>Domena, hosting i analityka</li></ul>
+        </div></div></article>
+        <article class="svc-step"><div class="wrap"><div>
+          <span class="num">02 · REDESIGN</span>
+          <h3>Redesign <span class="grad">strony</span></h3>
+          <p>Przestarzała strona odstrasza klientów. Przebudowujemy ją na nowoczesną, szybką i angażującą.</p>
+          <ul><li>Audyt obecnej strony</li><li>Nowy wygląd z animacjami 3D</li><li>Zachowanie pozycji w Google</li></ul>
+        </div></div></article>
+        <article class="svc-step right"><div class="wrap"><div>
+          <span class="num">03 · OPIEKA</span>
+          <h3>Opieka <span class="grad">i rozwój</span></h3>
+          <p>Strona to nie jednorazowy projekt. Dbamy o aktualizacje, szybkość i nowe sekcje, gdy firma rośnie.</p>
+          <ul><li>Aktualizacje treści</li><li>Monitoring i kopie zapasowe</li><li>Raport odwiedzin co miesiąc</li></ul>
+        </div></div></article>
+        <article class="svc-step"><div class="wrap"><div>
+          <span class="num">04 · AUTOMATYZACJE AI</span>
+          <h3>Agenci <span class="grad">AI w n8n</span></h3>
+          <p>Strona przyciąga klientów, a agent AI obsługuje ich dalej: odpowiada na zapytania, przenosi leady do CRM i raportuje wyniki.</p>
+          <ul><li>Strategia i audyt procesów</li><li>Wdrożenie agentów AI</li><li>Analityka i optymalizacja</li></ul>
+          <a href="#automatyzacje" class="btn btn-ghost" style="margin-top:18px">Zobacz, jak to działa ↓</a>
+        </div></div></article>
+        <div class="svc-dots" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i></div>
+        <div class="svc-progress"><span id="svc-bar"></span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="automatyzacje" aria-label="Automatyzacje AI w n8n">
+    <div id="aut-pin">
+      <div class="aut-sticky">
+        <canvas id="aut-gl" aria-hidden="true"></canvas>
+        <div id="aut-labels" aria-hidden="true"></div>
+        <div class="aut-shade"></div>
+        <div class="aut-top"><div class="wrap"><span class="kicker">Automatyzacje AI · n8n</span><span class="imm-count"><span class="cn" id="aut-count">01</span>/ 04</span></div></div>
+        <div class="aut-step"><div class="wrap"><div><span class="num">01 · WYZWALACZ</span><p class="h3">Zdarzenie <span class="grad">uruchamia</span> proces.</p><p>Nowe zapytanie z formularza, mail od klienta albo godzina w harmonogramie. Agent startuje sam, bez klikania.</p></div></div></div>
+        <div class="aut-step right"><div class="wrap"><div><span class="num">02 · AGENT AI</span><p class="h3">Agent <span class="grad">myśli</span> i planuje.</p><p>Analizuje treść, korzysta z pamięci i wiedzy Twojej firmy, a potem wybiera narzędzia. Pracuje na modelach OpenAI, Claude lub Gemini.</p></div></div></div>
+        <div class="aut-step"><div class="wrap"><div><span class="num">03 · AKCJE</span><p class="h3">Zadania <span class="grad">wykonują się</span> same.</p><p>Lead trafia do CRM, klient dostaje odpowiedź, zespół powiadomienie na Slacku, a dane lądują w bazie i dokumentach.</p></div></div></div>
+        <div class="aut-step right"><div class="wrap"><div><span class="num">04 · EFEKT</span><p class="h3">Twoja firma działa <span class="grad">24/7</span>.</p><p>Godziny ręcznej pracy znikają. Proces działa bez przerw i błędów, a Ty widzisz wyniki.</p><a href="#kontakt" class="btn btn-primary" data-pkg="Automatyzacja n8n" style="margin-top:18px">Zamów bezpłatny audyt →</a></div></div></div>
+        <div class="aut-dots" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i></div>
+        <div class="aut-progress"><span id="aut-bar"></span></div>
+      </div>
+    </div>
+
+    <div id="orc-pin">
+      <div class="orc-sticky">
+        <canvas id="orc-gl" aria-hidden="true"></canvas>
+        <div id="orc-tags" aria-hidden="true"></div>
+        <div class="orc-shade"></div>
+        <div class="orc-top"><div class="wrap"><span class="kicker">Orkiestracja n8n</span><span class="imm-count"><span class="cn" id="orc-count">00</span>/ 06</span></div></div>
+        <div class="orc-panel orc-intro" data-k="0"><div class="wrap">
+          <h2>Agent AI, który pracuje w Twojej firmie <span class="grad">bez przerwy.</span></h2>
+          <p>Projektujemy i wdrażamy automatyzacje w <a href="https://n8n.io" target="_blank" rel="noopener">n8n</a> połączone z modelami AI. Przejmują powtarzalną pracę, żeby Twój zespół zajął się klientami.</p>
+        </div></div>
+        <div class="orc-panel orc-svc" data-k="1"><div class="wrap"><div class="orc-grid"><article class="orc-card" style="--c:#fb923c"><span class="num">01</span><h3>Obsługa klienta AI</h3><p>Agent odpowiada na maile i wiadomości, kwalifikuje zapytania i przekazuje trudne sprawy człowiekowi.</p></article><article class="orc-card" style="--c:#3b82f6"><span class="num">02</span><h3>Leady prosto do CRM</h3><p>Formularz, ocena leada przez AI, wpis w CRM i powiadomienie dla handlowca. W kilka sekund od wysłania.</p></article><article class="orc-card" style="--c:#8b5cf6"><span class="num">03</span><h3>Dane z dokumentów</h3><p>Faktury, umowy i PDF-y zamieniają się w uporządkowane dane w arkuszu lub bazie, bez przepisywania.</p></article></div></div></div>
+        <div class="orc-panel orc-svc" data-k="2"><div class="wrap"><div class="orc-grid"><article class="orc-card" style="--c:#d946ef"><span class="num">04</span><h3>Raporty i podsumowania</h3><p>Codzienny raport sprzedaży, podsumowania spotkań i zestawienia trafiają na maila albo Slacka o stałej porze.</p></article><article class="orc-card" style="--c:#22c55e"><span class="num">05</span><h3>Chatbot z wiedzą firmy</h3><p>Asystent na stronie lub w zespole, który zna Twoje dokumenty, ofertę i procedury dzięki bazie wektorowej.</p></article><article class="orc-card" style="--c:#2dd4bf"><span class="num">06</span><h3>Integracje na zamówienie</h3><p>Łączymy setki aplikacji przez n8n i API: CRM, sklepy, księgowość, kalendarze, arkusze i komunikatory.</p></article></div></div></div>
+        <div class="orc-panel orc-step right" data-k="3"><div class="wrap"><div class="orc-box"><span class="num">01 · ETAP WDROŻENIA</span><p class="h3">Audyt procesów</p><p>Sprawdzamy, które zadania w Twojej firmie da się zautomatyzować i ile czasu to odzyska.</p></div></div></div>
+        <div class="orc-panel orc-step " data-k="4"><div class="wrap"><div class="orc-box"><span class="num">02 · ETAP WDROŻENIA</span><p class="h3">Budowa i testy</p><p>Tworzymy workflow w n8n z agentem AI i testujemy go na Twoich prawdziwych danych.</p></div></div></div>
+        <div class="orc-panel orc-step " data-k="5"><div class="wrap"><div class="orc-box"><span class="num">03 · ETAP WDROŻENIA</span><p class="h3">Wdrożenie i opieka</p><p>Uruchamiamy automatyzację, monitorujemy jej działanie i rozwijamy ją razem z firmą.</p></div></div></div>
+        <div class="orc-panel orc-cta" data-k="6"><div class="wrap"><div class="orc-box orc-cta-box">
+          <div><h3>Policzymy, ile godzin miesięcznie możesz <span class="grad">odzyskać</span>.</h3><p>Bezpłatny audyt automatyzacji, bez zobowiązań.</p></div>
+          <a href="#kontakt" class="btn btn-primary" data-pkg="Automatyzacja n8n">Zamów audyt automatyzacji →</a>
+        </div></div></div>
+        <div class="orc-dots" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="orc-progress"><span id="orc-bar"></span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="proces" aria-label="Proces">
+    <div id="prc-pin">
+      <div class="prc-sticky">
+        <canvas id="prc-gl" aria-hidden="true"></canvas>
+        <div id="prc-tags" aria-hidden="true"></div>
+        <div class="prc-shade"></div>
+        <div class="prc-top"><div class="wrap"><span class="kicker">Proces</span><span class="imm-count"><span class="cn" id="prc-count">00</span>/ 05</span></div></div>
+        <div class="prc-panel prc-intro" data-k="0"><div class="wrap">
+          <h2>Od rozmowy do strony online w <span class="grad">czterech krokach.</span></h2>
+          <p>Prosto i przejrzyście. Na każdym etapie widzisz postęp i masz wpływ na efekt.</p>
+        </div></div>
+        <div class="prc-panel prc-step right" data-k="1"><div class="wrap"><div class="prc-box"><span class="num">01 · KONSULTACJA</span><h3>Poznajemy Twoją firmę</h3><p>Rozmawiamy o firmie, klientach i celach. Bezpłatnie i bez zobowiązań.</p><ul><li>Rozmowa online lub telefoniczna</li><li>Analiza konkurencji</li><li>Wstępna wycena</li></ul></div></div></div>
+        <div class="prc-panel prc-step" data-k="2"><div class="wrap"><div class="prc-box"><span class="num">02 · KONCEPCJA 3D</span><h3>Projekt i prototyp sceny</h3><p>Przygotowujemy projekt wizualny i interaktywny prototyp sceny 3D dla Twojej marki.</p><ul><li>Makieta i kierunek graficzny</li><li>Prototyp sceny 3D</li><li>Twoje uwagi przed wdrożeniem</li></ul></div></div></div>
+        <div class="prc-panel prc-step right" data-k="3"><div class="wrap"><div class="prc-box"><span class="num">03 · WDROŻENIE</span><h3>Budujemy stronę</h3><p>Kodujemy stronę z animacjami 3D i optymalizujemy ją pod telefony i Google.</p><ul><li>Kod i animacje 3D</li><li>Szybkość i SEO</li><li>Testy na telefonach</li></ul></div></div></div>
+        <div class="prc-panel prc-step" data-k="4"><div class="wrap"><div class="prc-box"><span class="num">04 · START I WZROST</span><h3>Strona działa i zarabia</h3><p>Publikujemy stronę, podpinamy domenę i mierzymy wyniki, żeby strona dalej rosła.</p><ul><li>Domena i hosting</li><li>Analityka odwiedzin</li><li>Opieka i rozwój</li></ul></div></div></div>
+        <div class="prc-panel prc-cta" data-k="5"><div class="wrap"><div class="prc-box prc-cta-box">
+          <div><h3>Pierwszy krok jest <span class="grad">bezpłatny</span>.</h3><p>Odpowiemy w ciągu 24 godzin z pomysłem na stronę i wstępną wyceną.</p></div>
+          <a href="#kontakt" class="btn btn-primary">Umów bezpłatną konsultację →</a>
+        </div></div></div>
+        <div class="prc-dots" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="prc-progress"><span id="prc-bar"></span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="realizacje" aria-label="Realizacje">
+    <div id="wrk-pin">
+      <div class="wrk-sticky">
+        <canvas id="wrk-gl" aria-hidden="true"></canvas>
+        <div class="wrk-shade"></div>
+        <div class="wrk-top"><div class="wrap"><span class="kicker">Realizacje</span><span class="imm-count"><span class="cn" id="wrk-count">00</span>/ 07</span></div></div>
+        <div class="wrk-panel wrk-intro" data-k="0"><div class="wrap">
+          <h2>Galeria projektów, przez którą <span class="grad" style="white-space:nowrap">się przelatuje.</span></h2>
+          <p>Sześć koncepcji stron dla branż, z którymi pracujemy. Każdy panel to podgląd strony na żywo. Najedź, kliknij i przewijaj dalej.</p>
+        </div></div>
+        <div class="wrk-panel wrk-case right" data-k="1"><div class="wrap"><article class="wrk-box">
+          <span class="num">CASE 01 · RESTAURACJA</span><h3>Ogień &amp; Sól</h3><p class="lead">Steakhouse z kuchnią opartą na ogniu.</p>
+          <dl><div><dt>Problem</dt><dd>Rezerwacje tylko przez telefon, menu w PDF, który na telefonie trudno przeczytać.</dd></div><div><dt>Rozwiązanie</dt><dd>Hero 3D z daniem, menu online i rezerwacja stolika 24/7 z przypomnieniem SMS z n8n.</dd></div><div><dt>Efekt</dt><dd>Goście rezerwują sami o każdej porze, a obsługa nie odbiera telefonów w szczycie.</dd></div></dl>
+          <div class="wrk-chips"><span>Scena 3D</span><span>Rezerwacje online</span><span>Automatyzacja n8n</span></div>
+        </article></div></div>
+        <div class="wrk-panel wrk-case" data-k="2"><div class="wrap"><article class="wrk-box">
+          <span class="num">CASE 02 · KLINIKA</span><h3>Medora</h3><p class="lead">Klinika stomatologii estetycznej.</p>
+          <dl><div><dt>Problem</dt><dd>Pacjenci boją się zabiegu i nie wiedzą, jak wygląda efekt. Recepcja tonie w pytaniach.</dd></div><div><dt>Rozwiązanie</dt><dd>Wizualizacja leczenia w 3D, kalendarz wolnych terminów i asystent AI na stronie.</dd></div><div><dt>Efekt</dt><dd>Pacjent sam umawia wizytę, a asystent odpowiada na pytania o ceny i przygotowanie.</dd></div></dl>
+          <div class="wrk-chips"><span>Wizualizacja 3D</span><span>Kalendarz wizyt</span><span>Asystent AI</span></div>
+        </article></div></div>
+        <div class="wrk-panel wrk-case right" data-k="3"><div class="wrap"><article class="wrk-box">
+          <span class="num">CASE 03 · DEWELOPER</span><h3>Nova Residence</h3><p class="lead">Osiedle z 4 budynkami i 186 mieszkaniami.</p>
+          <dl><div><dt>Problem</dt><dd>Klienci przeglądają długie tabele mieszkań i nie widzą, gdzie dokładnie leży lokal.</dd></div><div><dt>Rozwiązanie</dt><dd>Interaktywny model 3D osiedla: obracasz budynek, klikasz piętro, widzisz plan i dostępność.</dd></div><div><dt>Efekt</dt><dd>Klient wybiera mieszkanie sam, a handlowcy dostają gotowe, konkretne zapytania.</dd></div></dl>
+          <div class="wrk-chips"><span>Model 3D osiedla</span><span>Wyszukiwarka</span><span>Integracja z CRM</span></div>
+        </article></div></div>
+        <div class="wrk-panel wrk-case" data-k="4"><div class="wrap"><article class="wrk-box">
+          <span class="num">CASE 04 · SALON SAMOCHODOWY</span><h3>Volt Motors</h3><p class="lead">Autoryzowany salon aut elektrycznych.</p>
+          <dl><div><dt>Problem</dt><dd>Klient porównuje auta w internecie, ale w salonie zjawia się dopiero na końcu decyzji.</dd></div><div><dt>Rozwiązanie</dt><dd>Konfigurator 3D z kolorem, felgami i wnętrzem oraz zapis na jazdę próbną w dwa kliknięcia.</dd></div><div><dt>Efekt</dt><dd>Klient przychodzi z gotową konfiguracją, a salon dostaje leady z telefonem i modelem.</dd></div></dl>
+          <div class="wrk-chips"><span>Konfigurator 3D</span><span>Jazda próbna online</span><span>Leady do CRM</span></div>
+        </article></div></div>
+        <div class="wrk-panel wrk-case right" data-k="5"><div class="wrap"><article class="wrk-box">
+          <span class="num">CASE 05 · HOTEL I SPA</span><h3>Aura Hotel &amp; SPA</h3><p class="lead">Hotel ze SPA nad jeziorem.</p>
+          <dl><div><dt>Problem</dt><dd>Większość rezerwacji przez portale z wysoką prowizją. Strona nie oddaje klimatu miejsca.</dd></div><div><dt>Rozwiązanie</dt><dd>Wirtualny spacer po pokojach i SPA, pakiety pobytowe i rezerwacja bezpośrednia.</dd></div><div><dt>Efekt</dt><dd>Więcej rezerwacji bez prowizji i goście, którzy wiedzą, czego się spodziewać.</dd></div></dl>
+          <div class="wrk-chips"><span>Wirtualny spacer</span><span>Rezerwacja direct</span><span>Pakiety SPA</span></div>
+        </article></div></div>
+        <div class="wrk-panel wrk-case" data-k="6"><div class="wrap"><article class="wrk-box">
+          <span class="num">CASE 06 · SKLEP INTERNETOWY</span><h3>Aurum</h3><p class="lead">Sklep z ręcznie robioną biżuterią.</p>
+          <dl><div><dt>Problem</dt><dd>Na zdjęciach biżuteria traci blask, a klienci porzucają koszyk przed płatnością.</dd></div><div><dt>Rozwiązanie</dt><dd>Produkt w 3D do obracania i przybliżania, grawer online i maile o porzuconym koszyku z n8n.</dd></div><div><dt>Efekt</dt><dd>Klient widzi każdy detal przed zakupem, a porzucone koszyki wracają same.</dd></div></dl>
+          <div class="wrk-chips"><span>Produkt 3D 360°</span><span>Szybki koszyk</span><span>Automatyzacja n8n</span></div>
+        </article></div></div>
+        <div class="wrk-panel wrk-cta" data-k="7"><div class="wrap"><div class="wrk-box wrk-cta-box">
+          <div><h3>Twoja strona może być <span class="grad">następna</span>.</h3><p>Opowiedz nam o swojej firmie. W 24 godziny wrócimy z pomysłem na scenę 3D i wstępną wyceną.</p></div>
+          <a href="#kontakt" class="btn btn-primary">Zamów swoją koncepcję →</a>
+        </div></div></div>
+        <div class="wrk-dots" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="wrk-progress"><span id="wrk-bar"></span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="pakiety">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="kicker">Pakiety</span>
+        <h2>Wybierz poziom, który pasuje do Twojej firmy.</h2>
+        <p>Każdą wycenę przygotowujemy indywidualnie po krótkiej konsultacji.</p>
+      </div>
+      <div class="packages">
+        <div class="pkg glass reveal">
+          <h3>Start</h3><p class="for">Jednostronicowa strona z akcentem 3D dla małej firmy.</p>
+          <ul><li>Landing page z animowanym hero 3D</li><li>Do 5 sekcji</li><li>Formularz kontaktowy</li><li>Podstawowe SEO</li></ul>
+          <a href="#kontakt" class="btn btn-ghost" data-pkg="Start">Zapytaj o pakiet Start</a>
+        </div>
+        <div class="pkg glass featured reveal">
+          <h3>Premium</h3><p class="for">Pełna strona firmowa z interaktywnymi scenami 3D.</p>
+          <ul><li>Do 6 podstron</li><li>Autorska scena 3D marki</li><li>Animacje przy przewijaniu</li><li>Teksty sprzedażowe</li><li>Analityka i SEO</li></ul>
+          <a href="#kontakt" class="btn btn-primary" data-pkg="Premium">Zapytaj o pakiet Premium</a>
+        </div>
+        <div class="pkg glass reveal">
+          <h3>Signature</h3><p class="for">Doświadczenie 3D na miarę marek premium.</p>
+          <ul><li>Nielimitowane podstrony</li><li>Modele 3D produktów</li><li>Sklep lub konfigurator</li><li>Opieka przez 3 miesiące</li></ul>
+          <a href="#kontakt" class="btn btn-ghost" data-pkg="Signature">Zapytaj o pakiet Signature</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="kicker">FAQ</span>
+        <h2>Najczęstsze pytania o strony 3D i automatyzacje AI.</h2>
+        <p>Krótko o cenach, czasie realizacji, szybkości, SEO i bezpieczeństwie danych.</p>
+      </div>
+      <div class="faq">
+          <details class="faq-item glass reveal"><summary>Ile kosztuje strona 3D premium?</summary><p>Każdą wycenę przygotowujemy indywidualnie, bo zależy od liczby podstron, złożoności scen 3D i tekstów. Po krótkiej, bezpłatnej konsultacji dostajesz konkretną ofertę z zakresem prac i terminem.</p></details>
+          <details class="faq-item glass reveal"><summary>Ile trwa zaprojektowanie i wdrożenie strony?</summary><p>Prosta strona typu landing page z animowanym hero 3D zajmuje zwykle 2–3 tygodnie. Pełna strona firmowa z autorskimi scenami 3D to najczęściej 4–8 tygodni, w zależności od liczby podstron i szybkości akceptacji projektu.</p></details>
+          <details class="faq-item glass reveal"><summary>Czy animacje 3D nie spowalniają strony?</summary><p>Nie musi tak być. Optymalizujemy modele, tekstury i kod, ładujemy sceny dopiero wtedy, gdy są potrzebne, a na słabszych telefonach upraszczamy efekty. Celem jest ładowanie poniżej 2 sekund i płynne działanie na urządzeniach mobilnych.</p></details>
+          <details class="faq-item glass reveal"><summary>Czy strona 3D jest dobra dla SEO i Google?</summary><p>Tak. Treść, nagłówki i opisy są zwykłym tekstem HTML, który Google czyta bez problemu. Dodajemy meta dane, dane strukturalne, mapę strony i dbamy o szybkość, a przy redesignie zachowujemy dotychczasowe pozycje w wyszukiwarce.</p></details>
+          <details class="faq-item glass reveal"><summary>Czym jest n8n i co można zautomatyzować?</summary><p>n8n to platforma do budowy automatyzacji, która łączy setki aplikacji: CRM, pocztę, sklepy, arkusze i komunikatory. Z agentem AI automatyzujemy obsługę zapytań, przekazywanie leadów do CRM, odczytywanie danych z faktur i umów, raporty oraz chatboty z wiedzą firmy.</p></details>
+          <details class="faq-item glass reveal"><summary>Czy automatyzacje AI są bezpieczne dla danych mojej firmy?</summary><p>n8n można uruchomić na własnym serwerze, więc dane nie muszą opuszczać Twojej infrastruktury. Dostępy ograniczamy do niezbędnego minimum, a dla danych wrażliwych dobieramy modele AI i ustawienia zgodne z RODO.</p></details>
+          <details class="faq-item glass reveal"><summary>Czy zajmujecie się stroną po wdrożeniu?</summary><p>Tak. Oferujemy opiekę: aktualizacje treści, monitoring, kopie zapasowe, raporty odwiedzin oraz rozwój automatyzacji, gdy firma rośnie. Możesz też przejąć stronę samodzielnie, bo przekazujemy pełny kod i dostępy.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section id="kontakt">
+    <div class="wrap">
+      <div class="contact glass reveal">
+        <div>
+          <span class="kicker">Kontakt</span>
+          <h2>Porozmawiajmy o <span class="grad">Twojej</span> stronie.</h2>
+          <p>Opisz krótko firmę i czego potrzebujesz. Odpowiemy w ciągu 24 godzin z pomysłem na stronę i wstępną wyceną.</p>
+        </div>
+        <form id="form">
+          <div class="row2">
+            <label>Imię<input name="imie" required autocomplete="name"></label>
+            <label>E-mail<input name="email" type="email" required autocomplete="email"></label>
+          </div>
+          <div class="row2">
+            <label>Firma<input name="firma"></label>
+            <label>Pakiet
+              <select name="pakiet" id="pakiet">
+                <option>Jeszcze nie wiem</option><option>Start</option><option>Premium</option><option>Signature</option><option>Automatyzacja n8n</option>
+              </select>
+            </label>
+          </div>
+          <label>Obecna strona (jeśli jest)<input name="strona" placeholder="https://"></label>
+          <label>Wiadomość<textarea name="wiadomosc" required></textarea></label>
+          <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
+          <button class="btn btn-primary" type="submit">Wyślij zapytanie →</button>
+          <p class="form-note" id="note"></p>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span class="brand" style="font-size:1rem"><img class="logo-img" src="/logo-mark.webp" alt="Znak QuantumFlow" width="44" height="41" style="width:44px;height:41px">QuantumFlow AI Agency</span>
+    <span id="social" style="display:flex;gap:18px;flex-wrap:wrap"></span>
+    <span class="share" style="display:flex;gap:14px;flex-wrap:wrap;align-items:center">Udostępnij: <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fquantumflow.agency%2F" target="_blank" rel="noopener">Facebook</a> <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fquantumflow.agency%2F" target="_blank" rel="noopener">LinkedIn</a> <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fquantumflow.agency%2F&amp;text=Strony%203D%20premium%20i%20automatyzacje%20AI" target="_blank" rel="noopener">X</a> <a href="https://wa.me/?text=QuantumFlow%20%E2%80%94%20strony%203D%20premium%20https%3A%2F%2Fquantumflow.agency%2F" target="_blank" rel="noopener">WhatsApp</a></span>
+    <span>© <span id="year"></span> QuantumFlow AI Agency. Strony 3D premium.</span>
+  </div>
+</footer>
+
+<script>
+// Adres, na który ma trafiać formularz. Uzupełnij, gdy będzie gotowy.
+window.CONTACT_EMAIL = "kontakt@quantumflow.agency";
+
+document.getElementById('year').textContent = new Date().getFullYear();
+const header = document.querySelector('header');
+addEventListener('scroll', () => header.classList.toggle('scrolled', scrollY > 30), {passive:true});
+const menu = document.getElementById('menu');
+document.getElementById('burger').onclick = () => menu.classList.toggle('open');
+menu.querySelectorAll('a').forEach(a => a.onclick = () => menu.classList.remove('open'));
+
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), {threshold:.15});
+document.querySelectorAll('.reveal').forEach((el,i) => { el.style.transitionDelay = (i%4)*90+'ms'; io.observe(el); });
+
+const cursor = document.getElementById('cursor');
+addEventListener('pointermove', e => { cursor.style.left = e.clientX+'px'; cursor.style.top = e.clientY+'px'; });
+
+document.querySelectorAll('.tilt').forEach(c => {
+  c.addEventListener('pointermove', e => {
+    const r = c.getBoundingClientRect(), x = (e.clientX-r.left)/r.width, y = (e.clientY-r.top)/r.height;
+    c.style.setProperty('--mx', x*100+'%'); c.style.setProperty('--my', y*100+'%');
+    c.style.transform = `perspective(900px) rotateY(${(x-.5)*10}deg) rotateX(${(.5-y)*10}deg)`;
+  });
+  c.addEventListener('pointerleave', () => c.style.transform = '');
+});
+
+document.querySelectorAll('[data-pkg]').forEach(b => b.addEventListener('click', () => document.getElementById('pakiet').value = b.dataset.pkg));
+
+// Wysyłka bez otwierania poczty (Web3Forms → skrzynka QuantumFlow)
+const WEB3FORMS_KEY = "789d4741-7b3d-4764-9f67-f0b87280563c";
+document.getElementById('form').addEventListener('submit', async e => {
+  e.preventDefault();
+  const form = e.target, btn = form.querySelector('button[type=submit]');
+  const d = Object.fromEntries(new FormData(form));
+  const note = document.getElementById('note');
+  if (d._honey) return;
+  btn.disabled = true; note.textContent = 'Wysyłamy…';
+  try {
+    const res = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({ access_key: WEB3FORMS_KEY, subject: 'Zapytanie ze strony: ' + (d.firma || d.imie), from_name: 'QuantumFlow – formularz',
+        replyto: d.email, 'Imię': d.imie, 'E-mail': d.email, 'Firma': d.firma, 'Pakiet': d.pakiet, 'Obecna strona': d.strona, 'Wiadomość': d.wiadomosc })
+    });
+    const j = await res.json().catch(() => ({}));
+    if (!res.ok || !j.success) throw new Error(j.message || res.status);
+    form.reset(); note.textContent = 'Dziękujemy! Odpowiemy w ciągu 24 godzin.';
+  } catch (err) {
+    console.warn('Formularz:', err);
+    note.innerHTML = `Nie udało się wysłać. Napisz bezpośrednio: <a href="mailto:${window.CONTACT_EMAIL}" style="text-decoration:underline">${window.CONTACT_EMAIL}</a>`;
+  } finally { btn.disabled = false; }
+});
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const isMobile = innerWidth < 760;
+
+/* ---------- HERO: kwantowy rdzeń + przepływ cząsteczek ---------- */
+const canvas = document.getElementById('gl');
+let renderer;
+try { renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:true}); }
+catch (e) { canvas.remove(); }
+
+if (renderer) {
+  document.querySelector('.fallback-bg').style.opacity = 0;
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  renderer.setSize(innerWidth, innerHeight);
+  const scene = new THREE.Scene();
+  scene.fog = new THREE.FogExp2(0x05050c, 0.045);
+  const camera = new THREE.PerspectiveCamera(45, innerWidth/innerHeight, 0.1, 100);
+  camera.position.set(0, 0, 9);
+
+  const noise = `
+  vec3 mod289(vec3 x){return x-floor(x*(1./289.))*289.;}
+  vec4 mod289(vec4 x){return x-floor(x*(1./289.))*289.;}
+  vec4 permute(vec4 x){return mod289(((x*34.)+1.)*x);}
+  vec4 taylorInvSqrt(vec4 r){return 1.79284291400159-.85373472095314*r;}
+  float snoise(vec3 v){const vec2 C=vec2(1./6.,1./3.);const vec4 D=vec4(0.,.5,1.,2.);
+  vec3 i=floor(v+dot(v,C.yyy));vec3 x0=v-i+dot(i,C.xxx);vec3 g=step(x0.yzx,x0.xyz);vec3 l=1.-g;
+  vec3 i1=min(g.xyz,l.zxy);vec3 i2=max(g.xyz,l.zxy);vec3 x1=x0-i1+C.xxx;vec3 x2=x0-i2+C.yyy;vec3 x3=x0-D.yyy;
+  i=mod289(i);vec4 p=permute(permute(permute(i.z+vec4(0.,i1.z,i2.z,1.))+i.y+vec4(0.,i1.y,i2.y,1.))+i.x+vec4(0.,i1.x,i2.x,1.));
+  float n_=.142857142857;vec3 ns=n_*D.wyz-D.xzx;vec4 j=p-49.*floor(p*ns.z*ns.z);vec4 x_=floor(j*ns.z);vec4 y_=floor(j-7.*x_);
+  vec4 x=x_*ns.x+ns.yyyy;vec4 y=y_*ns.x+ns.yyyy;vec4 h=1.-abs(x)-abs(y);vec4 b0=vec4(x.xy,y.xy);vec4 b1=vec4(x.zw,y.zw);
+  vec4 s0=floor(b0)*2.+1.;vec4 s1=floor(b1)*2.+1.;vec4 sh=-step(h,vec4(0.));vec4 a0=b0.xzyw+s0.xzyw*sh.xxyy;vec4 a1=b1.xzyw+s1.xzyw*sh.zzww;
+  vec3 p0=vec3(a0.xy,h.x);vec3 p1=vec3(a0.zw,h.y);vec3 p2=vec3(a1.xy,h.z);vec3 p3=vec3(a1.zw,h.w);
+  vec4 norm=taylorInvSqrt(vec4(dot(p0,p0),dot(p1,p1),dot(p2,p2),dot(p3,p3)));p0*=norm.x;p1*=norm.y;p2*=norm.z;p3*=norm.w;
+  vec4 m=max(.6-vec4(dot(x0,x0),dot(x1,x1),dot(x2,x2),dot(x3,x3)),0.);m=m*m;
+  return 42.*dot(m*m,vec4(dot(p0,x0),dot(p1,x1),dot(p2,x2),dot(p3,x3)));}`;
+
+  // Znak QF z cząsteczek 3D (składa się przy wejściu, rozsypuje przy przewijaniu)
+  const group = new THREE.Group(); scene.add(group);
+  const EW = 4.6, EH = EW*460/490;
+  const emb = { prog:0, ready:false, mat:null, plane:null };
+  const embTex = new THREE.TextureLoader().load('/emblem-hero.webp', tex => {
+    tex.colorSpace = THREE.SRGBColorSpace;
+    const img = tex.image, cw = isMobile ? 130 : 190, ch = Math.round(cw*img.height/img.width);
+    const cv = document.createElement('canvas'); cv.width = cw; cv.height = ch;
+    const cx = cv.getContext('2d', {willReadFrequently:true}); cx.drawImage(img, 0, 0, cw, ch);
+    const px = cx.getImageData(0, 0, cw, ch).data;
+    const tg = [], st = [], cl = [], sd = [];
+    for (let y=0; y<ch; y++) for (let x=0; x<cw; x++){
+      const i = (y*cw+x)*4, r = px[i]/255, g = px[i+1]/255, b = px[i+2]/255, l = Math.max(r,g,b);
+      if (l < .22 || Math.random() > l*1.15) continue;
+      const jx = (Math.random()-.5)/cw, jy = (Math.random()-.5)/ch;
+      const X = (x/cw - .5 + jx)*EW, Y = (.5 - y/ch + jy)*EH;
+      const Z = (l-.55)*.9 + (Math.random()-.5)*.35;
+      tg.push(X, Y, Z);
+      const a = Math.random()*Math.PI*2, rr = 5 + Math.random()*7, h = (Math.random()-.5)*8;
+      st.push(Math.cos(a)*rr, h, Math.sin(a)*rr - 2);
+      const boost = 1.15 + Math.random()*.5; cl.push(Math.min(1,r*boost), Math.min(1,g*boost), Math.min(1,b*boost));
+      sd.push(Math.random());
+    }
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.Float32BufferAttribute(tg, 3));
+    geo.setAttribute('aStart', new THREE.Float32BufferAttribute(st, 3));
+    geo.setAttribute('color', new THREE.Float32BufferAttribute(cl, 3));
+    geo.setAttribute('aSeed', new THREE.Float32BufferAttribute(sd, 1));
+    emb.mat = new THREE.ShaderMaterial({
+      uniforms:{uTime:{value:0}, uProg:{value:0}, uScatter:{value:0}, uMouse:{value:new THREE.Vector3(99,99,0)}, uPulse:{value:0}, uPR:{value:renderer.getPixelRatio()}},
+      vertexShader: noise + `uniform float uTime, uProg, uScatter, uPulse, uPR; uniform vec3 uMouse;
+        attribute vec3 aStart; attribute float aSeed; varying vec3 vC; varying float vA;
+        void main(){
+          float k = smoothstep(0., 1., clamp(uProg*1.7 - aSeed*.7, 0., 1.));
+          vec3 tgt = position + vec3(snoise(position*.7 + uTime*.25), snoise(position*.7 + 17. + uTime*.25), snoise(position*.7 + 31. + uTime*.2))*.035;
+          vec3 sw = aStart; float an = uTime*.15*(1.+aSeed);
+          sw.xz = mat2(cos(an), -sin(an), sin(an), cos(an))*sw.xz;
+          vec3 p = mix(sw, tgt, k);
+          vec2 d = p.xy - uMouse.xy; float dl = length(d);
+          float f = exp(-dl*dl*2.2)*.55;
+          p.xy += (d/(dl+.001))*f; p.z += f*1.4;
+          p += normalize(position + vec3(0.,0.,.5))*uPulse*(.6 + aSeed*.9);
+          vec3 out3 = aStart*1.25 + vec3(0., aSeed*3., 0.);
+          p = mix(p, out3, smoothstep(0., 1., clamp(uScatter*1.4 - aSeed*.4, 0., 1.)));
+          vec4 mv = modelViewMatrix*vec4(p, 1.); gl_Position = projectionMatrix*mv;
+          float tw = .75 + .25*sin(uTime*2.5 + aSeed*40.);
+          gl_PointSize = (1.1 + aSeed*1.9)*uPR*(11./-mv.z)*(1. + f*1.5);
+          vC = color*(1. + f*1.2); vA = (.55 + .45*k)*tw; }`,
+      fragmentShader: `varying vec3 vC; varying float vA; void main(){ float d = length(gl_PointCoord-.5); if (d > .5) discard;
+        gl_FragColor = vec4(vC, smoothstep(.5, .05, d)*vA); }`,
+      transparent:true, depthWrite:false, blending:THREE.AdditiveBlending, vertexColors:true
+    });
+    group.add(new THREE.Points(geo, emb.mat));
+    // Delikatna warstwa oryginalnej grafiki pod cząsteczkami dla czytelności znaku
+    emb.plane = new THREE.Mesh(new THREE.PlaneGeometry(EW, EH),
+      new THREE.MeshBasicMaterial({map:tex, transparent:true, opacity:0, blending:THREE.AdditiveBlending, depthWrite:false}));
+    emb.plane.position.z = -.15; group.add(emb.plane);
+    emb.ready = true;
+  });
+
+  // Poświata za znakiem
+  const glowC = document.createElement('canvas'); glowC.width = glowC.height = 128;
+  const gx = glowC.getContext('2d'), gr = gx.createRadialGradient(64,64,0,64,64,64);
+  gr.addColorStop(0,'rgba(34,211,238,.55)'); gr.addColorStop(.4,'rgba(59,130,246,.18)'); gr.addColorStop(1,'rgba(0,0,0,0)');
+  gx.fillStyle = gr; gx.fillRect(0,0,128,128);
+  const glow = new THREE.Sprite(new THREE.SpriteMaterial({map:new THREE.CanvasTexture(glowC), transparent:true, blending:THREE.AdditiveBlending, depthWrite:false, opacity:.0}));
+  glow.scale.set(9, 9, 1); glow.position.z = -1; group.add(glow);
+
+  // Orbity / pierścienie
+  const ringMat = c => new THREE.MeshBasicMaterial({color:c, transparent:true, opacity:.5});
+  const rings = [];
+  [[3.1,0x22d3ee,1.2],[3.5,0x3b82f6,-.7],[3.9,0x2dd4bf,.4]].forEach(([r,c,t],i)=>{
+    const m = new THREE.Mesh(new THREE.TorusGeometry(r,.006,8,200), ringMat(c));
+    m.rotation.x = Math.PI/2 + t*.4; m.rotation.y = t; group.add(m); rings.push(m);
+  });
+
+  // Przepływ cząsteczek
+  const N = isMobile ? 2500 : 6000;
+  const pos = new Float32Array(N*3), seed = new Float32Array(N), col = new Float32Array(N*3);
+  const pal = [new THREE.Color(0x3b82f6), new THREE.Color(0x22d3ee), new THREE.Color(0x2dd4bf), new THREE.Color(0xffffff)];
+  for (let i=0;i<N;i++){
+    const r = 3 + Math.random()*9, a = Math.random()*Math.PI*2, h=(Math.random()-.5)*(2+r*.5);
+    pos.set([Math.cos(a)*r, h, Math.sin(a)*r], i*3); seed[i]=Math.random();
+    const c = pal[Math.floor(Math.random()*pal.length)]; col.set([c.r,c.g,c.b], i*3);
+  }
+  const pg = new THREE.BufferGeometry();
+  pg.setAttribute('position', new THREE.BufferAttribute(pos,3));
+  pg.setAttribute('aSeed', new THREE.BufferAttribute(seed,1));
+  pg.setAttribute('color', new THREE.BufferAttribute(col,3));
+  const pMat = new THREE.ShaderMaterial({
+    uniforms:{uTime:{value:0}, uPR:{value:renderer.getPixelRatio()}},
+    vertexShader: noise + `uniform float uTime; uniform float uPR; attribute float aSeed; varying vec3 vC; varying float vA;
+      void main(){ vec3 p = position; float r = length(p.xz); float ang = atan(p.z,p.x) + uTime*(.6/r) + aSeed*.2;
+        p.x = cos(ang)*r; p.z = sin(ang)*r; p.y += snoise(vec3(p.x*.2, p.z*.2, uTime*.15))*1.2;
+        vec4 mv = modelViewMatrix*vec4(p,1.); gl_Position = projectionMatrix*mv;
+        gl_PointSize = (aSeed*2.5+1.)*uPR*(14./-mv.z); vC=color; vA=.35+aSeed*.65; }`,
+    fragmentShader:`varying vec3 vC; varying float vA; void main(){ float d=length(gl_PointCoord-.5); if(d>.5) discard;
+      gl_FragColor = vec4(vC, smoothstep(.5,0.,d)*vA); }`,
+    transparent:true, depthWrite:false, blending:THREE.AdditiveBlending, vertexColors:true
+  });
+  const points = new THREE.Points(pg, pMat); scene.add(points);
+
+  const mouse = {x:0,y:0,tx:0,ty:0,nx:0,ny:0,on:false};
+  addEventListener('pointermove', e => { mouse.tx = e.clientX/innerWidth-.5; mouse.ty = e.clientY/innerHeight-.5; mouse.nx = e.clientX/innerWidth*2-1; mouse.ny = -(e.clientY/innerHeight*2-1); mouse.on = true; });
+  document.addEventListener('pointerleave', () => mouse.on = false);
+  let pulse = 0;
+  addEventListener('pointerdown', e => { if (scrollY < innerHeight && !e.target.closest('a,button,input,textarea,select')) pulse = 1; });
+  addEventListener('resize', () => { camera.aspect = innerWidth/innerHeight; camera.updateProjectionMatrix(); renderer.setSize(innerWidth, innerHeight); });
+
+  const ray = new THREE.Raycaster(), hit = new THREE.Vector3(), plane0 = new THREE.Plane(new THREE.Vector3(0,0,1), 0), mLocal = new THREE.Vector3(99,99,0);
+  const clock = new THREE.Clock();
+  (function loop(){
+    const t = reduce ? 0 : clock.getElapsedTime();
+    const sp = scrollY / Math.max(1, document.body.scrollHeight - innerHeight);
+    const heroP = Math.min(1, scrollY / innerHeight);
+    mouse.x += (mouse.tx-mouse.x)*.05; mouse.y += (mouse.ty-mouse.y)*.05;
+    pulse += (0-pulse)*.045;
+    const mob = innerWidth < 760;
+    group.scale.setScalar(mob ? .5 : .95);
+    group.position.x = mob ? 0 : 4.3;
+    group.position.y = mob ? 2.05 - sp*4 : .15 - sp*3;
+    group.rotation.y = Math.sin(t*.35)*.18 + mouse.x*.45 + heroP*1.2;
+    group.rotation.x = Math.sin(t*.27)*.06 + mouse.y*.45;
+    rings.forEach((r,i)=> r.rotation.z = t*(.2+i*.1)*(i%2?-1:1));
+    if (emb.ready){
+      emb.prog = reduce ? 1 : Math.min(1, emb.prog + .0085);
+      const u = emb.mat.uniforms;
+      u.uTime.value = t; u.uProg.value = emb.prog; u.uScatter.value = heroP; u.uPulse.value = pulse;
+      group.updateMatrixWorld();
+      if (mouse.on && !mob){
+        ray.setFromCamera({x:mouse.nx, y:mouse.ny}, camera);
+        const pl = plane0.clone().applyMatrix4(group.matrixWorld);
+        if (ray.ray.intersectPlane(pl, hit)) mLocal.lerp(group.worldToLocal(hit.clone()), .2);
+      } else mLocal.lerp(new THREE.Vector3(99,99,0), .05);
+      u.uMouse.value.copy(mLocal);
+      const ease = Math.max(0, (emb.prog-.55)/.45);
+      emb.plane.material.opacity = ease*ease*(mob ? .45 : .5)*(1-heroP);
+      glow.material.opacity = ease*.7*(1-heroP*.8);
+    }
+    points.rotation.y = t*.03 + sp*2;
+    camera.position.z = 9 + sp*4;
+    camera.position.x = mouse.x*.6; camera.position.y = -mouse.y*.6;
+    camera.lookAt(0, 0, 0);
+    if (!document.body.classList.contains('imm-active') && !document.body.classList.contains('aut-active') && !document.body.classList.contains('svc-active') && !document.body.classList.contains('orc-active') && !document.body.classList.contains('prc-active') && !document.body.classList.contains('wrk-active')) renderer.render(scene, camera);
+    requestAnimationFrame(loop);
+  })();
+}
+
+/* ---------- Mini-sceny w portfolio ---------- */
+function mini(canvas, build){
+  let r; try { r = new THREE.WebGLRenderer({canvas, antialias:true, alpha:true}); } catch(e){ return; }
+  r.setPixelRatio(Math.min(devicePixelRatio,2));
+  const s = new THREE.Scene(), cam = new THREE.PerspectiveCamera(40,1,.1,100); cam.position.set(0,0,6);
+  s.add(new THREE.AmbientLight(0xffffff,.4));
+  const l1 = new THREE.PointLight(0x3b82f6,40,30); l1.position.set(4,3,4); s.add(l1);
+  const l2 = new THREE.PointLight(0x22d3ee,40,30); l2.position.set(-4,-2,3); s.add(l2);
+  const update = build(s, cam);
+  let visible = false, hover = 0, target = 0, mx = 0;
+  new IntersectionObserver(e => visible = e[0].isIntersecting).observe(canvas);
+  canvas.parentElement.parentElement.addEventListener('pointerenter', ()=> target=1);
+  canvas.parentElement.parentElement.addEventListener('pointerleave', ()=> target=0);
+  canvas.addEventListener('pointermove', e => { const b = canvas.getBoundingClientRect(); mx = (e.clientX-b.left)/b.width-.5; });
+  const resize = () => { const w = canvas.clientWidth, h = canvas.clientHeight; r.setSize(w,h,false); cam.aspect=w/h; cam.updateProjectionMatrix(); };
+  resize(); addEventListener('resize', resize);
+  const clock = new THREE.Clock();
+  (function loop(){ requestAnimationFrame(loop); if(!visible) return;
+    hover += (target-hover)*.06; update(reduce?0:clock.getElapsedTime(), hover, mx); r.render(s,cam); })();
+}
+
+const metal = c => new THREE.MeshStandardMaterial({color:c, metalness:.9, roughness:.18});
+
+document.querySelectorAll('canvas[data-scene]').forEach(c => {
+  const type = c.dataset.scene;
+  if (type==='rings') mini(c, (s)=>{
+    const g = new THREE.Group(); s.add(g);
+    const gold = metal(0xf5c66b), rose = metal(0xf4a6c0);
+    const a = new THREE.Mesh(new THREE.TorusGeometry(1.1,.16,48,160), gold);
+    const b = new THREE.Mesh(new THREE.TorusGeometry(1.1,.16,48,160), rose); b.position.x=.9; b.rotation.y=1.1;
+    const gem = new THREE.Mesh(new THREE.OctahedronGeometry(.35,0), new THREE.MeshStandardMaterial({color:0x9be7ff, metalness:.2, roughness:0, emissive:0x1b4b6b}));
+    gem.position.set(0,1.3,0); a.add(gem); g.add(a,b); g.position.x=-.45;
+    const sp = new THREE.PointLight(0xffe2a8,60,20); sp.position.set(0,4,3); s.add(sp);
+    return (t,h,mx)=>{ g.rotation.y = t*.4 + mx*1.5; g.rotation.x = Math.sin(t*.5)*.3; b.rotation.x = t*.6; gem.rotation.y=t*2; g.scale.setScalar(1+h*.12); };
+  });
+  if (type==='building') mini(c, (s,cam)=>{
+    const g = new THREE.Group(); s.add(g); cam.position.set(0,1.2,7);
+    const mat = new THREE.MeshStandardMaterial({color:0x1d1b3a, metalness:.6, roughness:.3});
+    const glow = new THREE.MeshBasicMaterial({color:0x22d3ee});
+    const blocks=[];
+    for(let x=-2;x<=2;x++) for(let z=-2;z<=2;z++){
+      const h = .4 + Math.random()*2.2*(1-Math.hypot(x,z)/4);
+      const m = new THREE.Mesh(new THREE.BoxGeometry(.6,1,.6), mat); m.position.set(x*.8,0,z*.8); m.userData.h=h; m.scale.y=.01; g.add(m); blocks.push(m);
+      const e = new THREE.LineSegments(new THREE.EdgesGeometry(m.geometry), new THREE.LineBasicMaterial({color:Math.random()>.5?0x3b82f6:0x22d3ee, transparent:true, opacity:.6})); m.add(e);
+    }
+    const base = new THREE.Mesh(new THREE.CircleGeometry(3,64), new THREE.MeshBasicMaterial({color:0x3b82f6, transparent:true, opacity:.12})); base.rotation.x=-Math.PI/2; base.position.y=-.5; g.add(base);
+    g.position.y=-.8; g.rotation.x=.35;
+    return (t,h,mx)=>{ g.rotation.y = t*.25 + mx; blocks.forEach((b,i)=>{ const k = Math.min(1, Math.max(0, (t*.6 - i*.03))); const target = b.userData.h*(.85+h*.3)*k + .01; b.scale.y += (target-b.scale.y)*.1; b.position.y = b.scale.y/2 - .5; }); };
+  });
+  if (type==='wave') mini(c, (s,cam)=>{
+    cam.position.set(0,2.5,5); cam.lookAt(0,0,0);
+    const geo = new THREE.PlaneGeometry(8,8,90,90); geo.rotateX(-Math.PI/2);
+    const mat = new THREE.MeshStandardMaterial({color:0x22d3ee, wireframe:true, transparent:true, opacity:.55});
+    const m = new THREE.Mesh(geo, mat); s.add(m);
+    const sphere = new THREE.Mesh(new THREE.SphereGeometry(.45,64,64), new THREE.MeshStandardMaterial({color:0x2dd4bf, emissive:0x6b1d4b, metalness:.3, roughness:.2})); s.add(sphere);
+    const p = geo.attributes.position, base = p.array.slice();
+    return (t,h,mx)=>{ for(let i=0;i<p.count;i++){ const x=base[i*3], z=base[i*3+2], d=Math.hypot(x-mx*4,z);
+        p.array[i*3+1] = Math.sin(d*2.2 - t*3)*.25*Math.exp(-d*.25)*(1+h); }
+      p.needsUpdate = true; sphere.position.set(mx*4, .9 + Math.sin(t*2)*.15, 0); const sc = 1+Math.sin(t*3)*.06+h*.15; sphere.scale.setScalar(sc); };
+  });
+});
+</script>
+<script type="module" src="/immersive.js"></script>
+<script type="module" src="/automation.js"></script>
+<script type="module" src="/services.js"></script>
+<script type="module" src="/orchestration.js"></script>
+<script type="module" src="/process.js"></script>
+<script type="module" src="/works.js"></script>
+<script src="/social.js" defer></script>
+</body>
+</html>
