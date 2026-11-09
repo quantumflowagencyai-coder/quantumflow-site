@@ -77,17 +77,21 @@ for (const n of fs.readdirSync(OUT)) if (n.endsWith('.html') && n !== 'index.htm
   const p = path.join(OUT, n);
   fs.writeFileSync(p, rd(p).replace(', max-snippet:-1', '').replaceAll('"#tresc"', '"#main-content"').replaceAll('id="tresc"', 'id="main-content"'));
 }
-// 10) grafiki HD: pobierane z repozytorium GitHub (przypięty commit, sprawdzane sha1), bo pliki >100 KB nie przechodzą przez narzędzie deployu
+// 10) grafiki HD i dopasowany do nich JS: pobierane z repozytorium GitHub (przypięty commit, kontrola sha1),
+//     bo pliki >100 KB nie przechodzą przez narzędzie deployu. Plik jest podmieniany tylko wtedy, gdy wersja
+//     w źródłach Vercel to nadal stara wersja (base) — późniejsze zmiany wgrane wprost na Vercel mają pierwszeństwo.
 const HD = JSON.parse(rd('_src/hd.json'));
 (async () => {
-  const crypto = require('crypto');
-  for (const [name, sha] of Object.entries(HD.files)) {
+  const crypto = require('crypto'), sha1 = b => crypto.createHash('sha1').update(b).digest('hex');
+  let n = 0;
+  for (const [name, { sha, base }] of Object.entries(HD.files)) {
+    if (fs.existsSync(name) && sha1(fs.readFileSync(name)) !== base) { console.log('HD pominięte (plik zmieniony na Vercel):', name); continue; }
     const url = `https://raw.githubusercontent.com/${HD.repo}/${HD.rev}/${name}`;
     let buf = null;
     for (let i = 0; i < 4 && !buf; i++) { try { const r = await fetch(url); if (r.ok) buf = Buffer.from(await r.arrayBuffer()); } catch (e) { } if (!buf) await new Promise(r => setTimeout(r, 1500 * (i + 1))); }
     must(buf, 'pobieranie ' + url);
-    must(crypto.createHash('sha1').update(buf).digest('hex') === sha, 'sha1 ' + name);
-    fs.writeFileSync(path.join(OUT, name), buf);
+    must(sha1(buf) === sha, 'sha1 ' + name);
+    fs.writeFileSync(path.join(OUT, name), buf); n++;
   }
-  console.log('build ok', fs.readdirSync(OUT).length, 'plików, HD:', Object.keys(HD.files).length);
+  console.log('build ok', fs.readdirSync(OUT).length, 'plików, HD:', n);
 })().catch(e => { console.error(e); process.exit(1); });

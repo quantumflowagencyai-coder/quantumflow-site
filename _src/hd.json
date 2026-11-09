@@ -2,22 +2,85 @@
  "repo": "quantumflowagencyai-coder/quantumflow-site",
  "rev": "0f1dba68c395f457f249042177ac40f967825293",
  "files": {
-  "img/agent-galaxy.webp": "8f4a51d904c0801cb44051ade2aa12aff7c2654b",
-  "img/agent-robot.webp": "95e4802752e57dbf45b8702e0aa3ccfa68a1d2d6",
-  "img/case-aura.avif": "4e9a80c56d0b0bfc857eef7632663c7bf800d9a3",
-  "img/case-aurum.avif": "0fc857723842b9e8cf1eacb3e22d9775a36f3dcf",
-  "img/case-medora.avif": "2b205f2220b7b4eb858a9b93c7c2cab78830ae45",
-  "img/case-nova.avif": "38b96e04461bb35ef5dfeb3703e61a967de01402",
-  "img/case-ogien.avif": "19a2ecac5e74af6221037c6faf724db45d256b68",
-  "img/case-volt.avif": "67e4191809e2505be73c56ab8e688e3afef49022",
-  "img/pak-bg.avif": "da2e15a9bc7b0e44a3f941a303ae7b8303411bec",
-  "img/pak-cards.avif": "32aa3cf943c98eed39731cab9414d2b2b47a85a9",
-  "img/pak-sprites.avif": "7a553b29ebefeea7a8ac1796033ed2cbda3f87ef",
-  "img/scena1.avif": "63a999c35f32b63e9db2b209c3ac8fe350f428d3",
-  "img/scena2.avif": "9d4f464eb4900f14bc060a682e64fd1856bd4ea4",
-  "img/scena3.avif": "46d5c5a5b6886ef4472c24f5e0fb5a621ad5bac1",
-  "img/scena4.avif": "3d3d02461057dad87423480341d721a3624d52cc",
-  "img/svc-a.webp": "95b93bae17e19356101fbf51d2a7df49822bf4a7",
-  "img/svc-b.webp": "5d2038ab43c696675e717e67731c7b14fdf51232"
+  "img/agent-galaxy.webp": {
+   "sha": "8f4a51d904c0801cb44051ade2aa12aff7c2654b",
+   "base": "95ce8dd210a76112a268c7f37c89840043cae7ab"
+  },
+  "img/agent-robot.webp": {
+   "sha": "95e4802752e57dbf45b8702e0aa3ccfa68a1d2d6",
+   "base": "3affe7eeb00c5bf50a869b0da62fff8a0df30d7c"
+  },
+  "img/case-aura.avif": {
+   "sha": "4e9a80c56d0b0bfc857eef7632663c7bf800d9a3",
+   "base": "cbf9d8b024149315636bb5e61b9184c2a7992248"
+  },
+  "img/case-aurum.avif": {
+   "sha": "0fc857723842b9e8cf1eacb3e22d9775a36f3dcf",
+   "base": "053bd195181f227774ec7befd79b6ae36d99f1b3"
+  },
+  "img/case-medora.avif": {
+   "sha": "2b205f2220b7b4eb858a9b93c7c2cab78830ae45",
+   "base": "f14823a4d04b668dec4bf4f0aeafe0b0c2f0fb43"
+  },
+  "img/case-nova.avif": {
+   "sha": "38b96e04461bb35ef5dfeb3703e61a967de01402",
+   "base": "2ef1917952ddcc8e172ad692c303b66fcaa85493"
+  },
+  "img/case-ogien.avif": {
+   "sha": "19a2ecac5e74af6221037c6faf724db45d256b68",
+   "base": "110bd62d95edb52489e8bd6a08975d1dc6c46308"
+  },
+  "img/case-volt.avif": {
+   "sha": "67e4191809e2505be73c56ab8e688e3afef49022",
+   "base": "48ac5b366ba1343bc065794370307536d4f7cdb0"
+  },
+  "img/pak-bg.avif": {
+   "sha": "da2e15a9bc7b0e44a3f941a303ae7b8303411bec",
+   "base": "3b336a6f62be6a7fecbf0f8cb9c527f4259ae23d"
+  },
+  "img/pak-cards.avif": {
+   "sha": "32aa3cf943c98eed39731cab9414d2b2b47a85a9",
+   "base": "cd2dd62f6a8aba8c8470676aab39e0ad410c0997"
+  },
+  "img/pak-sprites.avif": {
+   "sha": "7a553b29ebefeea7a8ac1796033ed2cbda3f87ef",
+   "base": "8aae450d44b05153f4f62635375441e32ddd30d2"
+  },
+  "img/scena1.avif": {
+   "sha": "63a999c35f32b63e9db2b209c3ac8fe350f428d3",
+   "base": "8240c7d9898dfbbe537ae4d9eda806799e05196e"
+  },
+  "img/scena2.avif": {
+   "sha": "9d4f464eb4900f14bc060a682e64fd1856bd4ea4",
+   "base": "d4db96b890cd375f14f248f0f18673efecf96a14"
+  },
+  "img/scena3.avif": {
+   "sha": "46d5c5a5b6886ef4472c24f5e0fb5a621ad5bac1",
+   "base": "b2fed8799dd2b3ef26472168f1bc63e97abb1dc3"
+  },
+  "img/scena4.avif": {
+   "sha": "3d3d02461057dad87423480341d721a3624d52cc",
+   "base": "3f6517cbed3baf27fec86c2d7e609b1c3588c118"
+  },
+  "img/svc-a.webp": {
+   "sha": "95b93bae17e19356101fbf51d2a7df49822bf4a7",
+   "base": "1acc7478c89137c23c9b6046b9cbe7babe6f30a2"
+  },
+  "img/svc-b.webp": {
+   "sha": "5d2038ab43c696675e717e67731c7b14fdf51232",
+   "base": "fad8ba7b8add11661339a237d1d1783d66736b33"
+  },
+  "works.js": {
+   "sha": "9c5229dc6298f2b1a7ee0bc1bb53d5a329f153ed",
+   "base": "25d0538a19349ee5c8b02df306599f04fd2e42de"
+  },
+  "works-live.js": {
+   "sha": "9131e573802a050e6f300bc636a42345b8136ec2",
+   "base": "3318da94076b6090bd7c02884e0e917b892af8a1"
+  },
+  "pricing.js": {
+   "sha": "72ade27ac17d85c11e28de01c3d1ecfe2f655232",
+   "base": "7260d048c637517558b68a432a3a363fa0a682ad"
+  }
  }
 }
