@@ -9,6 +9,8 @@ const counter = document.getElementById('imm-count');
 const bar = document.getElementById('imm-bar');
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const IMAGES = ['/img/scena1.avif', '/img/scena2.avif', '/img/scena3.avif', '/img/scena4.avif'];
+const VIDEOS = ['/img/scena1', '/img/scena2', '/img/scena3', '/img/scena4'];
+const saveData = !!(navigator.connection && navigator.connection.saveData);
 const GAP = 11, VIEW = 4.6, ASPECT = 1408 / 768;
 
 let renderer;
@@ -28,20 +30,21 @@ if (renderer) {
     tex.anisotropy = 4;
     const mat = new THREE.ShaderMaterial({
       transparent: true, depthWrite: false,
-      uniforms: { uTex: { value: tex }, uAlpha: { value: 0 }, uVel: { value: 0 }, uTime: { value: 0 }, uFocus: { value: 0 }, uBend: { value: 0 } },
+      uniforms: { uTex: { value: tex }, uLin: { value: 0 }, uAlpha: { value: 0 }, uVel: { value: 0 }, uTime: { value: 0 }, uFocus: { value: 0 }, uBend: { value: 0 } },
       vertexShader: `
         uniform float uBend; uniform float uTime; varying vec2 vUv;
         void main(){ vUv = uv; vec3 p = position;
           p.z += sin(uv.x*3.14159)*uBend + sin(uv.y*6.0 + uTime*1.2)*0.03*abs(uBend*4.0);
           gl_Position = projectionMatrix*modelViewMatrix*vec4(p,1.); }`,
       fragmentShader: `
-        uniform sampler2D uTex; uniform float uAlpha; uniform float uVel; uniform float uTime; uniform float uFocus; varying vec2 vUv;
+        uniform sampler2D uTex; uniform float uLin; uniform float uAlpha; uniform float uVel; uniform float uTime; uniform float uFocus; varying vec2 vUv;
         void main(){
           vec2 uv = vUv; vec2 c = uv - .5;
           uv = .5 + c*(1. - uFocus*.04);
           float s = uVel*.018;
           vec3 col = vec3(texture2D(uTex, uv + vec2(s,0.)).r, texture2D(uTex, uv).g, texture2D(uTex, uv - vec2(s,0.)).b);
           float sweep = smoothstep(.12,0.,abs(vUv.x - fract(uTime*.12)*1.6 + .3 - vUv.y*.3));
+          if (uLin > .5) col = mix(col/12.92, pow((col+.055)/1.055, vec3(2.4)), step(.04045, col));
           col += vec3(.25,.6,.9)*sweep*.18*uFocus;
           col *= .82 + uFocus*.25;
           float edge = smoothstep(0.,.07,vUv.x)*smoothstep(1.,.93,vUv.x)*smoothstep(0.,.1,vUv.y)*smoothstep(1.,.9,vUv.y);
@@ -53,6 +56,30 @@ if (renderer) {
     scene.add(mesh);
     return mesh;
   });
+
+  // Klipy wideo (Higgsfield): ładowane dopiero przy sekcji, gra tylko scena w centrum; obraz zostaje do pierwszej klatki
+  const vids = (reduce || saveData) ? [] : planes.map((p, i) => {
+    const v = document.createElement('video');
+    v.muted = true; v.loop = true; v.playsInline = true; v.preload = 'none';
+    v.setAttribute('muted', ''); v.setAttribute('playsinline', ''); v.setAttribute('aria-hidden', 'true');
+    for (const [ext, type] of [['webm', 'video/webm; codecs="vp9"'], ['mp4', 'video/mp4']]) {
+      const s = document.createElement('source'); s.src = `${VIDEOS[i]}.${ext}`; s.type = type; v.appendChild(s);
+    }
+    v.addEventListener('playing', () => {
+      if (p.userData.vtex) return;
+      const vt = new THREE.VideoTexture(v);
+      vt.colorSpace = THREE.NoColorSpace; vt.minFilter = THREE.LinearFilter; vt.generateMipmaps = false;
+      p.userData.vtex = vt;
+      const m = p.material.uniforms; m.uTex.value = vt; m.uLin.value = 1;
+    }, { once: true });
+    return v;
+  });
+  const syncVideos = (on) => vids.forEach((v, i) => {
+    const play = on && planes[i].material.uniforms.uFocus.value > .05;
+    if (play && v.paused) { if (v.preload === 'none') { v.preload = 'auto'; v.load(); } v.play().catch(() => {}); }
+    else if (!play && !v.paused) v.pause();
+  });
+  document.addEventListener('visibilitychange', () => { if (document.hidden) syncVideos(false); });
 
   // Ramki świetlne za każdą sceną
   planes.forEach(p => {
@@ -114,7 +141,7 @@ if (renderer) {
   const clock = new THREE.Clock();
   (function loop() {
     requestAnimationFrame(loop);
-    if (!visible) return;
+    if (!visible) { if (vids.length && !vids.every(v => v.paused)) syncVideos(false); return; }
     const t = reduce ? 0 : clock.elapsedTime;
     const target = progress() * (planes.length - 1);
     smooth += (target - smooth) * (reduce ? 1 : .085);
@@ -143,6 +170,7 @@ if (renderer) {
       p.position.x = p.userData.side * .9 * Math.min(1, ad / GAP);
       p.userData.frame.material.opacity = focus * .35 * (m.uAlpha.value);
     });
+    syncVideos(!document.hidden);
     points.rotation.z = t * .02;
     lines.position.x = Math.sin(t * .3) * .1;
 
