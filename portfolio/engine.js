@@ -66,6 +66,9 @@ let scrollVel = 0;
   if (lenis) lenis.on('scroll', e => { scrollVel = Math.max(-40, Math.min(40, e.velocity)); });
 })();
 
+// bez cząsteczek: prędkość scrolla liczona osobno (pasek haseł z niej korzysta)
+if (!$('#pf-gl') && lenis) { lenis.on('scroll', ev => { scrollVel = Math.max(-40, Math.min(40, ev.velocity)); }); gsap.ticker.add(() => { scrollVel *= .9; }); }
+
 /* ---------- hero ---------- */
 const hv = $('.hero-media video');
 if (hv) {
@@ -371,11 +374,42 @@ function heroIntro() {
 let started = false;
 function start() {
   if (started) return; started = true;
-  loader.classList.add('done'); if (lenis) lenis.start();
+  const framed = !reduce && hero && hero.classList.contains('hero--frame') && innerWidth > 860;
+  if (lenis) lenis.start();
   if (hv) hv.play().catch(() => {});
+  if (!framed) loader.classList.add('done');
   if (reduce) return;
+  if (framed) { cinematicIntro(); return; }
   heroIntro();
   gsap.from('.hero .lbl, .hero p.lead, .hero .btn', { opacity: 0, y: 20, duration: 1, stagger: .06, delay: .6 });
+}
+// wejście kinowe (hero w ramce): licznik odjeżdża, kurtyna loadera zjeżdża w górę,
+// ramka z filmem otwiera się z cienkiej żarzącej się linii, potem litery i reszta
+function cinematicIntro() {
+  const media = $('.hero-media', hero), vid = $('video, img', media), FRAME = 'inset(15vh 3vw 22vh 56vw round 28px)';
+  const line = document.createElement('div'); line.className = 'intro-line'; hero.appendChild(line);
+  loader.style.transition = 'none';
+  gsap.set(media, { clipPath: 'inset(56.5vh 3vw 43.5vh 56vw round 2px)' });
+  gsap.set(vid, { scale: 1.55 });
+  gsap.set(heroChars, { yPercent: 120, rotationX: -95, opacity: 0 });
+  gsap.set($$('.hero-top .lbl, .hero p.lead, .hero .btn', hero), { opacity: 0, y: 24 });
+  gsap.set($('.hero-marq', hero), { yPercent: 120, opacity: 0 });
+  const tl = gsap.timeline({ defaults: { ease: 'expo.inOut' } });
+  tl.to('#loader .l-num, #loader .l-txt', { yPercent: -60, opacity: 0, duration: .7, ease: 'power3.in', stagger: .05 })
+    .to('#loader .l-bar', { scaleX: 0, transformOrigin: '100% 50%', duration: .5, ease: 'power3.in' }, '<')
+    .to(loader, { clipPath: 'inset(0 0 100% 0)', duration: 1.1 }, '-=.25')
+    .add(() => loader.classList.add('done'))
+    // żarząca się linia rysuje się w miejscu ramki
+    .fromTo(line, { scaleX: 0, opacity: 1 }, { scaleX: 1, duration: .9, ease: 'expo.out' }, '-=.55')
+    // ramka otwiera się z linii w górę i w dół, film się „uspokaja”
+    .to(media, { clipPath: FRAME, duration: 1.4 }, '-=.35')
+    .to(line, { opacity: 0, duration: .5, ease: 'power2.out' }, '<.15')
+    .to(vid, { scale: 1.15, duration: 2.2, ease: 'expo.out' }, '<')
+    .to(heroChars, { yPercent: 0, rotationX: 0, opacity: 1, duration: 1.3, ease: 'expo.out', stagger: .03,
+      onComplete: () => { introDone = true; } }, '<.35')
+    .to($$('.hero-top .lbl, .hero p.lead, .hero .btn', hero), { opacity: 1, y: 0, duration: 1, ease: 'power3.out', stagger: .07 }, '<.5')
+    .to($('.hero-marq', hero), { yPercent: 0, opacity: 1, duration: 1.1, ease: 'expo.out' }, '<.2')
+    .add(() => line.remove());
 }
 requestAnimationFrame(loaderTick);
 setTimeout(start, 9000); // awaryjnie

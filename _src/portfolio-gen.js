@@ -37,8 +37,7 @@ for (const s of P.sites) {
 <body>
 <a class="skip" href="#tresc">Przejdź do treści</a>
 <div id="loader" role="status" aria-live="polite"><div class="l-txt">${esc(s.loader)}</div><div class="l-num"><span>00</span><b>/100</b></div><div class="l-bar"><i></i></div></div>
-<canvas id="pf-gl" aria-hidden="true"></canvas>
-<div class="beams" aria-hidden="true"><i></i><i></i><i></i></div>
+${s.noParticles ? '' : '<canvas id="pf-gl" aria-hidden="true"></canvas>\n<div class="beams" aria-hidden="true"><i></i><i></i><i></i></div>'}
 
 <header class="pf-nav"><a class="pf-brand" href="#top">${esc(s.name)}</a><a class="pf-back" href="/#portfolio">← QuantumFlow</a></header>
 

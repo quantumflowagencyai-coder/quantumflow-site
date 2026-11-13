@@ -159,7 +159,7 @@
    "footAddr": "ul. Józefa 12, Kraków · wt–nd 17:00–23:00",
    "pillCta": "Rezerwacja",
    "transScale": 1,
-   "fx": "embers",
+   "fx": "",
    "marq": [
     "Dry-aged 45 dni",
     "Ogień z dębu i buku",
@@ -175,7 +175,8 @@
     "cards": true,
     "pano": true,
     "panoZoom": true
-   }
+   },
+   "noParticles": true
   },
   {
    "slug": "lume",

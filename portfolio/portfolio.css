@@ -120,6 +120,7 @@ p.lead{max-width:520px;color:#c9c4bd;font-size:clamp(15px,1.15vw,18px)}
 .card-in{position:relative;transform-style:preserve-3d;will-change:transform}
 .card-in .glare{position:absolute;inset:0;z-index:3;pointer-events:none;opacity:0;transition:opacity .4s;border-radius:inherit;background:radial-gradient(circle at var(--gx,50%) var(--gy,50%),rgba(255,255,255,.35),transparent 46%);mix-blend-mode:overlay}
 @media (prefers-reduced-motion:reduce){.knock{display:none}.pano.zoom h2.giant{position:absolute;width:auto;height:auto;clip:auto;left:clamp(16px,4vw,64px);bottom:12vh}}
+.intro-line{position:absolute;left:56vw;right:3vw;top:56.5vh;height:2px;z-index:2;pointer-events:none;background:linear-gradient(90deg,transparent,var(--acc2) 20%,var(--acc) 50%,var(--acc2) 80%,transparent);box-shadow:0 0 18px var(--acc),0 0 40px var(--acc2);transform-origin:50% 50%}
 /* manifest */
 .manifest{padding-block:28vh 22vh}
 .manifest .lbl{margin-bottom:34px}
