@@ -42,6 +42,7 @@
 .pfh-body h3{font-family:"Space Grotesk";font-weight:700;font-size:clamp(2.6rem,5.6vw,5rem);line-height:.86;letter-spacing:-.05em;margin:8px 0 10px;padding-top:.1em}
 .pfh-body p{max-width:420px;color:#c9c4bd;font-size:.92rem}
 .pfh-go{display:inline-flex;gap:8px;margin-top:14px;font-weight:600;font-size:.9rem;color:#050505;background:var(--pa);border-radius:999px;padding:9px 16px}
+.pfh-solo{grid-template-columns:1fr}.pfh-solo .pfh-media{aspect-ratio:21/9}.pfh-solo .pfh-body{padding:40px 44px}
 .pfh-note{margin-top:22px;color:var(--muted);font-size:.85rem}
-@media (max-width:860px){.pfh-grid{grid-template-columns:1fr}.pfh-media{aspect-ratio:4/5}.pfh-body h3{font-size:3rem}}
+@media (max-width:860px){.pfh-grid{grid-template-columns:1fr}.pfh-media,.pfh-solo .pfh-media{aspect-ratio:4/5}.pfh-solo .pfh-body{padding:26px 28px}.pfh-solo .pfh-media video{object-position:78% 50%}.pfh-body h3{font-size:3rem}}
 @media (prefers-reduced-motion:reduce){.pfh-card,.pfh-media video{transition:none}}

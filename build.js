@@ -75,6 +75,28 @@ must(blocks.some(b => b.telephone === TEL), 'telefon w schema');
 src = once(src, '<p>Opisz krótko firmę i czego potrzebujesz. Odpowiemy w ciągu 24 godzin z pomysłem na stronę i wstępną wyceną.</p>\n        </div>',
   `<p>Opisz krótko firmę i czego potrzebujesz. Odpowiemy w ciągu 24 godzin z pomysłem na stronę i wstępną wyceną.</p>\n          <p class="contact-tel" style="margin-top:18px">Wolisz zadzwonić? <a href="tel:${TEL}" style="color:var(--cyan);font-weight:600;white-space:nowrap">${TEL_TXT}</a></p>\n        </div>`);
 src = src.slice(0, j0) + blocks.map(b => J + JSON.stringify(b) + '</script>').join('\n') + src.slice(j1 + 9);
+// Portfolio: publikujemy tylko strony z _src/portfolio-live.json (reszta czeka na poprawki)
+{
+  const ALL = ['ember', 'lume', 'ironclad', 'monolit'];
+  const LIVE = fs.existsSync('_src/portfolio-live.json') ? JSON.parse(fs.readFileSync('_src/portfolio-live.json', 'utf8')) : ALL;
+  const OFF = ALL.filter(x => !LIVE.includes(x));
+  for (const x of OFF) {
+    fs.rmSync(path.join(OUT, 'portfolio', x + '.html'), { force: true });
+    fs.rmSync(path.join(OUT, 'portfolio', x), { recursive: true, force: true });
+    src = src.replace(new RegExp(`\\s*<a class="pfh-card" href="/portfolio/${x}"[\\s\\S]*?</a>`), '');
+  }
+  if (OFF.length) {
+    let i = 0;
+    src = src.replace(/<span class="pfh-num">\d\d \//g, () => `<span class="pfh-num">${String(++i).padStart(2, '0')} /`);
+    const head = { 1: 'Strona, którą', 2: 'Dwie strony, które', 3: 'Trzy strony, które', 4: 'Cztery strony, które' }[LIVE.length];
+    src = src.replace(/Cztery strony, które <span class="grad">/, head + ' <span class="grad">');
+    if (LIVE.length === 1) src = src.replace('<div class="pfh-grid">', '<div class="pfh-grid pfh-solo">');
+    const sm = path.join(OUT, 'sitemap.xml');
+    if (fs.existsSync(sm)) fs.writeFileSync(sm, fs.readFileSync(sm, 'utf8').split('\n').filter(l => !OFF.some(x => l.includes('/portfolio/' + x + '<'))).join('\n'));
+    const ll = path.join(OUT, 'llms.txt');
+    if (fs.existsSync(ll)) fs.writeFileSync(ll, fs.readFileSync(ll, 'utf8').replace(/portfolio \d koncepcyjnych stron 3D \([^)]*\)/, LIVE.length === 1 ? `portfolio z koncepcyjną stroną 3D (/portfolio/${LIVE[0]})` : `portfolio ${LIVE.length} koncepcyjnych stron 3D (${LIVE.map(x => '/portfolio/' + x).join(', ')})`));
+  }
+}
 fs.writeFileSync(OUT + '/index.html', src);
 
 // 8) kontakt.js: lokalizacja Sanok
