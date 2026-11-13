@@ -14,6 +14,7 @@ for (const s of P.sites) {
       </div></article>`).join('');
   const words = (ws) => ws.map(w => `<div class="sw ${w.pos}" data-in="${w.in}" data-out="${w.out}"><div class="lbl">${w.lbl}</div><div class="giant">${lines(w.l)}</div></div>`).join('');
   const calc = s.calc;
+  const marq = (s.marq || []).map(w => `<span>${esc(w)}</span><i>✦</i>`).join('');
   const html = `<!doctype html>
 <html lang="pl">
 <head>
@@ -42,13 +43,16 @@ for (const s of P.sites) {
 <header class="pf-nav"><a class="pf-brand" href="#top">${esc(s.name)}</a><a class="pf-back" href="/#portfolio">← QuantumFlow</a></header>
 
 <main id="tresc">
-  <section class="hero" id="top">
+  <section class="hero" id="top" data-fx="${s.fx || ''}">
     <div class="hero-media" aria-hidden="true">
       <video muted loop playsinline preload="auto" poster="${m}/hero.webp"><source src="${m}/hero.webm" type="video/webm"><source src="${m}/hero.mp4" type="video/mp4"></video>
     </div>
+    <canvas class="hero-fx" aria-hidden="true"></canvas>
+    <div class="hero-spot" aria-hidden="true"></div>
     <div class="hero-top"><span class="lbl"><b>01/</b> ${esc(s.kicker)}</span><span class="lbl">${esc(s.city)}</span></div>
     <h1 class="giant">${lines(s.hero)}</h1>
     <div class="hero-meta"><p class="lead">${esc(s.lead)}</p><a class="btn" href="#cta">${esc(s.cta)}</a></div>
+    <div class="hero-marq" aria-hidden="true"><div class="mq-track">${marq}${marq}</div></div>
   </section>
 
   <section class="seq" data-src="${m}/obrot" data-count="${s.frames.obrot}" data-fallback="${s.fallback}" aria-label="${esc(s.seqLabel)}">
