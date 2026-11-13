@@ -504,7 +504,12 @@
     "Kondycja",
     "Bez wymówek",
     "Pierwszy trening gratis"
-   ]
+   ],
+   "video": {
+    "cards": true,
+    "pano": true,
+    "manifest": true
+   }
   },
   {
    "slug": "monolit",

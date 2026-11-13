@@ -9,7 +9,7 @@ for (const s of P.sites) {
   const m = `/portfolio/${s.slug}`;
   const cards = s.cards.map((c, i) => `
       <article class="card"><div class="card-in">
-        <div class="card-img"><img src="${m}/g${i + 5}.webp" alt="${esc(c.alt)}" loading="lazy" width="1080" height="1350"></div>
+        <div class="card-img"><img src="${m}/g${i + 5}.webp" alt="${esc(c.alt)}" loading="lazy" width="1080" height="1350">${s.video && s.video.cards ? `<video class="card-vid" muted playsinline loop preload="none" aria-hidden="true" data-auto poster="${m}/g${i + 5}.webp"><source src="${m}/k${i + 1}.webm" type="video/webm"><source src="${m}/k${i + 1}.mp4" type="video/mp4"></video>` : ''}</div>
         <div class="card-b"><div><h3>${esc(c.t)}</h3><p>${esc(c.d)}</p></div><span class="pr">${esc(c.p)}</span></div>
       </div></article>`).join('');
   const words = (ws) => ws.map(w => `<div class="sw ${w.pos}" data-in="${w.in}" data-out="${w.out}"><div class="lbl">${w.lbl}</div><div class="giant">${lines(w.l)}</div></div>`).join('');
@@ -64,7 +64,8 @@ for (const s of P.sites) {
     </div>
   </section>
 
-  <section class="manifest wrap">
+  <section class="manifest wrap${s.video && s.video.manifest ? ' has-vid' : ''}">
+    ${s.video && s.video.manifest ? `<div class="man-vid" aria-hidden="true"><video muted playsinline preload="none" data-once poster="${m}/manifest.webp"><source src="${m}/manifest.webm" type="video/webm"><source src="${m}/manifest.mp4" type="video/mp4"></video></div>` : ''}
     <div class="lbl"><b>03/</b> ${esc(s.manifestLbl)}</div>
     <p class="big" data-words>${esc(s.manifest)}</p>
   </section>
@@ -84,7 +85,7 @@ for (const s of P.sites) {
   </section>
 
   <section class="pano" aria-label="${esc(s.panoAlt)}">
-    <img src="${m}/g4.webp" alt="${esc(s.panoAlt)}" loading="lazy" width="1920" height="1080">
+    <img src="${m}/g4.webp" alt="${esc(s.panoAlt)}" loading="lazy" width="1920" height="1080">${s.video && s.video.pano ? `<video class="pano-vid" muted playsinline loop preload="none" aria-hidden="true" data-auto poster="${m}/g4.webp"><source src="${m}/pano.webm" type="video/webm"><source src="${m}/pano.mp4" type="video/mp4"></video>` : ''}
     <h2 class="giant">${lines(s.pano)}</h2>
   </section>
 

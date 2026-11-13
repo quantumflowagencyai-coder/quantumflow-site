@@ -381,9 +381,21 @@ if (!reduce) {
   // karty
   $$('.cards').forEach(c => gsap.from($$('.card', c), { y: 80, opacity: 0, duration: 1.1, ease: 'expo.out', stagger: .1, scrollTrigger: { trigger: c, start: 'top 80%' } }));
   // panorama: paralaksa
-  $$('.pano img').forEach(i => gsap.fromTo(i, { yPercent: -10 }, { yPercent: 0, ease: 'none', scrollTrigger: { trigger: i.parentNode, start: 'top bottom', end: 'bottom top', scrub: true } }));
+  $$('.pano img, .pano-vid').forEach(i => gsap.fromTo(i, { yPercent: -10 }, { yPercent: 0, ease: 'none', scrollTrigger: { trigger: i.parentNode, start: 'top bottom', end: 'bottom top', scrub: true } }));
   // stopka
   $$('.pf-foot .huge').forEach(h => gsap.from(h, { yPercent: 40, opacity: 0, ease: 'expo.out', duration: 1.6, scrollTrigger: { trigger: h, start: 'top 95%' } }));
+}
+
+
+/* filmy: pętle grają tylko na ekranie, manifest odtwarza się raz po wejściu */
+if (!reduce) {
+  const vids = $$('video[data-auto], video[data-once]');
+  vids.forEach(v => v.addEventListener('playing', () => v.classList.add('on'), { once: true }));
+  const io = new IntersectionObserver(es => es.forEach(e => { const v = e.target;
+    if (e.isIntersecting) { if (v.dataset.once !== undefined) { if (!v.dataset.done) { v.dataset.done = 1; v.preload = 'auto'; v.play().catch(() => {}); } } else { v.preload = 'auto'; v.play().catch(() => {}); } }
+    else if (v.dataset.auto !== undefined) v.pause(); }), { threshold: .3 });
+  vids.forEach(v => io.observe(v));
+  $$('.man-vid video').forEach(v => gsap.fromTo(v, { scale: 1.18 }, { scale: 1, ease: 'none', scrollTrigger: { trigger: v.closest('.manifest'), start: 'top bottom', end: 'bottom top', scrub: true } }));
 }
 
 /* ---------- kalkulator ---------- */
