@@ -324,7 +324,7 @@ if (hero && !reduce) {
     sx += (tx - sx) * .08; sy += (ty - sy) * .08;
     if (spot) { spot.style.setProperty('--mx', (sx * 100).toFixed(2) + '%'); spot.style.setProperty('--my', (sy * 100).toFixed(2) + '%'); }
     const nx = sx - .5, ny = sy - .5;
-    mqx(-nx * 40); mqy(-ny * 26);
+    if (!hero.classList.contains('hero--frame')) { mqx(-nx * 40); mqy(-ny * 26); }
     lq.forEach((q, i) => q(nx * (14 + i * 14)));
     if (introDone && finePtr && mouse.on) {
       const R = 180;
@@ -338,7 +338,17 @@ if (hero && !reduce) {
     gsap.ticker.add(() => { const v = Math.min(6, 1 + Math.abs(scrollVel) * .25); tw.timeScale(tw.timeScale() + (v * (scrollVel < -1 ? -1 : 1) - tw.timeScale()) * .1); }); }
   // wyjście z hero przy scrollu: zoom filmu, tytuł odjeżdża
   const vid = $('video, img', media);
-  gsap.timeline({ scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: true } })
+  if (hero.classList.contains('hero--frame') && innerWidth > 860) {
+    // hero w ramce: przypięty, ramka z filmem rozlewa się na cały ekran, na końcu wielka nazwa
+    gsap.timeline({ scrollTrigger: { trigger: hero, start: 'top top', end: '+=120%', scrub: 1, pin: true, refreshPriority: 1 } })
+      .fromTo(media, { clipPath: 'inset(15vh 3vw 22vh 56vw round 28px)' }, { clipPath: 'inset(0vh 0vw 0vh 0vw round 0px)', ease: 'power2.inOut', duration: .6 }, 0)
+      .fromTo(vid, { scale: 1.15 }, { scale: 1, ease: 'none', duration: 1 }, 0)
+      .to(heroH1, { xPercent: -12, opacity: 0, ease: 'power1.in', duration: .4 }, 0)
+      .to($$('.hero-top, .hero-meta, .hero-marq', hero), { y: -50, opacity: 0, ease: 'power1.in', duration: .35 }, 0)
+      .fromTo($('.hero-over', hero), { opacity: 0, scale: .82, letterSpacing: '.1em' }, { opacity: 1, scale: 1, letterSpacing: '-.05em', ease: 'expo.out', duration: .4 }, .55)
+      .to($('.hero-over', hero), { opacity: 0, yPercent: -30, ease: 'power1.in', duration: .15 }, .9)
+      .to($('.hero-fx', hero), { opacity: .5, ease: 'none', duration: 1 }, 0);
+  } else gsap.timeline({ scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: true } })
     .to(vid, { scale: 1.22, ease: 'none' }, 0)
     .to(heroH1, { yPercent: -18, scale: .94, opacity: .1, transformOrigin: '0% 100%', ease: 'none' }, 0)
     .to($$('.hero-top, .hero-meta', hero), { y: -70, opacity: 0, ease: 'none' }, 0)
@@ -382,7 +392,7 @@ if (!reduce) {
   // karty
   $$('.cards').forEach(c => gsap.from($$('.card', c), { y: 80, opacity: 0, duration: 1.1, ease: 'expo.out', stagger: .1, scrollTrigger: { trigger: c, start: 'top 80%' } }));
   // panorama: paralaksa
-  $$('.pano img, .pano-vid').forEach(i => gsap.fromTo(i, { yPercent: -10 }, { yPercent: 0, ease: 'none', scrollTrigger: { trigger: i.parentNode, start: 'top bottom', end: 'bottom top', scrub: true } }));
+  $$('.pano:not(.zoom) img, .pano:not(.zoom) .pano-vid').forEach(i => gsap.fromTo(i, { yPercent: -10 }, { yPercent: 0, ease: 'none', scrollTrigger: { trigger: i.parentNode, start: 'top bottom', end: 'bottom top', scrub: true } }));
   // stopka
   $$('.pf-foot .huge').forEach(h => gsap.from(h, { yPercent: 40, opacity: 0, ease: 'expo.out', duration: 1.6, scrollTrigger: { trigger: h, start: 'top 95%' } }));
 }
@@ -398,6 +408,25 @@ if (!reduce) {
   vids.forEach(v => io.observe(v));
   $$('.man-vid video').forEach(v => gsap.fromTo(v, { scale: 1.18 }, { scale: 1, ease: 'none', scrollTrigger: { trigger: v.closest('.manifest'), start: 'top bottom', end: 'bottom top', scrub: true } }));
 }
+
+
+/* przelot przez litery: film w napisie, napis rośnie aż przelatujemy przez niego */
+if (!reduce) $$('.pano.zoom').forEach(p => {
+  const k = $('.knock', p), v = $('.pano-vid', p) || $('img', p);
+  gsap.timeline({ scrollTrigger: { trigger: p, start: 'top top', end: '+=170%', scrub: 1, pin: true } })
+    .fromTo(k, { scale: 1 }, { scale: 32, ease: 'power3.in', duration: 1 }, 0)
+    .to(k, { opacity: 0, ease: 'none', duration: .22 }, .78)
+    .fromTo(v, { scale: 1.3 }, { scale: 1, ease: 'none', duration: 1 }, 0);
+});
+/* karty: przechył 3D i odblask za kursorem */
+if (!reduce && matchMedia('(pointer:fine)').matches) $$('.card').forEach(c => {
+  const inn = $('.card-in', c); if (!inn) return;
+  const g = document.createElement('i'); g.className = 'glare'; inn.appendChild(g);
+  const rx = gsap.quickTo(inn, 'rotationX', { duration: .7, ease: 'power3' }), ry = gsap.quickTo(inn, 'rotationY', { duration: .7, ease: 'power3' });
+  c.addEventListener('pointermove', ev => { const r = c.getBoundingClientRect(), x = (ev.clientX - r.left) / r.width, y = (ev.clientY - r.top) / r.height;
+    rx((.5 - y) * 10); ry((x - .5) * 12); g.style.setProperty('--gx', x * 100 + '%'); g.style.setProperty('--gy', y * 100 + '%'); g.style.opacity = 1; });
+  c.addEventListener('pointerleave', () => { rx(0); ry(0); g.style.opacity = 0; });
+});
 
 /* ---------- kalkulator ---------- */
 $$('.calc').forEach(c => {

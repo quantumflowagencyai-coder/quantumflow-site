@@ -8,7 +8,7 @@
    "fallback": "sphere",
    "frames": {
     "obrot": 121,
-    "przejscie": 100
+    "przejscie": 121
    },
    "title": "steakhouse na otwartym ogniu",
    "desc": "EMBER: koncepcja immersyjnej strony 3D dla steakhouse'u. Stek obracający się nad ogniem, iskry z cząsteczek, karta dań i kalkulator rezerwacji. Projekt QuantumFlow AI Agency.",
@@ -169,7 +169,13 @@
     "Kuchnia otwarta od 17:00"
    ],
    "theme": "light",
-   "extraCss": ":root{--bg:#f6eee4;--fg:#24160f;--mute:#7b6556;--line:rgba(36,22,15,.14);--glass:rgba(255,255,255,.55)}html,body{background:#f6eee4}body{background:radial-gradient(120% 80% at 80% 0%,#fff6ea 0%,#f6eee4 45%,#efe2d3 100%) fixed}::selection{color:#fff}#loader{background:radial-gradient(120% 90% at 75% 0%,#fff3e3 0%,#f6eee4 60%,#efdfcd 100%)}.beams i{mix-blend-mode:multiply;opacity:.16!important}.hero-media video,.hero-media img{opacity:1;filter:brightness(1.12) saturate(1.1)}.hero-media::after{background:linear-gradient(90deg,#f6eee4 0%,rgba(246,238,228,.82) 34%,rgba(246,238,228,0) 66%),linear-gradient(0deg,#f6eee4 2%,transparent 34%)}.hero-spot{mix-blend-mode:multiply;opacity:.45}.hero .lbl{color:#6b5446}.seq{color:#fbf4ea}.seq .lbl{color:#d9c4b3}.seq-sticky{background:radial-gradient(110% 85% at 50% 45%,#3a1f12 0%,#1c0f09 55%,#120a06 100%)}.card{background:linear-gradient(150deg,var(--acc),rgba(36,22,15,.08) 40%,rgba(36,22,15,.04) 70%,var(--acc2))}.card-in{background:#fffaf3}.card-b h3{color:#24160f}.pano .giant{color:#fff8ef}.pano::after{background:linear-gradient(0deg,#f6eee4,transparent 35%,transparent 72%,#f6eee4)}.pano img{opacity:1;filter:brightness(1.15)}.glass>div{background:rgba(255,252,247,.78)!important}.pill{background:rgba(255,250,243,.82);color:#24160f}.pf-foot .huge{background:linear-gradient(180deg,#f4a62a 0%,#e9461b 45%,#f6eee4 95%);-webkit-background-clip:text;background-clip:text}.hero-marq{border-color:rgba(36,22,15,.14)}p.lead{color:#4f3a2e}.seq p.lead{color:#eadccf}.pf-nav{mix-blend-mode:normal;color:#24160f}.calc-sum .lead{color:#5d473a}.pf-back{background:rgba(255,250,243,.88);padding:8px 14px;border-radius:99px;opacity:1}"
+   "extraCss": ":root{--bg:#f6eee4;--fg:#24160f;--mute:#7b6556;--line:rgba(36,22,15,.14);--glass:rgba(255,255,255,.55)}html,body{background:#f6eee4}body{background:radial-gradient(120% 80% at 80% 0%,#fff6ea 0%,#f6eee4 45%,#efe2d3 100%) fixed}::selection{color:#fff}#loader{background:radial-gradient(120% 90% at 75% 0%,#fff3e3 0%,#f6eee4 60%,#efdfcd 100%)}.beams i{mix-blend-mode:multiply;opacity:.16!important}.hero-media video,.hero-media img{opacity:1;filter:brightness(1.12) saturate(1.1)}.hero-media::after{background:linear-gradient(90deg,#f6eee4 0%,rgba(246,238,228,.82) 34%,rgba(246,238,228,0) 66%),linear-gradient(0deg,#f6eee4 2%,transparent 34%)}.hero-spot{mix-blend-mode:multiply;opacity:.45}.hero .lbl{color:#6b5446}.seq{color:#fbf4ea}.seq .lbl{color:#d9c4b3}.seq-sticky{background:radial-gradient(110% 85% at 50% 45%,#3a1f12 0%,#1c0f09 55%,#120a06 100%)}.card{background:linear-gradient(150deg,var(--acc),rgba(36,22,15,.08) 40%,rgba(36,22,15,.04) 70%,var(--acc2))}.card-in{background:#fffaf3}.card-b h3{color:#24160f}.pano .giant{color:#fff8ef}.pano::after{background:linear-gradient(0deg,#f6eee4,transparent 35%,transparent 72%,#f6eee4)}.pano img{opacity:1;filter:brightness(1.15)}.glass>div{background:rgba(255,252,247,.78)!important}.pill{background:rgba(255,250,243,.82);color:#24160f}.pf-foot .huge{background:linear-gradient(180deg,#f4a62a 0%,#e9461b 45%,#f6eee4 95%);-webkit-background-clip:text;background-clip:text}.hero-marq{border-color:rgba(36,22,15,.14)}p.lead{color:#4f3a2e}.seq p.lead{color:#eadccf}.pf-nav{mix-blend-mode:normal;color:#24160f}.calc-sum .lead{color:#5d473a}.pf-back{background:rgba(255,250,243,.88);padding:8px 14px;border-radius:99px;opacity:1}.seq.short .seq-sticky{background:#f6eee4}.seq.short{color:#24160f}.seq.short .lbl{color:#7b6556}.seq.short canvas{mix-blend-mode:multiply}",
+   "heroFrame": true,
+   "video": {
+    "cards": true,
+    "pano": true,
+    "panoZoom": true
+   }
   },
   {
    "slug": "lume",

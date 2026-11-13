@@ -99,6 +99,27 @@ p.lead{max-width:520px;color:#c9c4bd;font-size:clamp(15px,1.15vw,18px)}
 .manifest.has-vid{position:relative;isolation:isolate}
 .man-vid{position:absolute;inset:0;z-index:-1;overflow:hidden;-webkit-mask:radial-gradient(ellipse 70% 65% at 60% 50%,#000 30%,transparent 75%);mask:radial-gradient(ellipse 70% 65% at 60% 50%,#000 30%,transparent 75%)}
 .man-vid video{width:100%;height:100%;object-fit:cover;opacity:.42;filter:brightness(.8) contrast(1.1)}
+
+/* premium: hero w ramce, przelot przez litery, karty 3D */
+.hero-over{position:absolute;inset:0;z-index:0;display:grid;place-items:center;pointer-events:none;font-family:var(--fd);font-weight:700;text-transform:uppercase;letter-spacing:-.05em;line-height:.8;font-size:clamp(90px,22vw,420px);color:#fff8ef;opacity:0;text-shadow:0 20px 80px rgba(0,0,0,.35)}
+@media (min-width:861px){
+  .hero.hero--frame .hero-media{clip-path:inset(15vh 3vw 22vh 56vw round 28px);will-change:clip-path}
+  .hero.hero--frame .hero-media::after{background:linear-gradient(0deg,rgba(20,10,5,.45),transparent 45%)}
+  .hero.hero--frame .hero-media video{opacity:1}
+  .hero.hero--frame .hero-top .lbl:last-child{opacity:0}
+  .hero.hero--frame h1.giant{font-size:clamp(64px,10.8vw,210px)}
+}
+@media (max-width:860px){.hero-over{display:none}}
+.pano.zoom{height:100vh}
+.pano.zoom::after{display:none}
+.pano.zoom .pano-vid{height:100%}
+.pano.zoom h2.giant{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.knock{position:absolute;inset:0;z-index:3;display:grid;place-items:center;background:var(--bg);mix-blend-mode:screen;will-change:transform}
+.knock span{font-family:var(--fd);font-weight:700;text-transform:uppercase;letter-spacing:-.05em;line-height:.82;text-align:center;font-size:clamp(72px,15.5vw,300px);color:#000}
+.card{perspective:1100px}
+.card-in{position:relative;transform-style:preserve-3d;will-change:transform}
+.card-in .glare{position:absolute;inset:0;z-index:3;pointer-events:none;opacity:0;transition:opacity .4s;border-radius:inherit;background:radial-gradient(circle at var(--gx,50%) var(--gy,50%),rgba(255,255,255,.35),transparent 46%);mix-blend-mode:overlay}
+@media (prefers-reduced-motion:reduce){.knock{display:none}.pano.zoom h2.giant{position:absolute;width:auto;height:auto;clip:auto;left:clamp(16px,4vw,64px);bottom:12vh}}
 /* manifest */
 .manifest{padding-block:28vh 22vh}
 .manifest .lbl{margin-bottom:34px}

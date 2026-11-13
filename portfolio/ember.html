@@ -15,7 +15,7 @@
 <link rel="preload" href="/fonts/space-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/portfolio/fonts.css">
 <link rel="stylesheet" href="/portfolio/portfolio.css">
-<style>:root{--acc:#e9461b;--acc2:#f4a62a}:root{--bg:#f6eee4;--fg:#24160f;--mute:#7b6556;--line:rgba(36,22,15,.14);--glass:rgba(255,255,255,.55)}html,body{background:#f6eee4}body{background:radial-gradient(120% 80% at 80% 0%,#fff6ea 0%,#f6eee4 45%,#efe2d3 100%) fixed}::selection{color:#fff}#loader{background:radial-gradient(120% 90% at 75% 0%,#fff3e3 0%,#f6eee4 60%,#efdfcd 100%)}.beams i{mix-blend-mode:multiply;opacity:.16!important}.hero-media video,.hero-media img{opacity:1;filter:brightness(1.12) saturate(1.1)}.hero-media::after{background:linear-gradient(90deg,#f6eee4 0%,rgba(246,238,228,.82) 34%,rgba(246,238,228,0) 66%),linear-gradient(0deg,#f6eee4 2%,transparent 34%)}.hero-spot{mix-blend-mode:multiply;opacity:.45}.hero .lbl{color:#6b5446}.seq{color:#fbf4ea}.seq .lbl{color:#d9c4b3}.seq-sticky{background:radial-gradient(110% 85% at 50% 45%,#3a1f12 0%,#1c0f09 55%,#120a06 100%)}.card{background:linear-gradient(150deg,var(--acc),rgba(36,22,15,.08) 40%,rgba(36,22,15,.04) 70%,var(--acc2))}.card-in{background:#fffaf3}.card-b h3{color:#24160f}.pano .giant{color:#fff8ef}.pano::after{background:linear-gradient(0deg,#f6eee4,transparent 35%,transparent 72%,#f6eee4)}.pano img{opacity:1;filter:brightness(1.15)}.glass>div{background:rgba(255,252,247,.78)!important}.pill{background:rgba(255,250,243,.82);color:#24160f}.pf-foot .huge{background:linear-gradient(180deg,#f4a62a 0%,#e9461b 45%,#f6eee4 95%);-webkit-background-clip:text;background-clip:text}.hero-marq{border-color:rgba(36,22,15,.14)}p.lead{color:#4f3a2e}.seq p.lead{color:#eadccf}.pf-nav{mix-blend-mode:normal;color:#24160f}.calc-sum .lead{color:#5d473a}.pf-back{background:rgba(255,250,243,.88);padding:8px 14px;border-radius:99px;opacity:1}</style>
+<style>:root{--acc:#e9461b;--acc2:#f4a62a}:root{--bg:#f6eee4;--fg:#24160f;--mute:#7b6556;--line:rgba(36,22,15,.14);--glass:rgba(255,255,255,.55)}html,body{background:#f6eee4}body{background:radial-gradient(120% 80% at 80% 0%,#fff6ea 0%,#f6eee4 45%,#efe2d3 100%) fixed}::selection{color:#fff}#loader{background:radial-gradient(120% 90% at 75% 0%,#fff3e3 0%,#f6eee4 60%,#efdfcd 100%)}.beams i{mix-blend-mode:multiply;opacity:.16!important}.hero-media video,.hero-media img{opacity:1;filter:brightness(1.12) saturate(1.1)}.hero-media::after{background:linear-gradient(90deg,#f6eee4 0%,rgba(246,238,228,.82) 34%,rgba(246,238,228,0) 66%),linear-gradient(0deg,#f6eee4 2%,transparent 34%)}.hero-spot{mix-blend-mode:multiply;opacity:.45}.hero .lbl{color:#6b5446}.seq{color:#fbf4ea}.seq .lbl{color:#d9c4b3}.seq-sticky{background:radial-gradient(110% 85% at 50% 45%,#3a1f12 0%,#1c0f09 55%,#120a06 100%)}.card{background:linear-gradient(150deg,var(--acc),rgba(36,22,15,.08) 40%,rgba(36,22,15,.04) 70%,var(--acc2))}.card-in{background:#fffaf3}.card-b h3{color:#24160f}.pano .giant{color:#fff8ef}.pano::after{background:linear-gradient(0deg,#f6eee4,transparent 35%,transparent 72%,#f6eee4)}.pano img{opacity:1;filter:brightness(1.15)}.glass>div{background:rgba(255,252,247,.78)!important}.pill{background:rgba(255,250,243,.82);color:#24160f}.pf-foot .huge{background:linear-gradient(180deg,#f4a62a 0%,#e9461b 45%,#f6eee4 95%);-webkit-background-clip:text;background-clip:text}.hero-marq{border-color:rgba(36,22,15,.14)}p.lead{color:#4f3a2e}.seq p.lead{color:#eadccf}.pf-nav{mix-blend-mode:normal;color:#24160f}.calc-sum .lead{color:#5d473a}.pf-back{background:rgba(255,250,243,.88);padding:8px 14px;border-radius:99px;opacity:1}.seq.short .seq-sticky{background:#f6eee4}.seq.short{color:#24160f}.seq.short .lbl{color:#7b6556}.seq.short canvas{mix-blend-mode:multiply}</style>
 </head>
 <body>
 <a class="skip" href="#tresc">Przejdź do treści</a>
@@ -26,12 +26,13 @@
 <header class="pf-nav"><a class="pf-brand" href="#top">EMBER</a><a class="pf-back" href="/#portfolio">← QuantumFlow</a></header>
 
 <main id="tresc">
-  <section class="hero" id="top" data-fx="embers">
+  <section class="hero hero--frame" id="top" data-fx="embers">
     <div class="hero-media" aria-hidden="true">
       <video muted loop playsinline preload="auto" poster="/portfolio/ember/hero.webp"><source src="/portfolio/ember/hero.webm" type="video/webm"><source src="/portfolio/ember/hero.mp4" type="video/mp4"></video>
     </div>
     <canvas class="hero-fx" aria-hidden="true"></canvas>
     <div class="hero-spot" aria-hidden="true"></div>
+    <div class="hero-over" aria-hidden="true">EMBER</div>
     <div class="hero-top"><span class="lbl"><b>01/</b> Steakhouse · ogień · dąb</span><span class="lbl">Kraków · Kazimierz</span></div>
     <h1 class="giant"><span class="ln s1"><span>Mięso.</span></span><span class="ln s2"><span><span class="acc">Ogień.</span></span></span><span class="ln s3"><span>Czas.</span></span></h1>
     <div class="hero-meta"><p class="lead">Sezonowana wołowina pieczona nad żarem z dębu. Bez skrótów, bez gazu, tylko ogień i 48 dni cierpliwości.</p><a class="btn" href="#cta">Zarezerwuj stolik</a></div>
@@ -57,21 +58,21 @@
     <div class="cards-head"><h2 class="giant" style="font-size:clamp(48px,8vw,150px)"><span class="ln s1"><span>Z</span></span><span class="ln s2"><span><span class="acc">rusztu</span></span></span></h2><span class="lbl"><b>04/</b> Karta</span></div>
     <div class="cards">
       <article class="card"><div class="card-in">
-        <div class="card-img"><img src="/portfolio/ember/g5.webp" alt="Plastry ribeye na czarnym łupku" loading="lazy" width="1080" height="1350"></div>
+        <div class="card-img"><img src="/portfolio/ember/g5.webp" alt="Plastry ribeye na czarnym łupku" loading="lazy" width="1080" height="1350"><video class="card-vid" muted playsinline loop preload="none" aria-hidden="true" data-auto poster="/portfolio/ember/g5.webp"><source src="/portfolio/ember/k1.webm" type="video/webm"><source src="/portfolio/ember/k1.mp4" type="video/mp4"></video></div>
         <div class="card-b"><div><h3>Ribeye</h3><p>300 g, sól morska, rozmaryn</p></div><span class="pr">149 zł</span></div>
       </div></article>
       <article class="card"><div class="card-in">
-        <div class="card-img"><img src="/portfolio/ember/g6.webp" alt="Czerwone wino nalewane do kieliszka" loading="lazy" width="1080" height="1350"></div>
+        <div class="card-img"><img src="/portfolio/ember/g6.webp" alt="Czerwone wino nalewane do kieliszka" loading="lazy" width="1080" height="1350"><video class="card-vid" muted playsinline loop preload="none" aria-hidden="true" data-auto poster="/portfolio/ember/g6.webp"><source src="/portfolio/ember/k2.webm" type="video/webm"><source src="/portfolio/ember/k2.mp4" type="video/mp4"></video></div>
         <div class="card-b"><div><h3>Bordeaux 2018</h3><p>Kieliszek do steku</p></div><span class="pr">58 zł</span></div>
       </div></article>
       <article class="card"><div class="card-in">
-        <div class="card-img"><img src="/portfolio/ember/g7.webp" alt="Szef kroi stek nożem damasceńskim" loading="lazy" width="1080" height="1350"></div>
+        <div class="card-img"><img src="/portfolio/ember/g7.webp" alt="Szef kroi stek nożem damasceńskim" loading="lazy" width="1080" height="1350"><video class="card-vid" muted playsinline loop preload="none" aria-hidden="true" data-auto poster="/portfolio/ember/g7.webp"><source src="/portfolio/ember/k3.webm" type="video/webm"><source src="/portfolio/ember/k3.mp4" type="video/mp4"></video></div>
         <div class="card-b"><div><h3>Tomahawk</h3><p>Dla dwojga, krojony przy stole</p></div><span class="pr">389 zł</span></div>
       </div></article>
     </div>
   </section>
 
-  <section class="seq short" data-src="/portfolio/ember/przejscie" data-count="100" data-fallback="burst" data-scale="1" aria-label="Iskry">
+  <section class="seq short" data-src="/portfolio/ember/przejscie" data-count="121" data-fallback="burst" data-scale="1" aria-label="Iskry">
     <div class="seq-sticky">
       <canvas aria-hidden="true"></canvas>
       <div class="seq-hud"><span class="lbl"><b>05/</b> Iskry</span><span class="lbl">(<span class="cnt">00</span>)</span></div>
@@ -79,8 +80,9 @@
     </div>
   </section>
 
-  <section class="pano" aria-label="Ciemna sala steakhouse'u z ciepłym światłem">
-    <img src="/portfolio/ember/g4.webp" alt="Ciemna sala steakhouse'u z ciepłym światłem" loading="lazy" width="1920" height="1080">
+  <section class="pano zoom" aria-label="Ciemna sala steakhouse'u z ciepłym światłem">
+    <img src="/portfolio/ember/g4.webp" alt="Ciemna sala steakhouse'u z ciepłym światłem" loading="lazy" width="1920" height="1080"><video class="pano-vid" muted playsinline loop preload="none" aria-hidden="true" data-auto poster="/portfolio/ember/g4.webp"><source src="/portfolio/ember/pano.webm" type="video/webm"><source src="/portfolio/ember/pano.mp4" type="video/mp4"></video>
+    <div class="knock" aria-hidden="true"><span>Stół<br>przy ogniu</span></div>
     <h2 class="giant"><span class="ln s1"><span>Stół</span></span><span class="ln s2"><span>przy ogniu</span></span></h2>
   </section>
 

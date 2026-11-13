@@ -43,12 +43,13 @@ for (const s of P.sites) {
 <header class="pf-nav"><a class="pf-brand" href="#top">${esc(s.name)}</a><a class="pf-back" href="/#portfolio">← QuantumFlow</a></header>
 
 <main id="tresc">
-  <section class="hero" id="top" data-fx="${s.fx || ''}">
+  <section class="hero${s.heroFrame ? ' hero--frame' : ''}" id="top" data-fx="${s.fx || ''}">
     <div class="hero-media" aria-hidden="true">
       <video muted loop playsinline preload="auto" poster="${m}/hero.webp"><source src="${m}/hero.webm" type="video/webm"><source src="${m}/hero.mp4" type="video/mp4"></video>
     </div>
     <canvas class="hero-fx" aria-hidden="true"></canvas>
     <div class="hero-spot" aria-hidden="true"></div>
+    ${s.heroFrame ? `<div class="hero-over" aria-hidden="true">${esc(s.name)}</div>` : ''}
     <div class="hero-top"><span class="lbl"><b>01/</b> ${esc(s.kicker)}</span><span class="lbl">${esc(s.city)}</span></div>
     <h1 class="giant">${lines(s.hero)}</h1>
     <div class="hero-meta"><p class="lead">${esc(s.lead)}</p><a class="btn" href="#cta">${esc(s.cta)}</a></div>
@@ -84,8 +85,9 @@ for (const s of P.sites) {
     </div>
   </section>
 
-  <section class="pano" aria-label="${esc(s.panoAlt)}">
+  <section class="pano${s.video && s.video.panoZoom ? ' zoom' : ''}" aria-label="${esc(s.panoAlt)}">
     <img src="${m}/g4.webp" alt="${esc(s.panoAlt)}" loading="lazy" width="1920" height="1080">${s.video && s.video.pano ? `<video class="pano-vid" muted playsinline loop preload="none" aria-hidden="true" data-auto poster="${m}/g4.webp"><source src="${m}/pano.webm" type="video/webm"><source src="${m}/pano.mp4" type="video/mp4"></video>` : ''}
+    ${s.video && s.video.panoZoom ? `<div class="knock" aria-hidden="true"><span>${s.pano.map(l => l.replace(/<[^>]+>/g, '')).join('<br>')}</span></div>` : ''}
     <h2 class="giant">${lines(s.pano)}</h2>
   </section>
 
