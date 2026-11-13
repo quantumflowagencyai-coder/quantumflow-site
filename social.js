@@ -25,5 +25,4 @@ const ld = document.createElement('script');
 ld.type = 'application/ld+json';
 ld.textContent = JSON.stringify({ '@context': 'https://schema.org', '@type': 'ProfessionalService', '@id': 'https://quantumflow.agency/#org', name: 'QuantumFlow AI Agency', url: 'https://quantumflow.agency/', sameAs: SOCIAL.map(s => s.url) });
 document.head.appendChild(ld);
-import('/works-live.js');
 import('/pricing.js');

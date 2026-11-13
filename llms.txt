@@ -15,7 +15,7 @@ Najważniejsze fakty:
 
 ## Strony
 
-- [Strona główna](https://quantumflow.agency/): oferta, sceny 3D, automatyzacje AI, proces, realizacje koncepcyjne, pakiety, FAQ i formularz.
+- [Strona główna](https://quantumflow.agency/): oferta, sceny 3D, automatyzacje AI, proces, portfolio 4 koncepcyjnych stron 3D (/portfolio/ember, /portfolio/lume, /portfolio/ironclad, /portfolio/monolit), pakiety, FAQ i formularz.
 - [O nas](https://quantumflow.agency/o-nas): kim jesteśmy, jak pracujemy, technologie i zasady.
 - [Kontakt](https://quantumflow.agency/kontakt): dane kontaktowe i bezpłatna wycena.
 - [FAQ](https://quantumflow.agency/#faq): ceny, czas realizacji, szybkość stron 3D, SEO, n8n, bezpieczeństwo danych, opieka.
@@ -24,7 +24,7 @@ Najważniejsze fakty:
 
 - [Polityka prywatności](https://quantumflow.agency/polityka-prywatnosci)
 - [Regulamin](https://quantumflow.agency/regulamin)
-- [Polityka redakcyjna](https://quantumflow.agency/polityka-redakcyjna): realizacje na stronie to koncepcje pokazowe; grafiki częściowo tworzone z pomocą AI i sprawdzane przez człowieka.
+- [Polityka redakcyjna](https://quantumflow.agency/polityka-redakcyjna): projekty w portfolio to koncepcje pokazowe; grafiki częściowo tworzone z pomocą AI i sprawdzane przez człowieka.
 
 ## Optional
 

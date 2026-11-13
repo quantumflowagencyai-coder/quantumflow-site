@@ -71,7 +71,7 @@ for (const s of P.sites) {
     </div>
   </section>
 
-  <section class="seq short" data-src="${m}/przejscie" data-count="${s.frames.przejscie}" data-fallback="burst" aria-label="${esc(s.transLabel)}">
+  <section class="seq short" data-src="${m}/przejscie" data-count="${s.frames.przejscie}" data-fallback="burst" data-scale="${s.transScale || 1}" aria-label="${esc(s.transLabel)}">
     <div class="seq-sticky">
       <canvas aria-hidden="true"></canvas>
       <div class="seq-hud"><span class="lbl"><b>05/</b> ${esc(s.transLabel)}</span><span class="lbl">(<span class="cnt">00</span>)</span></div>
