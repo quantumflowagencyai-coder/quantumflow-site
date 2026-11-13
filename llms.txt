@@ -4,13 +4,13 @@
 
 Najważniejsze fakty:
 - Usługi: nowe strony 3D premium od zera, redesign istniejących stron z zachowaniem pozycji w Google, automatyzacje AI i agenci AI w n8n (obsługa zapytań, leady do CRM, dokumenty, raporty, chatboty z wiedzą firmy).
-- Pakiety stron: Start (landing page z animowanym hero 3D, do 5 sekcji, formularz, podstawowe SEO), Premium (do 6 podstron, autorska scena 3D marki, animacje przy przewijaniu, teksty sprzedażowe, analityka i SEO), Signature (nielimitowane podstrony, modele 3D produktów, sklep lub konfigurator, 3 miesiące opieki). Wycena zawsze indywidualna i bezpłatna.
+- Pakiety stron: Start (landing page z animowanym hero 3D, do 5 sekcji, formularz, podstawowe SEO), Premium (do 6 podstron, autorska scena 3D marki, animacje przy przewijaniu, teksty sprzedażowe, analityka i SEO), Signature (nielimitowane podstrony, modele 3D produktów, sklep lub konfigurator, 3 miesiące opieki). Ceny netto: Start od 4 900 zł, Premium od 11 900 zł, Signature od 24 900 zł; automatyzacja n8n od 2 500 zł, chatbot AI od 4 900 zł, opieka od 290 zł/mies. Dokładna wycena po bezpłatnej konsultacji.
 - Czas realizacji: landing page 2–3 tygodnie, pełna strona firmowa 4–8 tygodni.
 - Wydajność: cel ładowania poniżej 2 sekund, pełna responsywność, uproszczone efekty na słabszych telefonach.
 - n8n można uruchomić na serwerze klienta (self-hosted), więc dane nie muszą opuszczać jego infrastruktury; zgodność z RODO.
 - Po wdrożeniu: opieka (aktualizacje, monitoring, kopie zapasowe, raporty) albo przekazanie pełnego kodu i dostępów.
 - Założyciel: Piotr Żołnierczyk. Właściciel marki: Biuro Rachunkowe STELLA Natalia Pieszczoch, ul. Kołłątaja 56, 38-500 Sanok, Polska, NIP 6871861607, REGON 528765171.
-- Kontakt: kontakt@quantumflow.agency, odpowiedź w ciągu 24 godzin, bezpłatna konsultacja.
+- Kontakt: tel. +48 690 777 721, kontakt@quantumflow.agency, odpowiedź w ciągu 24 godzin, bezpłatna konsultacja.
 - Stos technologiczny: Next.js, React Three Fiber, drei, Three.js, GSAP ScrollTrigger, Lenis, n8n, hosting Vercel.
 
 ## Strony

@@ -68,6 +68,12 @@ const j0 = src.indexOf(J), j1 = src.indexOf('</script>', j0);
 const faq = JSON.parse(src.slice(j0 + J.length, j1))['@graph'].find(x => x['@type'] === 'FAQPage');
 faq['@id'] = 'https://quantumflow.agency/#faq';
 const blocks = [...JSON.parse(rd('_src/schema.json')), { '@context': 'https://schema.org', ...faq }];
+// telefon agencji: schema (organizacja i punkt kontaktowy) + linia w sekcji Kontakt
+const TEL = '+48690777721', TEL_TXT = '+48 690 777 721';
+for (const b of blocks) if (b['@type'] === 'ProfessionalService') { b.telephone = TEL; if (b.contactPoint) b.contactPoint.telephone = TEL; }
+must(blocks.some(b => b.telephone === TEL), 'telefon w schema');
+src = once(src, '<p>Opisz krótko firmę i czego potrzebujesz. Odpowiemy w ciągu 24 godzin z pomysłem na stronę i wstępną wyceną.</p>\n        </div>',
+  `<p>Opisz krótko firmę i czego potrzebujesz. Odpowiemy w ciągu 24 godzin z pomysłem na stronę i wstępną wyceną.</p>\n          <p class="contact-tel" style="margin-top:18px">Wolisz zadzwonić? <a href="tel:${TEL}" style="color:var(--cyan);font-weight:600;white-space:nowrap">${TEL_TXT}</a></p>\n        </div>`);
 src = src.slice(0, j0) + blocks.map(b => J + JSON.stringify(b) + '</script>').join('\n') + src.slice(j1 + 9);
 fs.writeFileSync(OUT + '/index.html', src);
 
