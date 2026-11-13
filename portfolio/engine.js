@@ -9,6 +9,7 @@ const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const css = getComputedStyle(document.documentElement);
 const ACC = css.getPropertyValue('--acc').trim() || '#ff5a1f';
 const DPR = Math.min(devicePixelRatio || 1, 2);
+const LIGHT = document.documentElement.dataset.theme === 'light';
 
 /* ---------- loader ---------- */
 const loader = $('#loader'), lNum = $('#loader .l-num span'), lBar = $('#loader .l-bar i');
@@ -53,7 +54,7 @@ let scrollVel = 0;
   for (let i = 0; i < N; i++) { pos[i * 3] = (Math.random() - .5) * 30; pos[i * 3 + 1] = (Math.random() - .5) * 20; pos[i * 3 + 2] = (Math.random() - .5) * 14; sp[i] = .2 + Math.random(); }
   const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.BufferAttribute(pos, 3)); g.setAttribute('sp', new THREE.BufferAttribute(sp, 1));
   const mat = new THREE.ShaderMaterial({
-    transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
+    transparent: true, depthWrite: false, blending: LIGHT ? THREE.NormalBlending : THREE.AdditiveBlending,
     uniforms: { t: { value: 0 }, v: { value: 0 }, c: { value: new THREE.Color(ACC) }, px: { value: DPR } },
     vertexShader: `attribute float sp;uniform float t,v,px;varying float a;void main(){vec3 p=position;p.y=mod(p.y+t*.25*sp+v*sp*2.+10.,20.)-10.;p.x+=sin(t*.3*sp+p.y)*.3;vec4 m=modelViewMatrix*vec4(p,1.);gl_Position=projectionMatrix*m;gl_PointSize=px*(1.5+sp*2.4)*(10./-m.z);a=.25+.6*sp;}`,
     fragmentShader: `uniform vec3 c;varying float a;void main(){float d=length(gl_PointCoord-.5);if(d>.5)discard;gl_FragColor=vec4(c,a*smoothstep(.5,0.,d));}`
@@ -174,7 +175,7 @@ const heroFx = (function () {
     init() { for (let i = 0; i < this.n; i++) { const p = this.spawn(); p.y = rnd(0, H); P.push(p); } },
     burst(x, y, n = 40) { for (let i = 0; i < n; i++) { const a = rnd(-Math.PI, 0), v = rnd(2, 9) * DPR; extra.push(Object.assign(this.spawn(x, y, Math.cos(a) * v, Math.sin(a) * v, true), { decay: rnd(.01, .025), fr: .97 })); } },
     step(t) {
-      ctx.globalCompositeOperation = 'lighter';
+      ctx.globalCompositeOperation = LIGHT ? 'source-over' : 'lighter';
       const [mx, my] = local();
       if (mouse.on && Math.hypot(mouse.vx, mouse.vy) > 6 && extra.length < 260) for (let k = 0; k < 2; k++) extra.push(Object.assign(this.spawn(mx, my, mouse.vx * .15 * DPR + rnd(-1, 1), mouse.vy * .15 * DPR - rnd(1, 3), true), { decay: rnd(.015, .03), fr: .965 }));
       const all = P.concat(extra);

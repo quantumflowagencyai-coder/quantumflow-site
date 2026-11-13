@@ -16,7 +16,7 @@ for (const s of P.sites) {
   const calc = s.calc;
   const marq = (s.marq || []).map(w => `<span>${esc(w)}</span><i>✦</i>`).join('');
   const html = `<!doctype html>
-<html lang="pl">
+<html lang="pl"${s.theme ? ` data-theme="${s.theme}"` : ''}>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -27,7 +27,7 @@ for (const s of P.sites) {
 <meta property="og:title" content="${esc(s.name)}: koncepcja strony 3D od QuantumFlow">
 <meta property="og:description" content="${esc(s.desc)}">
 <meta property="og:image" content="https://quantumflow.agency${m}/hero.webp">
-<meta name="theme-color" content="#050505">
+<meta name="theme-color" content="${s.theme === 'light' ? '#f6eee4' : '#050505'}">
 <link rel="icon" href="/emblem.webp">
 <link rel="preload" href="/fonts/space-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/portfolio/fonts.css">
