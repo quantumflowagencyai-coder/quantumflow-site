@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LUMÉ: klinika medycyny estetycznej | Portfolio QuantumFlow</title>
+<meta name="description" content="LUMÉ: koncepcja immersyjnej strony 3D dla kliniki medycyny estetycznej. Kryształowe serum przewijane scrollem, cząsteczki perłowego pyłu, zabiegi i kalkulator planu terapii. Projekt QuantumFlow AI Agency.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://quantumflow.agency/portfolio/lume">
+<meta property="og:title" content="LUMÉ: koncepcja strony 3D od QuantumFlow">
+<meta property="og:description" content="LUMÉ: koncepcja immersyjnej strony 3D dla kliniki medycyny estetycznej. Kryształowe serum przewijane scrollem, cząsteczki perłowego pyłu, zabiegi i kalkulator planu terapii. Projekt QuantumFlow AI Agency.">
+<meta property="og:image" content="https://quantumflow.agency/portfolio/lume/hero.webp">
+<meta name="theme-color" content="#050505">
+<link rel="icon" href="/emblem.webp">
+<link rel="preload" href="/fonts/space-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/portfolio/fonts.css">
+<link rel="stylesheet" href="/portfolio/portfolio.css">
+<style>:root{--acc:#f2b8c6;--acc2:#ffe3ea}</style>
+</head>
+<body>
+<a class="skip" href="#tresc">Przejdź do treści</a>
+<div id="loader" role="status" aria-live="polite"><div class="l-txt">Przygotowujemy gabinet</div><div class="l-num"><span>00</span><b>/100</b></div><div class="l-bar"><i></i></div></div>
+<canvas id="pf-gl" aria-hidden="true"></canvas>
+<div class="beams" aria-hidden="true"><i></i><i></i><i></i></div>
+
+<header class="pf-nav"><a class="pf-brand" href="#top">LUMÉ</a><a class="pf-back" href="/#portfolio">← QuantumFlow</a></header>
+
+<main id="tresc">
+  <section class="hero" id="top">
+    <div class="hero-media" aria-hidden="true">
+      <video muted loop playsinline preload="auto" poster="/portfolio/lume/hero.webp"><source src="/portfolio/lume/hero.webm" type="video/webm"><source src="/portfolio/lume/hero.mp4" type="video/mp4"></video>
+    </div>
+    <div class="hero-top"><span class="lbl"><b>01/</b> Medycyna estetyczna</span><span class="lbl">Warszawa · Mokotów</span></div>
+    <h1 class="giant"><span class="ln s1"><span>Skóra</span></span><span class="ln s2"><span>w świetle</span></span><span class="ln s3"><span><span class="acc">perły</span></span></span></h1>
+    <div class="hero-meta"><p class="lead">Naturalny efekt, lekarze z kilkunastoletnim doświadczeniem i plan terapii ułożony dokładnie pod Ciebie.</p><a class="btn" href="#cta">Umów konsultację</a></div>
+  </section>
+
+  <section class="seq" data-src="/portfolio/lume/obrot" data-count="0" data-fallback="sphere" aria-label="Serum LUMÉ No.1">
+    <div class="seq-sticky">
+      <div class="glow" aria-hidden="true"></div>
+      <canvas aria-hidden="true"></canvas>
+      <div class="seq-hud"><span class="lbl"><b>02/</b> Serum LUMÉ No.1</span><span class="lbl">(<span class="cnt">00</span>)</span></div>
+      <div class="seq-words"><div class="sw tr" data-in="0.06" data-out="0.32"><div class="lbl"><b>3</b> rodzaje kwasu hialuronowego</div><div class="giant"><span class="ln s1"><span>Głębokie</span></span><span class="ln s2"><span>nawilżenie</span></span></div></div><div class="sw bl" data-in="0.38" data-out="0.64"><div class="lbl">Bez okresu rekonwalescencji</div><div class="giant"><span class="ln s1"><span><span class="acc">Blask</span></span></span><span class="ln s2"><span>od 1. dnia</span></span></div></div><div class="sw tr" data-in="0.7" data-out="0.97"><div class="lbl">Formuła kliniczna</div><div class="giant"><span class="ln s1"><span>Nauka</span></span><span class="ln s2"><span>i spokój</span></span></div></div></div>
+    </div>
+  </section>
+
+  <section class="manifest wrap">
+    <div class="lbl"><b>03/</b> Filozofia</div>
+    <p class="big" data-words>Nie zmieniamy twarzy. Przywracamy jej świeżość, delikatnie i stopniowo, tak żeby nikt nie wiedział, że byłaś u nas, ale każdy widział, że wyglądasz lepiej.</p>
+  </section>
+
+  <section class="cards-sec wrap" id="oferta">
+    <div class="cards-head"><h2 class="giant" style="font-size:clamp(48px,8vw,150px)"><span class="ln s1"><span>Za</span></span><span class="ln s2"><span><span class="acc">biegi</span></span></span></h2><span class="lbl"><b>04/</b> Zabiegi</span></div>
+    <div class="cards">
+      <article class="card"><div class="card-in">
+        <div class="card-img"><img src="/portfolio/lume/g5.webp" alt="Dłoń w rękawiczce nakłada serum pipetą" loading="lazy" width="1080" height="1350"></div>
+        <div class="card-b"><div><h3>Mezoterapia</h3><p>Koktajl witamin i kwasu</p></div><span class="pr">od 590 zł</span></div>
+      </div></article>
+      <article class="card"><div class="card-in">
+        <div class="card-img"><img src="/portfolio/lume/g6.webp" alt="Szklane butelki kosmetyków na czarnym kamieniu" loading="lazy" width="1080" height="1350"></div>
+        <div class="card-b"><div><h3>Pielęgnacja</h3><p>Domowa kuracja po zabiegu</p></div><span class="pr">od 240 zł</span></div>
+      </div></article>
+      <article class="card"><div class="card-in">
+        <div class="card-img"><img src="/portfolio/lume/g7.webp" alt="Makro rozświetlonej skóry" loading="lazy" width="1080" height="1350"></div>
+        <div class="card-b"><div><h3>Skin glow</h3><p>Peeling, laser, rewitalizacja</p></div><span class="pr">od 890 zł</span></div>
+      </div></article>
+    </div>
+  </section>
+
+  <section class="seq short" data-src="/portfolio/lume/przejscie" data-count="0" data-fallback="burst" aria-label="Rozpad w pył">
+    <div class="seq-sticky">
+      <canvas aria-hidden="true"></canvas>
+      <div class="seq-hud"><span class="lbl"><b>05/</b> Rozpad w pył</span><span class="lbl">(<span class="cnt">00</span>)</span></div>
+      <div class="seq-words"><div class="sw br" data-in="0.15" data-out="0.85"><div class="lbl">Efekt, który zostaje</div><div class="giant"><span class="ln s1"><span>Lekko.</span></span><span class="ln s2"><span><span class="acc">Świetliście.</span></span></span></div></div></div>
+    </div>
+  </section>
+
+  <section class="pano" aria-label="Ciemna, luksusowa recepcja kliniki z orchideą">
+    <img src="/portfolio/lume/g4.webp" alt="Ciemna, luksusowa recepcja kliniki z orchideą" loading="lazy" width="1920" height="1080">
+    <h2 class="giant"><span class="ln s1"><span>Spokój</span></span><span class="ln s2"><span>po zabiegu</span></span></h2>
+  </section>
+
+  <section class="calc-sec wrap" id="cta">
+    <div class="cards-head"><h2 class="giant" style="font-size:clamp(48px,8vw,150px)"><span class="ln s1"><span>Plan</span></span><span class="ln s2"><span><span class="acc">terapii</span></span></span></h2><span class="lbl"><b>06/</b> Kalkulator</span></div>
+    <div class="calc" data-base="0">
+      <div class="glass"><div>
+        <label for="sesje">Liczba sesji <span data-for="sesje"></span></label><input type="range" id="sesje" min="1" max="6" step="1" value="3" data-mult="1" data-suf=" ×">
+        <label>Zabieg</label><div class="opts" data-single><button type="button" aria-pressed="true" data-add="590">Mezoterapia</button><button type="button" aria-pressed="false" data-add="890">Laser frakcyjny</button><button type="button" aria-pressed="false" data-add="1200">Stymulator tkankowy</button></div>
+        <label>Dodatki (za sesję)</label><div class="opts"><button type="button" aria-pressed="false" data-add="120">Maska LED</button><button type="button" aria-pressed="false" data-add="150">Masaż drenujący</button></div>
+      </div></div>
+      <div class="glass"><div class="calc-sum">
+        <div><div class="lbl">Pakiet zabiegów</div><div class="total" aria-live="polite">0 zł</div><p class="lead" style="margin-top:14px">Kwota orientacyjna. Ostateczny plan ustala lekarz na bezpłatnej konsultacji.</p></div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn" href="/kontakt">Umawiam konsultację</a><a class="btn ghost" href="/#portfolio">Inne projekty</a></div>
+      </div></div>
+    </div>
+  </section>
+</main>
+
+<footer class="pf-foot wrap">
+  <div class="row"><div>ul. Puławska 28, Warszawa · pn–sob 9:00–20:00<br><span class="concept">Koncepcja demonstracyjna. Marka i dane są fikcyjne.</span></div>
+  <div>Strona 3D zaprojektowana przez <a href="/">QuantumFlow AI Agency</a><br>Chcesz taką dla swojej firmy? <a href="/kontakt">Napisz do nas</a></div></div>
+  <div class="huge" aria-hidden="true">LUMÉ</div>
+</footer>
+
+<div class="pill" aria-hidden="true"><span class="pl">LUMÉ</span><span class="pt"><i></i></span><span class="pc">0%</span><a href="#cta">Konsultacja</a></div>
+
+<script src="/vendor/gsap.min.js"></script>
+<script src="/vendor/ScrollTrigger.min.js"></script>
+<script src="/vendor/lenis.min.js"></script>
+<script type="module" src="/portfolio/engine.js"></script>
+</body>
+</html>

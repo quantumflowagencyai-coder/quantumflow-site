@@ -14,6 +14,9 @@ const FS = 'node_modules/@fontsource-variable/';
 for (const [pkg, name] of [['inter', 'inter'], ['space-grotesk', 'space-grotesk']])
   for (const sub of ['latin', 'latin-ext']) fs.copyFileSync(`${FS}${pkg}/files/${pkg}-${sub}-wght-normal.woff2`, `${OUT}/fonts/${name}-${sub}.woff2`);
 fs.copyFileSync('node_modules/three/build/three.module.min.js', OUT + '/three.module.min.js');
+// GSAP + ScrollTrigger + Lenis lokalnie (strony /portfolio)
+fs.mkdirSync(OUT + '/vendor', { recursive: true });
+for (const [f, n] of [['gsap/dist/gsap.min.js', 'gsap.min.js'], ['gsap/dist/ScrollTrigger.min.js', 'ScrollTrigger.min.js'], ['lenis/dist/lenis.min.js', 'lenis.min.js']]) fs.copyFileSync('node_modules/' + f, OUT + '/vendor/' + n);
 
 let src = rd('_src/index.orig.html');
 
