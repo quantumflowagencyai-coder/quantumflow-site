@@ -31,7 +31,7 @@ for (const s of P.sites) {
 <link rel="preload" href="/fonts/space-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/portfolio/fonts.css">
 <link rel="stylesheet" href="/portfolio/portfolio.css">
-<style>:root{--acc:${s.acc};--acc2:${s.acc2}}</style>
+<style>:root{--acc:${s.acc};--acc2:${s.acc2}}${s.extraCss || ''}</style>
 </head>
 <body>
 <a class="skip" href="#tresc">Przejdź do treści</a>
