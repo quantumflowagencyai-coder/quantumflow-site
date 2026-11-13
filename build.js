@@ -78,7 +78,8 @@ src = src.slice(0, j0) + blocks.map(b => J + JSON.stringify(b) + '</script>').jo
 // Portfolio: publikujemy tylko strony z _src/portfolio-live.json (reszta czeka na poprawki)
 {
   const ALL = ['ember', 'lume', 'ironclad', 'monolit'];
-  const LIVE = fs.existsSync('_src/portfolio-live.json') ? JSON.parse(fs.readFileSync('_src/portfolio-live.json', 'utf8')) : ALL;
+  // na podglądach (VERCEL_ENV=preview) wszystkie strony, na produkcji tylko z listy
+  const LIVE = process.env.VERCEL_ENV === 'preview' ? ALL : fs.existsSync('_src/portfolio-live.json') ? JSON.parse(fs.readFileSync('_src/portfolio-live.json', 'utf8')) : ALL;
   const OFF = ALL.filter(x => !LIVE.includes(x));
   for (const x of OFF) {
     fs.rmSync(path.join(OUT, 'portfolio', x + '.html'), { force: true });
