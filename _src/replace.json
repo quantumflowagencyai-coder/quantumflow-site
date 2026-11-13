@@ -1,1 +1,66 @@
-[["<a href=\"#\" class=\"brand\"><img class=\"logo-img\" src=\"/logo-mark.webp\" alt=\"Logo QuantumFlow AI Agency\" width=\"64\" height=\"60\">","<a href=\"/\" class=\"brand\" aria-label=\"QuantumFlow AI Agency – strona główna\"><img class=\"logo-img\" src=\"/logo-mark.webp\" srcset=\"/logo-mark.webp 160w\" sizes=\"64px\" alt=\"Logo QuantumFlow AI Agency\" width=\"64\" height=\"60\" fetchpriority=\"high\">"],["<button class=\"burger\" id=\"burger\" aria-label=\"Menu\">","<button class=\"burger\" id=\"burger\" aria-label=\"Otwórz menu\" aria-controls=\"menu\">"],["<input name=\"imie\" required autocomplete=\"name\">","<input name=\"imie\" id=\"f-imie\" required autocomplete=\"name\" aria-label=\"Imię\">"],["<input name=\"email\" type=\"email\" required autocomplete=\"email\">","<input name=\"email\" id=\"f-email\" type=\"email\" required autocomplete=\"email\" aria-label=\"Adres e-mail\">"],["<input name=\"firma\">","<input name=\"firma\" id=\"f-firma\" autocomplete=\"organization\" aria-label=\"Nazwa firmy\">"],["<select name=\"pakiet\" id=\"pakiet\">","<select name=\"pakiet\" id=\"pakiet\" aria-label=\"Wybrany pakiet\">"],["<input name=\"strona\" placeholder=\"https://\">","<input name=\"strona\" id=\"f-strona\" type=\"url\" placeholder=\"https://\" aria-label=\"Adres obecnej strony\">"],["<textarea name=\"wiadomosc\" required></textarea>","<textarea name=\"wiadomosc\" id=\"f-wiadomosc\" required aria-label=\"Treść wiadomości\"></textarea>"],["<input type=\"text\" name=\"_honey\" tabindex=\"-1\" autocomplete=\"off\" aria-hidden=\"true\" style=\"position:absolute;left:-9999px\">","<label for=\"f-honey\" class=\"sr-only\" aria-hidden=\"true\" style=\"position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden\">Nie wypełniaj tego pola</label><input type=\"text\" name=\"_honey\" id=\"f-honey\" tabindex=\"-1\" autocomplete=\"off\" aria-hidden=\"true\" aria-label=\"Nie wypełniaj tego pola\" style=\"position:absolute;left:-9999px\">"],["rel=\"noopener\">X</a>","rel=\"noopener\">X (Twitter)</a>"]]
+[
+[
+"<a href=\"#\" class=\"brand\"><img class=\"logo-img\" src=\"/logo-mark.webp\" alt=\"Logo QuantumFlow AI Agency\" width=\"64\" height=\"60\">",
+"<a href=\"/\" class=\"brand\" aria-label=\"QuantumFlow AI Agency – strona główna\"><img class=\"logo-img\" src=\"/logo-mark.webp\" srcset=\"/logo-mark.webp 160w\" sizes=\"64px\" alt=\"Logo QuantumFlow AI Agency\" width=\"64\" height=\"60\" fetchpriority=\"high\">"
+],
+[
+"<button class=\"burger\" id=\"burger\" aria-label=\"Menu\">",
+"<button class=\"burger\" id=\"burger\" aria-label=\"Otwórz menu\" aria-controls=\"menu\">"
+],
+[
+"<input name=\"imie\" required autocomplete=\"name\">",
+"<input name=\"imie\" id=\"f-imie\" required autocomplete=\"name\" aria-label=\"Imię\">"
+],
+[
+"<input name=\"email\" type=\"email\" required autocomplete=\"email\">",
+"<input name=\"email\" id=\"f-email\" type=\"email\" required autocomplete=\"email\" aria-label=\"Adres e-mail\">"
+],
+[
+"<input name=\"firma\">",
+"<input name=\"firma\" id=\"f-firma\" autocomplete=\"organization\" aria-label=\"Nazwa firmy\">"
+],
+[
+"<select name=\"pakiet\" id=\"pakiet\">",
+"<select name=\"pakiet\" id=\"pakiet\" aria-label=\"Wybrany pakiet\">"
+],
+[
+"<input name=\"strona\" placeholder=\"https://\">",
+"<input name=\"strona\" id=\"f-strona\" type=\"url\" placeholder=\"https://\" aria-label=\"Adres obecnej strony\">"
+],
+[
+"<textarea name=\"wiadomosc\" required></textarea>",
+"<textarea name=\"wiadomosc\" id=\"f-wiadomosc\" required aria-label=\"Treść wiadomości\"></textarea>"
+],
+[
+"<input type=\"text\" name=\"_honey\" tabindex=\"-1\" autocomplete=\"off\" aria-hidden=\"true\" style=\"position:absolute;left:-9999px\">",
+"<label for=\"f-honey\" class=\"sr-only\" aria-hidden=\"true\" style=\"position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden\">Nie wypełniaj tego pola</label><input type=\"text\" name=\"_honey\" id=\"f-honey\" tabindex=\"-1\" autocomplete=\"off\" aria-hidden=\"true\" aria-label=\"Nie wypełniaj tego pola\" style=\"position:absolute;left:-9999px\">"
+],
+[
+"rel=\"noopener\">X</a>",
+"rel=\"noopener\">X (Twitter)</a>"
+],
+[
+"<p>Każdą wycenę przygotowujemy indywidualnie po krótkiej konsultacji.</p>",
+"<p>Ceny netto · Automatyzacje n8n od 2 500 zł · Chatbot AI od 4 900 zł · Opieka od 290 zł/mies.</p>"
+],
+[
+"Jednostronicowa strona z akcentem 3D dla małej firmy.</p>",
+"Jednostronicowa strona z akcentem 3D dla małej firmy.<span class=\"pk-price\"> od <b>4 900 zł</b> netto</span></p>"
+],
+[
+"Pełna strona firmowa z interaktywnymi scenami 3D.</p>",
+"Pełna strona firmowa z interaktywnymi scenami 3D.<span class=\"pk-price\"> od <b>11 900 zł</b> netto</span></p>"
+],
+[
+"Doświadczenie 3D na miarę marek premium.</p>",
+"Doświadczenie 3D na miarę marek premium.<span class=\"pk-price\"> od <b>24 900 zł</b> netto</span></p>"
+],
+[
+"<summary>Ile kosztuje strona 3D premium?</summary><p>Każdą wycenę przygotowujemy indywidualnie, bo zależy od liczby podstron, złożoności scen 3D i tekstów. Po krótkiej, bezpłatnej konsultacji dostajesz konkretną ofertę z zakresem prac i terminem.",
+"<summary>Ile kosztuje strona 3D premium?</summary><p>Pakiet Start (strona z animowanym hero 3D) kosztuje od 4 900 zł netto, Premium z autorską sceną 3D od 11 900 zł netto, a Signature od 24 900 zł netto. Automatyzacje n8n zaczynają się od 2 500 zł netto, chatbot AI od 4 900 zł netto, a stała opieka od 290 zł netto miesięcznie. Dokładną wycenę z zakresem prac i terminem dostajesz po krótkiej, bezpłatnej konsultacji."
+],
+[
+"\"text\": \"Każdą wycenę przygotowujemy indywidualnie, bo zależy od liczby podstron, złożoności scen 3D i tekstów. Po krótkiej, bezpłatnej konsultacji dostajesz konkretną ofertę z zakresem prac i terminem.",
+"\"text\": \"Pakiet Start (strona z animowanym hero 3D) kosztuje od 4 900 zł netto, Premium z autorską sceną 3D od 11 900 zł netto, a Signature od 24 900 zł netto. Automatyzacje n8n zaczynają się od 2 500 zł netto, chatbot AI od 4 900 zł netto, a stała opieka od 290 zł netto miesięcznie. Dokładną wycenę z zakresem prac i terminem dostajesz po krótkiej, bezpłatnej konsultacji."
+]
+]
