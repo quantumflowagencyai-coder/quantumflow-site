@@ -508,3 +508,9 @@ html.no-ld .ld{display:none}
 .stages li.lit .num{color:var(--acc);text-shadow:0 0 16px rgba(46,230,208,.6)}
 @media (max-width:960px){.stages::before,.stages::after,.stages .spark{display:none}.stages{border-top-color:var(--line)}}
 @media (prefers-reduced-motion:reduce){.stages::after{transform:scaleX(1)}.stages .spark{display:none}}
+
+/* Pakiety: kafelki automatyzacji */
+.pk-sub{margin-top:clamp(70px,9vw,120px)}
+.pk-ai .pk-card h3{font-size:clamp(2rem,3vw,2.8rem)}
+.pk-ai .pk-card{background:radial-gradient(ellipse 80% 50% at 50% 0%,rgba(59,130,246,.08),transparent 70%),linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.01))}
+.pk-ai .pk-feat{background:radial-gradient(ellipse 90% 60% at 50% 0%,rgba(46,230,208,.18),transparent 70%),linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.015))}
