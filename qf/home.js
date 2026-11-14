@@ -246,7 +246,17 @@
   // ---------- automatyzacje: karuzela 3D kart wokół rdzenia AI ----------
   const aut = $('#automatyzacje'), ring = $('#aut-ring');
   if (aut && ring) {
-    if (!hasG || RM || !WIDE) aut.classList.add('flat');
+    if (!hasG || RM || !WIDE) {
+      aut.classList.add('flat');
+      if (!RM && 'IntersectionObserver' in window) {
+        const io2 = new IntersectionObserver(es => es.forEach(e => {
+          const v = e.target;
+          if (e.isIntersecting) { if (v.preload === 'none') { v.preload = 'auto'; v.load(); } v.play().catch(() => { }); const c = v.closest('.aut-core'); if (c) v.addEventListener('playing', () => c.classList.add('vid'), { once: true }); }
+          else v.pause();
+        }), { threshold: .2 });
+        $$('video', aut).forEach(v => io2.observe(v));
+      }
+    }
     else {
       const pin = $('#aut-pin'), stageA = $('#aut-stage'), nodes = $$('.aut-node', ring), N = nodes.length;
       const svg = $('#aut-orbit'), o1 = $('.o1', svg), o2 = $('.o2', svg), beam = $('#aut-beam'), packG = $('#aut-packs');
@@ -297,6 +307,7 @@
         nodes.forEach((n, k) => { n.classList.toggle('on', k === i); n.setAttribute('aria-current', k === i ? 'step' : 'false'); });
         const n = nodes[i]; n.classList.remove('hit'); void n.offsetWidth; n.classList.add('hit');
         giant.classList.remove('in'); void giant.offsetWidth; giant.textContent = NAMES[i]; giant.classList.add('in');
+        nodes.forEach((n2, k) => { const v = $('video', n2); if (!v) return; if (k === i) { if (v.preload === 'none') { v.preload = 'auto'; v.load(); } v.play().catch(() => { }); } else v.pause(); });
         cnt.textContent = String(i + 1).padStart(2, '0'); dots.forEach((d, k) => d.classList.toggle('on', k === i));
         log.textContent = `workflow.run() · węzeł ${i + 1}/4 · ${[86, 412, 690, 812][i]} ms`;
         logLine(i);
@@ -316,6 +327,8 @@
       nodes.forEach((n, i) => n.addEventListener('click', e => { if (i !== active) { e.preventDefault(); goTo(i); } }));
       dots.forEach((d, i) => d.addEventListener('click', () => goTo(i)));
       addEventListener('resize', () => { layout(); place(); });
+      const cv = $('video', core);
+      if (cv) { cv.preload = 'auto'; cv.load(); cv.addEventListener('playing', () => core.classList.add('vid'), { once: true }); new IntersectionObserver(es => es.forEach(e => e.isIntersecting ? cv.play().catch(() => { }) : cv.pause()), { rootMargin: '200px' }).observe(pin); }
       layout(); setActive(0); place();
       const t0 = performance.now();
       (function loop(now) {
