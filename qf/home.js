@@ -249,7 +249,7 @@
     if (!hasG || RM || !WIDE) aut.classList.add('flat');
     else {
       const pin = $('#aut-pin'), nodes = $$('.aut-node', track), wire = $('#aut-wire'), pOff = $('#aut-path'), pOn = $('#aut-path-on'), bar = $('#aut-bar'), log = $('#aut-log');
-      let len = 0;
+      let len = 0, head = 0, nodeLen = [], inView = false;
       const build = () => {
         const tr = track.getBoundingClientRect();
         wire.setAttribute('viewBox', `0 0 ${tr.width} ${tr.height}`);
@@ -259,19 +259,63 @@
         let d = `M${pts[0][0]},${pts[0][1]}`;
         for (let i = 1; i < pts.length; i++) { const [x0, y0] = pts[i - 1], [x1, y1] = pts[i], mx = (x0 + x1) / 2; d += ` C${mx},${y0} ${mx},${y1} ${x1},${y1}`; }
         pOff.setAttribute('d', d); pOn.setAttribute('d', d);
-        len = pOn.getTotalLength(); pOn.style.strokeDasharray = len; pOn.style.strokeDashoffset = len;
+        len = pOn.getTotalLength(); pOn.style.strokeDasharray = len; pOn.style.strokeDashoffset = len - head;
+        // długość przewodu, na której leży każdy węzeł
+        nodeLen = pts.slice(1).map(([x, y]) => { let best = 0, bd = 1e9; for (let l = 0; l <= len; l += 4) { const q = pOn.getPointAtLength(l), dd = (q.x - x) ** 2 + (q.y - y) ** 2; if (dd < bd) { bd = dd; best = l; } } return best; });
       };
       const dist = () => track.scrollWidth - innerWidth;
       const HOLD = .12;
+      // paczki danych płynące po przewodzie
+      const NS = 'http://www.w3.org/2000/svg', TAGS = ['mail', 'lead', 'PDF', 'CRM', 'Slack', 'API', 'AI'];
+      const packs = TAGS.map((t, i) => {
+        const g = document.createElementNS(NS, 'g'); g.setAttribute('class', 'pk');
+        g.innerHTML = `<circle r="9" class="pk-halo"/><circle r="3.6" class="pk-dot"/><text y="-16" text-anchor="middle">${t}</text>`;
+        wire.appendChild(g); return { g, off: i / TAGS.length, last: -1 };
+      });
+      // log wykonania
+      const term = document.createElement('div'); term.className = 'aut-term'; term.setAttribute('aria-hidden', 'true');
+      term.innerHTML = '<div class="aut-term-h"><i></i><i></i><i></i><span>n8n · executions</span></div><ol></ol>';
+      $('.aut-stage').appendChild(term);
+      const tlist = $('ol', term);
+      const MSG = [
+        ['01', 'Wyzwalacz', ['nowy mail od klienta', 'formularz: zapytanie o wycenę', 'harmonogram 08:00']],
+        ['02', 'Agent AI', ['klasyfikacja: lead gorący', 'odczyt faktury PDF', 'odpowiedź z bazy wiedzy']],
+        ['03', 'Akcje', ['wpis w CRM + Slack', 'arkusz zaktualizowany', 'mail do klienta wysłany']],
+        ['04', 'Efekt', ['gotowe w 0,8 s', 'oszczędzone 12 min pracy', 'raport w skrzynce']],
+      ];
+      let mi = 0;
+      const hit = i => {
+        const n = nodes[i]; n.classList.remove('hit'); void n.offsetWidth; n.classList.add('hit');
+        const [no, name, opts] = MSG[i], li = document.createElement('li');
+        li.innerHTML = `<b>✓ ${no}</b> ${name} <span>· ${opts[mi++ % opts.length]}</span>`;
+        tlist.prepend(li); while (tlist.children.length > 3) tlist.lastChild.remove();
+      };
+      let t0 = performance.now();
+      (function flow(now) {
+        requestAnimationFrame(flow);
+        if (!inView || head < 30) { packs.forEach(p => p.g.style.opacity = 0); return; }
+        const t = (now - t0) / 1000, span = head + 60;
+        packs.forEach(p => {
+          const s = ((t * 260 + p.off * span) % span) - 30;
+          if (s < 0 || s > head) { p.g.style.opacity = 0; p.last = s; return; }
+          const q = pOn.getPointAtLength(s);
+          p.g.setAttribute('transform', `translate(${q.x.toFixed(1)},${q.y.toFixed(1)})`);
+          p.g.style.opacity = Math.min(1, (head - s) / 40, (s + 30) / 40);
+          nodeLen.forEach((L, i) => { if (p.last < L && s >= L) hit(i); });
+          p.last = s;
+        });
+      })(t0);
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: pin, start: 'top top', end: 'bottom bottom', scrub: 1, invalidateOnRefresh: true,
           onRefresh: build,
+          onToggle: s => { inView = s.isActive; term.classList.toggle('on', s.isActive); },
           onUpdate: s => {
-            const p = clamp((s.progress - HOLD) / (1 - HOLD), 0, 1); pOn.style.strokeDashoffset = len * (1 - clamp(p * 1.08, 0, 1));
+            const p = clamp((s.progress - HOLD) / (1 - HOLD), 0, 1);
+            head = len * clamp(p * 1.08, 0, 1); pOn.style.strokeDashoffset = len - head;
             bar.style.transform = `scaleX(${s.progress})`;
-            const k = clamp(Math.floor(p * 4.4), 0, 4);
-            nodes.forEach((n, i) => n.classList.toggle('on', i < k));
+            nodes.forEach((n, i) => n.classList.toggle('on', head >= nodeLen[i] - 20));
+            const k = nodes.filter(n => n.classList.contains('on')).length;
             log.textContent = k ? `workflow.run() · węzeł ${k}/4 · ${Math.round(80 + p * 1400)} ms` : 'workflow.run() · czeka na zdarzenie';
           },
         },
