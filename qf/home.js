@@ -302,12 +302,13 @@
         beam.setAttribute('x1', L.cx); beam.setAttribute('x2', L.cx); beam.setAttribute('y1', L.cy + L.cs * .36); beam.setAttribute('y2', fy);
         beam.style.opacity = Math.max(0, 1 - Math.abs(pos - Math.round(pos)) * 5);
       };
+      let secOn = false;
       const setActive = i => {
         if (i === active) return; active = i;
         nodes.forEach((n, k) => { n.classList.toggle('on', k === i); n.setAttribute('aria-current', k === i ? 'step' : 'false'); });
         const n = nodes[i]; n.classList.remove('hit'); void n.offsetWidth; n.classList.add('hit');
         giant.classList.remove('in'); void giant.offsetWidth; giant.textContent = NAMES[i]; giant.classList.add('in');
-        nodes.forEach((n2, k) => { const v = $('video', n2); if (!v) return; if (k === i) { if (v.preload === 'none') { v.preload = 'auto'; v.load(); } v.play().catch(() => { }); } else v.pause(); });
+        { const v = $('video', nodes[i]); if (v && secOn && v.preload !== 'auto') { v.preload = 'auto'; v.load(); v.play().catch(() => { }); } }
         cnt.textContent = String(i + 1).padStart(2, '0'); dots.forEach((d, k) => d.classList.toggle('on', k === i));
         log.textContent = `workflow.run() · węzeł ${i + 1}/4 · ${[86, 412, 690, 812][i]} ms`;
         logLine(i);
@@ -329,13 +330,18 @@
       addEventListener('resize', () => { layout(); place(); });
       const cv = $('video', core);
       // wczytaj wszystkie filmy sekcji z wyprzedzeniem (ok. 2 ekrany przed sekcją)
-      const allV = [cv, ...nodes.map(n => $('video', n))].filter(Boolean);
-      let cvOn = false;
-      const warm = () => { allV.forEach(v => { if (v.preload !== 'auto') { v.preload = 'auto'; v.load(); } });
-        // load() przerywa wcześniejsze play() – wznów to, co ma grać
-        if (cvOn && cv) cv.play().catch(() => { }); const av = $('video', nodes[active]); if (av && inView) av.play().catch(() => { }); };
-      const wio = new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) { warm(); wio.disconnect(); } }, { rootMargin: '200% 0px' }); wio.observe(pin);
-      if (cv) { cv.addEventListener('playing', () => core.classList.add('vid'), { once: true }); new IntersectionObserver(es => es.forEach(e => { cvOn = e.isIntersecting; cvOn ? cv.play().catch(() => { }) : cv.pause(); }), { rootMargin: '200px' }).observe(pin); }
+      // filmy: wczytywane po kolei (najpierw karta 1 i kula), a w sekcji grają wszystkie naraz,
+      // więc przełączenie karty pokazuje od razu ruch, bez startu odtwarzania
+      const cardV = nodes.map(n => $('video', n)).filter(Boolean);
+      const order = [cardV[0], cv, ...cardV.slice(1)].filter(Boolean);
+      const playIf = v => { if (secOn && v.preload === 'auto') v.play().catch(() => { }); };
+      const warm = () => { let k = 0; const next = () => { const v = order[k++]; if (!v) return; if (v.preload === 'auto') return next(); v.preload = 'auto'; v.load(); playIf(v); let done = false; const go = () => { if (done) return; done = true; next(); }; v.addEventListener('canplaythrough', go, { once: true }); setTimeout(go, 2500); }; next(); };
+      let warmed = false; const warm1 = () => { if (!warmed) { warmed = true; warm(); } };
+      const wio = new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) { warm1(); wio.disconnect(); } }, { rootMargin: '300% 0px' }); wio.observe(pin);
+      // albo kilka sekund po wczytaniu strony, w tle
+      addEventListener('load', () => setTimeout(() => (window.requestIdleCallback || setTimeout)(warm1), 3000), { once: true }); if (document.readyState === 'complete') setTimeout(warm1, 3000);
+      if (cv) cv.addEventListener('playing', () => core.classList.add('vid'), { once: true });
+      new IntersectionObserver(es => es.forEach(e => { secOn = e.isIntersecting; order.forEach(v => secOn ? playIf(v) : v.pause()); }), { rootMargin: '200px' }).observe(pin);
       layout(); setActive(0); place();
       const t0 = performance.now();
       (function loop(now) {
