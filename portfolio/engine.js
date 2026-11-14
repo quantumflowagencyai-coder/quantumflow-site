@@ -693,6 +693,52 @@ $$('.cards--plan .card').forEach(c => {
   c.addEventListener('click', e => { if (e.pointerType === 'mouse') return; pos(e); go(st.r > 40 ? 0 : 150); });
 });
 
+/* rzut rysuje się sam: kreska biegnie wzdłuż ścian (BFS po jasnych pikselach), złota końcówka pióra, potem metryka */
+function planDraw(c, i) {
+  const pl = $('.plan', c); if (!pl || reduce) return; pl.loading = 'eager';
+  const W = 540, H = 675, cv = document.createElement('canvas'); cv.width = W; cv.height = H; cv.className = 'plan-cv';
+  pl.after(cv); pl.style.opacity = 0;
+  const tag = document.createElement('span'); tag.className = 'plan-tag lbl'; tag.innerHTML = `<b>A-0${i + 1}</b> · 1:100 · <em>0%</em>`;
+  $('.card-img', c).appendChild(tag);
+  const pct = $('em', tag);
+  let ready = null;
+  const prep = () => ready || (ready = (pl.decode ? pl.decode() : Promise.resolve()).catch(() => {}).then(() => {
+    const ctx = cv.getContext('2d', { willReadFrequently: true });
+    ctx.drawImage(pl, 0, 0, W, H);
+    const src = ctx.getImageData(0, 0, W, H), d = src.data, N = W * H;
+    const on = new Uint8Array(N), dist = new Int32Array(N).fill(-1);
+    for (let p = 0; p < N; p++) { const q = p * 4; if (d[q] * .3 + d[q + 1] * .59 + d[q + 2] * .11 > 46) on[p] = 1; }
+    const qu = new Int32Array(N); let max = 0;
+    const bfs = (seed, base) => { let h = 0, t = 0; qu[t++] = seed; dist[seed] = base;
+      while (h < t) { const p = qu[h++], x = p % W, y = (p / W) | 0, nd = dist[p] + 1;
+        for (let dy = -1; dy <= 1; dy++) for (let dx = -1; dx <= 1; dx++) { const xx = x + dx, yy = y + dy;
+          if (xx < 0 || yy < 0 || xx >= W || yy >= H) continue; const n = yy * W + xx;
+          if (on[n] && dist[n] < 0) { dist[n] = nd; if (nd > max) max = nd; qu[t++] = n; } } } };
+    // start: najdłuższa ściana zaczyna się w lewym górnym rogu, reszta elementów dołącza w trakcie
+    let first = -1; for (let s = 0; s < W + H && first < 0; s++) for (let x = 0; x <= s; x++) { const y = s - x; if (x < W && y < H && on[y * W + x]) { first = y * W + x; break; } }
+    if (first >= 0) bfs(first, 0);
+    const mainMax = max || 1;
+    for (let p = 0; p < N; p++) if (on[p] && dist[p] < 0) { const y = (p / W) | 0; bfs(p, Math.round(mainMax * (.08 + .5 * y / H) )); }
+    ctx.clearRect(0, 0, W, H);
+    return { ctx, d, dist, max: Math.max(max, 1), out: ctx.createImageData(W, H) };
+  }));
+  ScrollTrigger.create({ trigger: c, start: 'top 75%', once: true, onEnter: () => prep().then(S => {
+    const { ctx, d, dist, out } = S, o = out.data, N = W * H, st = { t: 0 };
+    const frame = () => {
+      const t = st.t * S.max;
+      for (let p = 0; p < N; p++) { const k = dist[p], q = p * 4;
+        if (k < 0 || k > t) { o[q + 3] = 0; continue; }
+        const g = t - k;
+        if (g < 14 && st.t < 1) { const a = 1 - g / 14; o[q] = 255; o[q + 1] = 200 + 40 * a; o[q + 2] = 120 + 80 * a; o[q + 3] = 255; }
+        else { o[q] = d[q]; o[q + 1] = d[q + 1]; o[q + 2] = d[q + 2]; o[q + 3] = 255; } }
+      ctx.putImageData(out, 0, 0); pct.textContent = Math.round(st.t * 100) + '%';
+    };
+    gsap.to(st, { t: 1, duration: 2.6 + i * .25, delay: i * .18, ease: 'power1.inOut', onUpdate: frame, onComplete: () => {
+      frame(); gsap.to(pl, { opacity: 1, duration: .5 }); gsap.to(cv, { opacity: 0, duration: .5 }); tag.classList.add('done'); pct.textContent = 'gotowe'; } });
+  }) });
+}
+$$('.cards--plan .card').forEach(planDraw);
+
 /* widok z okna: dzień przechodzi w noc przy przewijaniu, zegar i przełącznik */
 $$('.daynight').forEach(sec => {
   const night = $('.dn-night', sec), clock = $('.dn-clock', sec), bt = $$('.dn-tog button', sec), knob = $('.dn-tog i', sec);
