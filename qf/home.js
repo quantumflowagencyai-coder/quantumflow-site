@@ -399,7 +399,6 @@
   });
 
   // ---------- kontakt: wielkie „Porozmawiajmy” jedzie z scrollem ----------
-  if (hasG && !RM) gsap.fromTo('.ct-giant span', { xPercent: 0 }, { xPercent: -60, ease: 'none', scrollTrigger: { trigger: '#kontakt', start: 'top bottom', end: 'bottom top', scrub: true } });
 
   // ---------- formularz (Web3Forms) ----------
   window.CONTACT_EMAIL = 'kontakt@quantumflow.agency';
