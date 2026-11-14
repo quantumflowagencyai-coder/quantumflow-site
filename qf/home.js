@@ -330,9 +330,12 @@
       const cv = $('video', core);
       // wczytaj wszystkie filmy sekcji z wyprzedzeniem (ok. 2 ekrany przed sekcją)
       const allV = [cv, ...nodes.map(n => $('video', n))].filter(Boolean);
-      const warm = () => allV.forEach(v => { if (v.preload !== 'auto') { v.preload = 'auto'; v.load(); } });
+      let cvOn = false;
+      const warm = () => { allV.forEach(v => { if (v.preload !== 'auto') { v.preload = 'auto'; v.load(); } });
+        // load() przerywa wcześniejsze play() – wznów to, co ma grać
+        if (cvOn && cv) cv.play().catch(() => { }); const av = $('video', nodes[active]); if (av && inView) av.play().catch(() => { }); };
       const wio = new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) { warm(); wio.disconnect(); } }, { rootMargin: '200% 0px' }); wio.observe(pin);
-      if (cv) { cv.addEventListener('playing', () => core.classList.add('vid'), { once: true }); new IntersectionObserver(es => es.forEach(e => e.isIntersecting ? cv.play().catch(() => { }) : cv.pause()), { rootMargin: '200px' }).observe(pin); }
+      if (cv) { cv.addEventListener('playing', () => core.classList.add('vid'), { once: true }); new IntersectionObserver(es => es.forEach(e => { cvOn = e.isIntersecting; cvOn ? cv.play().catch(() => { }) : cv.pause(); }), { rootMargin: '200px' }).observe(pin); }
       layout(); setActive(0); place();
       const t0 = performance.now();
       (function loop(now) {
