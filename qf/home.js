@@ -243,85 +243,96 @@
     (function loop() { px += (tx - px) * .12; py += (ty - py) * .12; prev.style.left = px + 'px'; prev.style.top = py + 'px'; requestAnimationFrame(loop); })();
   }
 
-  // ---------- automatyzacje: tor poziomy + przewód n8n ----------
-  const aut = $('#automatyzacje'), track = $('#aut-track');
-  if (aut && track) {
+  // ---------- automatyzacje: karuzela 3D kart wokół rdzenia AI ----------
+  const aut = $('#automatyzacje'), ring = $('#aut-ring');
+  if (aut && ring) {
     if (!hasG || RM || !WIDE) aut.classList.add('flat');
     else {
-      const pin = $('#aut-pin'), nodes = $$('.aut-node', track), wire = $('#aut-wire'), pOff = $('#aut-path'), pOn = $('#aut-path-on'), bar = $('#aut-bar'), log = $('#aut-log');
-      let len = 0, head = 0, nodeLen = [], inView = false;
-      const build = () => {
-        const tr = track.getBoundingClientRect();
-        wire.setAttribute('viewBox', `0 0 ${tr.width} ${tr.height}`);
-        const pts = nodes.map(n => { const r = $('.node', n).getBoundingClientRect(); return [r.left - tr.left + r.width / 2, r.top - tr.top + r.height / 2]; });
-        const intro = $('.aut-intro', track).getBoundingClientRect();
-        pts.unshift([intro.right - tr.left - 40, tr.height / 2]);
-        let d = `M${pts[0][0]},${pts[0][1]}`;
-        for (let i = 1; i < pts.length; i++) { const [x0, y0] = pts[i - 1], [x1, y1] = pts[i], mx = (x0 + x1) / 2; d += ` C${mx},${y0} ${mx},${y1} ${x1},${y1}`; }
-        pOff.setAttribute('d', d); pOn.setAttribute('d', d);
-        len = pOn.getTotalLength(); pOn.style.strokeDasharray = len; pOn.style.strokeDashoffset = len - head;
-        // długość przewodu, na której leży każdy węzeł
-        nodeLen = pts.slice(1).map(([x, y]) => { let best = 0, bd = 1e9; for (let l = 0; l <= len; l += 4) { const q = pOn.getPointAtLength(l), dd = (q.x - x) ** 2 + (q.y - y) ** 2; if (dd < bd) { bd = dd; best = l; } } return best; });
-      };
-      const dist = () => track.scrollWidth - innerWidth;
-      const HOLD = .12;
-      // paczki danych płynące po przewodzie
-      const NS = 'http://www.w3.org/2000/svg', TAGS = ['mail', 'lead', 'PDF', 'CRM', 'Slack', 'API', 'AI'];
-      const packs = TAGS.map((t, i) => {
-        const g = document.createElementNS(NS, 'g'); g.setAttribute('class', 'pk');
-        g.innerHTML = `<circle r="9" class="pk-halo"/><circle r="3.6" class="pk-dot"/><text y="-16" text-anchor="middle">${t}</text>`;
-        wire.appendChild(g); return { g, off: i / TAGS.length, last: -1 };
-      });
-      // log wykonania
-      const term = document.createElement('div'); term.className = 'aut-term'; term.setAttribute('aria-hidden', 'true');
-      term.innerHTML = '<div class="aut-term-h"><i></i><i></i><i></i><span>n8n · executions</span></div><ol></ol>';
-      $('.aut-stage').appendChild(term);
-      const tlist = $('ol', term);
+      const pin = $('#aut-pin'), stageA = $('#aut-stage'), nodes = $$('.aut-node', ring), N = nodes.length;
+      const svg = $('#aut-orbit'), o1 = $('.o1', svg), o2 = $('.o2', svg), beam = $('#aut-beam'), packG = $('#aut-packs');
+      const core = $('#aut-core'), giant = $('#aut-giant'), cnt = $('#aut-cnt'), dots = $$('#aut-dots button'), bar = $('#aut-bar'), log = $('#aut-log');
+      const NAMES = ['Wyzwalacz', 'Agent AI', 'Akcje', 'Efekt'];
       const MSG = [
         ['01', 'Wyzwalacz', ['nowy mail od klienta', 'formularz: zapytanie o wycenę', 'harmonogram 08:00']],
         ['02', 'Agent AI', ['klasyfikacja: lead gorący', 'odczyt faktury PDF', 'odpowiedź z bazy wiedzy']],
         ['03', 'Akcje', ['wpis w CRM + Slack', 'arkusz zaktualizowany', 'mail do klienta wysłany']],
         ['04', 'Efekt', ['gotowe w 0,8 s', 'oszczędzone 12 min pracy', 'raport w skrzynce']],
       ];
+      // log wykonań
+      const term = document.createElement('div'); term.className = 'aut-term'; term.setAttribute('aria-hidden', 'true');
+      term.innerHTML = '<div class="aut-term-h"><i></i><i></i><i></i><span>n8n · executions</span></div><ol></ol>';
+      stageA.appendChild(term); const tlist = $('ol', term);
       let mi = 0;
-      const hit = i => {
-        const n = nodes[i]; n.classList.remove('hit'); void n.offsetWidth; n.classList.add('hit');
-        const [no, name, opts] = MSG[i], li = document.createElement('li');
-        li.innerHTML = `<b>✓ ${no}</b> ${name} <span>· ${opts[mi++ % opts.length]}</span>`;
-        tlist.prepend(li); while (tlist.children.length > 3) tlist.lastChild.remove();
+      const logLine = i => { const [no, name, o] = MSG[i], li = document.createElement('li'); li.innerHTML = `<b>✓ ${no}</b> ${name} <span>· ${o[mi++ % o.length]}</span>`; tlist.prepend(li); while (tlist.children.length > 3) tlist.lastChild.remove(); };
+      // paczki danych na orbicie
+      const NS = 'http://www.w3.org/2000/svg', TAGS = ['mail', 'lead', 'PDF', 'CRM', 'Slack', 'AI'];
+      const packs = TAGS.map((t, i) => { const g = document.createElementNS(NS, 'g'); g.innerHTML = `<circle r="9" class="pk-halo"/><circle r="3.6" class="pk-dot"/><text y="-15" text-anchor="middle">${t}</text>`; packG.appendChild(g); return { g, off: i / TAGS.length }; });
+      const bdots = [0, .5].map(o => { const c = document.createElementNS(NS, 'circle'); c.setAttribute('r', '4'); c.setAttribute('class', 'pk-dot'); packG.appendChild(c); return { c, o }; });
+
+      let L = {}, pos = 0, target = 0, active = -1, inView = false;
+      const layout = () => {
+        const W = innerWidth, H = innerHeight;
+        L = { W, H, cx: W / 2, cy: H * .4, cs: Math.min(270, W * .2), rx: Math.min(W * .34, 540), ry: Math.min(H * .25, 220) };
+        core.style.setProperty('--cy', L.cy + 'px'); core.style.setProperty('--cs', L.cs + 'px');
+        svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+        for (const [e, k] of [[o1, 1], [o2, 1.1]]) { e.setAttribute('cx', L.cx); e.setAttribute('cy', L.cy); e.setAttribute('rx', L.rx * k); e.setAttribute('ry', L.ry * k); }
+        nodes.forEach(n => { n.style.left = '0px'; n._w = n.offsetWidth; n._h = n.offsetHeight; });
       };
-      let t0 = performance.now();
-      (function flow(now) {
-        requestAnimationFrame(flow);
-        if (!inView || head < 30) { packs.forEach(p => p.g.style.opacity = 0); return; }
-        const t = (now - t0) / 1000, span = head + 60;
-        packs.forEach(p => {
-          const s = ((t * 260 + p.off * span) % span) - 30;
-          if (s < 0 || s > head) { p.g.style.opacity = 0; p.last = s; return; }
-          const q = pOn.getPointAtLength(s);
-          p.g.setAttribute('transform', `translate(${q.x.toFixed(1)},${q.y.toFixed(1)})`);
-          p.g.style.opacity = Math.min(1, (head - s) / 40, (s + 30) / 40);
-          nodeLen.forEach((L, i) => { if (p.last < L && s >= L) hit(i); });
-          p.last = s;
+      const place = () => {
+        nodes.forEach((n, i) => {
+          const a = (i - pos) * Math.PI * 2 / N, sa = Math.sin(a), ca = Math.cos(a), d = (ca + 1) / 2;
+          const x = L.cx + L.rx * sa, y = L.cy + L.ry * ca, sc = .48 + .52 * d * d;
+          n.style.transform = `translate3d(${(x - n._w / 2).toFixed(1)}px,${(y - n._h / 2).toFixed(1)}px,0) scale(${sc.toFixed(3)}) rotateY(${(-sa * 18).toFixed(2)}deg)`;
+          n.style.zIndex = Math.round(d * 100);
+          n.style.opacity = (.25 + .75 * d).toFixed(3);
+          n.style.filter = d > .97 ? 'none' : `blur(${((1 - d) * 5).toFixed(2)}px) brightness(${(.45 + .55 * d).toFixed(3)})`;
         });
-      })(t0);
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: pin, start: 'top top', end: 'bottom bottom', scrub: 1, invalidateOnRefresh: true,
-          onRefresh: build,
-          onToggle: s => { inView = s.isActive; term.classList.toggle('on', s.isActive); },
-          onUpdate: s => {
-            const p = clamp((s.progress - HOLD) / (1 - HOLD), 0, 1);
-            head = len * clamp(p * 1.08, 0, 1); pOn.style.strokeDashoffset = len - head;
-            bar.style.transform = `scaleX(${s.progress})`;
-            nodes.forEach((n, i) => n.classList.toggle('on', head >= nodeLen[i] - 20));
-            const k = nodes.filter(n => n.classList.contains('on')).length;
-            log.textContent = k ? `workflow.run() · węzeł ${k}/4 · ${Math.round(80 + p * 1400)} ms` : 'workflow.run() · czeka na zdarzenie';
-          },
-        },
+        // promień z rdzenia do aktywnej karty
+        const f = nodes[clamp(Math.round(pos), 0, N - 1)], fy = L.cy + L.ry - f._h / 2 - 26;
+        beam.setAttribute('x1', L.cx); beam.setAttribute('x2', L.cx); beam.setAttribute('y1', L.cy + L.cs * .36); beam.setAttribute('y2', fy);
+        beam.style.opacity = Math.max(0, 1 - Math.abs(pos - Math.round(pos)) * 5);
+      };
+      const setActive = i => {
+        if (i === active) return; active = i;
+        nodes.forEach((n, k) => { n.classList.toggle('on', k === i); n.setAttribute('aria-current', k === i ? 'step' : 'false'); });
+        const n = nodes[i]; n.classList.remove('hit'); void n.offsetWidth; n.classList.add('hit');
+        giant.classList.remove('in'); void giant.offsetWidth; giant.textContent = NAMES[i]; giant.classList.add('in');
+        cnt.textContent = String(i + 1).padStart(2, '0'); dots.forEach((d, k) => d.classList.toggle('on', k === i));
+        log.textContent = `workflow.run() · węzeł ${i + 1}/4 · ${[86, 412, 690, 812][i]} ms`;
+        logLine(i);
+      };
+      const H0 = .06, H1 = .94;
+      const range = () => Math.max(1, pin.offsetHeight - innerHeight);
+      const goTo = i => { const top = pin.getBoundingClientRect().top + scrollY + (H0 + (i / (N - 1)) * (H1 - H0)) * range() + 2; lenis ? lenis.scrollTo(top, { duration: 1.1 }) : scrollTo({ top, behavior: 'smooth' }); };
+      ScrollTrigger.create({
+        trigger: pin, start: 'top top', end: 'bottom bottom',
+        onToggle: s => { inView = s.isActive; term.classList.toggle('on', s.isActive); },
+        onUpdate: s => { target = clamp((s.progress - H0) / (H1 - H0), 0, 1) * (N - 1); bar.style.transform = `scaleX(${s.progress})`; },
+        onRefresh: () => { layout(); place(); },
       });
-      tl.to({}, { duration: HOLD }).to(track, { x: () => -dist(), ease: 'none', duration: 1 - HOLD });
-      build();
+      // magnes: dociąga do najbliższej karty
+      let idle = 0;
+      addEventListener('scroll', () => { clearTimeout(idle); idle = setTimeout(() => { if (!inView) return; const k = Math.round(target); if (Math.abs(target - k) > .04) goTo(k); }, 260); }, { passive: true });
+      nodes.forEach((n, i) => n.addEventListener('click', e => { if (i !== active) { e.preventDefault(); goTo(i); } }));
+      dots.forEach((d, i) => d.addEventListener('click', () => goTo(i)));
+      addEventListener('resize', () => { layout(); place(); });
+      layout(); setActive(0); place();
+      const t0 = performance.now();
+      (function loop(now) {
+        requestAnimationFrame(loop);
+        const r = pin.getBoundingClientRect();
+        if (r.top > innerHeight || r.bottom < 0) return;
+        pos += (target - pos) * .085; if (Math.abs(target - pos) < 1e-4) pos = target;
+        place(); setActive(clamp(Math.round(pos), 0, N - 1));
+        const t = (now - t0) / 1000;
+        packs.forEach(p => {
+          const th = (t * .55 + p.off) * Math.PI * 2, ca = Math.cos(th);
+          p.g.setAttribute('transform', `translate(${(L.cx + L.rx * Math.sin(th)).toFixed(1)},${(L.cy + L.ry * ca).toFixed(1)})`);
+          p.g.style.opacity = (.15 + .85 * (ca + 1) / 2).toFixed(2);
+        });
+        const y1 = +beam.getAttribute('y1'), y2 = +beam.getAttribute('y2'), bo = +beam.style.opacity || 0;
+        bdots.forEach(b => { const k = (t * 1.4 + b.o) % 1; b.c.setAttribute('cx', L.cx); b.c.setAttribute('cy', (y1 + (y2 - y1) * k).toFixed(1)); b.c.style.opacity = bo * Math.sin(k * Math.PI); });
+      })(t0);
     }
   }
   // światło pod kursorem na kartach
