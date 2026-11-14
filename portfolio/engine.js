@@ -102,14 +102,20 @@ function fallbackObject(ctx, w, h, p, kind) {
 function sequence(sec) {
   const cv = $('canvas', sec), ctx = cv.getContext('2d');
   const src = sec.dataset.src, count = +sec.dataset.count || 0, ext = sec.dataset.ext || 'webp', kind = sec.dataset.fallback || 'sphere';
-  const frames = []; let ok = false, cur = 0, last = -1, progress = 0;
-  const size = () => { cv.width = innerWidth * DPR; cv.height = innerHeight * DPR; last = -1; draw(); };
+  const frames = []; let ok = false, cur = 0, last = -1, progress = 0, target = 0;
+  const size = () => { cv.width = innerWidth * DPR; cv.height = innerHeight * DPR; ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high'; last = -1; draw(); };
+  const okF = k => frames[k] && frames[k].complete && frames[k].naturalWidth;
   const draw = () => {
-    if (ok) { const i = Math.min(count - 1, Math.round(progress * (count - 1))); let f = frames[i];
-      if (!f || !f.complete || !f.naturalWidth) { for (let k = i; k >= 0; k--) if (frames[k] && frames[k].naturalWidth) { f = frames[k]; break; } }
-      if (!f || (i === last)) return; last = i; ctx.clearRect(0, 0, cv.width, cv.height); coverDraw(ctx, f, cv.width, cv.height, +sec.dataset.scale || 1); }
+    if (ok) { const pos = progress * (count - 1), i = Math.min(count - 1, Math.floor(pos)), fr = pos - i;
+      const key = Math.round(pos * 24) / 24; if (key === last) return;
+      let f = frames[i]; if (!okF(i)) { f = null; for (let k = i; k >= 0; k--) if (okF(k)) { f = frames[k]; break; } }
+      if (!f) return; last = key; const sc = +sec.dataset.scale || 1;
+      ctx.globalAlpha = 1; ctx.clearRect(0, 0, cv.width, cv.height); coverDraw(ctx, f, cv.width, cv.height, sc);
+      if (fr > .04 && i + 1 < count && okF(i + 1) && f === frames[i]) { ctx.globalAlpha = fr; coverDraw(ctx, frames[i + 1], cv.width, cv.height, sc); ctx.globalAlpha = 1; } }
     else fallbackObject(ctx, cv.width, cv.height, progress, kind);
   };
+  // postęp dogania scroll z lekką bezwładnością: obraz płynie zamiast przeskakiwać
+  gsap.ticker.add(() => { const d = target - progress; if (Math.abs(d) < 1e-5) return; progress = Math.abs(d) < 2e-4 ? target : progress + d * .22; draw(); });
   if (count && src) {
     const url = i => `${src}/${String(i + 1).padStart(4, '0')}.${ext}`;
     const first = new Image(); first.src = url(0); frames[0] = first;
@@ -122,7 +128,7 @@ function sequence(sec) {
   addEventListener('resize', size); size();
   const words = $$('.sw', sec).map(el => ({ el, a: +el.dataset.in, b: +el.dataset.out }));
   ScrollTrigger.create({ trigger: sec, start: 'top top', end: 'bottom bottom', scrub: true, onUpdate: s => {
-    progress = s.progress; draw();
+    target = s.progress; if (reduce) { progress = target; draw(); }
     for (const w of words) { const t = progress < w.a ? 0 : progress > w.b ? 0 : Math.min(1, (progress - w.a) / .06, (w.b - progress) / .06); w.el.style.opacity = t; w.el.style.transform = `translateY(${(1 - t) * 40}px)`; }
     const hud = $('.seq-hud .cnt', sec); if (hud) hud.textContent = String(Math.round(progress * 100)).padStart(2, '0');
   } });
