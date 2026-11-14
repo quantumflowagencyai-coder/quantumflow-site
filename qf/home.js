@@ -328,7 +328,11 @@
       dots.forEach((d, i) => d.addEventListener('click', () => goTo(i)));
       addEventListener('resize', () => { layout(); place(); });
       const cv = $('video', core);
-      if (cv) { cv.preload = 'auto'; cv.load(); cv.addEventListener('playing', () => core.classList.add('vid'), { once: true }); new IntersectionObserver(es => es.forEach(e => e.isIntersecting ? cv.play().catch(() => { }) : cv.pause()), { rootMargin: '200px' }).observe(pin); }
+      // wczytaj wszystkie filmy sekcji z wyprzedzeniem (ok. 2 ekrany przed sekcją)
+      const allV = [cv, ...nodes.map(n => $('video', n))].filter(Boolean);
+      const warm = () => allV.forEach(v => { if (v.preload !== 'auto') { v.preload = 'auto'; v.load(); } });
+      const wio = new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) { warm(); wio.disconnect(); } }, { rootMargin: '200% 0px' }); wio.observe(pin);
+      if (cv) { cv.addEventListener('playing', () => core.classList.add('vid'), { once: true }); new IntersectionObserver(es => es.forEach(e => e.isIntersecting ? cv.play().catch(() => { }) : cv.pause()), { rootMargin: '200px' }).observe(pin); }
       layout(); setActive(0); place();
       const t0 = performance.now();
       (function loop(now) {
