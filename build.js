@@ -18,7 +18,27 @@ fs.copyFileSync('node_modules/three/build/three.module.min.js', OUT + '/three.mo
 fs.mkdirSync(OUT + '/vendor', { recursive: true });
 for (const [f, n] of [['gsap/dist/gsap.min.js', 'gsap.min.js'], ['gsap/dist/ScrollTrigger.min.js', 'ScrollTrigger.min.js'], ['lenis/dist/lenis.min.js', 'lenis.min.js']]) fs.copyFileSync('node_modules/' + f, OUT + '/vendor/' + n);
 
-let src = rd('_src/index.orig.html');
+let src;
+const TEL = '+48690777721', TEL_TXT = '+48 690 777 721';
+if (fs.existsSync('_src/home.html')) {
+  // Nowa strona główna (2026-11-14): styl portfolio, gotowy HTML + /qf/home.css + /qf/home.js
+  src = rd('_src/home.html');
+  const J = '<script type="application/ld+json">';
+  const blocks = JSON.parse(rd('_src/schema.json'));
+  for (const b of blocks) if (b['@type'] === 'ProfessionalService') {
+    b.telephone = TEL; if (b.contactPoint) b.contactPoint.telephone = TEL;
+    b.sameAs = [...new Set([...(b.sameAs || []), 'https://www.facebook.com/quantumflow.ai.agency/', 'https://www.instagram.com/quantumflowaiagency/', 'https://share.google/zeEI3BiuIkQmRPPwX'])];
+  }
+  must(blocks.some(b => b.telephone === TEL), 'telefon w schema');
+  const strip = h => h.replace(/<[^>]+>/g, '').replace(/&amp;/g, '&').trim();
+  const qa = [...src.matchAll(/<details class="faq-item"><summary>([\s\S]*?)<\/summary><div class="faq-a"><p>([\s\S]*?)<\/p><\/div><\/details>/g)]
+    .map(m => ({ '@type': 'Question', name: strip(m[1]), acceptedAnswer: { '@type': 'Answer', text: strip(m[2]) } }));
+  must(qa.length >= 5, 'FAQ w schema');
+  blocks.push({ '@context': 'https://schema.org', '@type': 'FAQPage', '@id': 'https://quantumflow.agency/#faq', mainEntity: qa });
+  src = once(src, '<!--SCHEMA-->', blocks.map(b => J + JSON.stringify(b) + '</script>').join('\n'));
+  must(src.includes('789d4741-') === false && fs.readFileSync('qf/home.js', 'utf8').includes('api.web3forms.com'), 'formularz Web3Forms');
+} else {
+src = rd('_src/index.orig.html');
 
 // 1) CSS -> styles.css
 const s0 = src.indexOf('<style>\n'), s1 = src.indexOf('</style>', s0);
@@ -69,12 +89,12 @@ const faq = JSON.parse(src.slice(j0 + J.length, j1))['@graph'].find(x => x['@typ
 faq['@id'] = 'https://quantumflow.agency/#faq';
 const blocks = [...JSON.parse(rd('_src/schema.json')), { '@context': 'https://schema.org', ...faq }];
 // telefon agencji: schema (organizacja i punkt kontaktowy) + linia w sekcji Kontakt
-const TEL = '+48690777721', TEL_TXT = '+48 690 777 721';
 for (const b of blocks) if (b['@type'] === 'ProfessionalService') { b.telephone = TEL; if (b.contactPoint) b.contactPoint.telephone = TEL; }
 must(blocks.some(b => b.telephone === TEL), 'telefon w schema');
 src = once(src, '<p>Opisz krótko firmę i czego potrzebujesz. Odpowiemy w ciągu 24 godzin z pomysłem na stronę i wstępną wyceną.</p>\n        </div>',
   `<p>Opisz krótko firmę i czego potrzebujesz. Odpowiemy w ciągu 24 godzin z pomysłem na stronę i wstępną wyceną.</p>\n          <p class="contact-tel" style="margin-top:18px">Wolisz zadzwonić? <a href="tel:${TEL}" style="color:var(--cyan);font-weight:600;white-space:nowrap">${TEL_TXT}</a></p>\n        </div>`);
 src = src.slice(0, j0) + blocks.map(b => J + JSON.stringify(b) + '</script>').join('\n') + src.slice(j1 + 9);
+}
 // Portfolio: publikujemy tylko strony z _src/portfolio-live.json (reszta czeka na poprawki)
 {
   const ALL = ['ember', 'lume', 'ironclad', 'monolit'];
@@ -90,7 +110,7 @@ src = src.slice(0, j0) + blocks.map(b => J + JSON.stringify(b) + '</script>').jo
     let i = 0;
     src = src.replace(/<span class="pfh-num">\d\d \//g, () => `<span class="pfh-num">${String(++i).padStart(2, '0')} /`);
     const head = { 1: 'Strona, którą', 2: 'Dwie strony, które', 3: 'Trzy strony, które', 4: 'Cztery strony, które' }[LIVE.length];
-    src = src.replace(/Cztery strony, które <span class="grad">/, head + ' <span class="grad">');
+    src = src.replace(/Cztery strony, które <span class="(grad|acc)">/, (m, c) => head + ` <span class="${c}">`);
     if (LIVE.length === 1) src = src.replace('<div class="pfh-grid">', '<div class="pfh-grid pfh-solo">');
     const sm = path.join(OUT, 'sitemap.xml');
     if (fs.existsSync(sm)) fs.writeFileSync(sm, fs.readFileSync(sm, 'utf8').split('\n').filter(l => !OFF.some(x => l.includes('/portfolio/' + x + '<'))).join('\n'));
