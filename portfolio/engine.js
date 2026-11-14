@@ -662,6 +662,9 @@ $$('.build').forEach(sec => {
   ScrollTrigger.create({ trigger: sec, start: 'top top', end: '+=260%', pin: true, scrub: true, onUpdate: s => upd(s.progress) });
 });
 
+/* kamera na budowie: znacznik czasu jak w podglądzie monitoringu */
+$$('.bd-time').forEach(el => { const tick = () => { const d = new Date(); el.textContent = d.toLocaleDateString('pl-PL') + ' ' + d.toLocaleTimeString('pl-PL'); }; tick(); setInterval(tick, 1000); });
+
 /* wybór piętra: pasy na budynku, panel z danymi */
 $$('.fl-svg').forEach(svg => {
   const box = JSON.parse(svg.dataset.box), F = +svg.dataset.floors, sec = svg.closest('.floors');

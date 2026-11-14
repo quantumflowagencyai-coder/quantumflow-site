@@ -146,6 +146,7 @@ ${s.noParticles ? '' : '<canvas id="pf-gl" aria-hidden="true"></canvas>\n<div cl
       <div class="bd-hud"><span class="lbl"><b>05/</b> Budowa na żywo</span><span class="lbl bd-date">${esc(T.build[0].date)}</span></div>
       <div class="bd-read"><div class="lbl bd-lbl">${esc(T.build[0].lbl)}</div><div class="bd-pct"><span>0</span><b>%</b></div><div class="lbl">zaawansowania prac</div></div>
       <ol class="bd-tl">${nodes}</ol>
+      ${T.cam ? `<figure class="bd-cam" aria-label="${esc(T.cam.alt)}"><video data-auto muted loop playsinline preload="none" poster="${m}/${T.cam.src}.webp"><source src="${m}/${T.cam.src}.webm" type="video/webm"><source src="${m}/${T.cam.src}.mp4" type="video/mp4"></video><figcaption><span class="lbl"><i></i>Na żywo · ${esc(T.cam.lbl)}</span><span class="lbl bd-time">--:--:--</span></figcaption></figure>` : ''}
     </div>
   </section>
 `;

@@ -551,8 +551,8 @@
    "seqWords": [
     {
      "pos": "tl",
-     "in": 0.03,
-     "out": 0.2,
+     "in": 0.02,
+     "out": 0.15,
      "lbl": "Gdańsk · Młode Miasto",
      "l": [
       "Nad",
@@ -561,8 +561,8 @@
     },
     {
      "pos": "br",
-     "in": 0.27,
-     "out": 0.45,
+     "in": 0.28,
+     "out": 0.41,
      "lbl": "<b>118</b> m wysokości",
      "l": [
       "Piętro",
@@ -571,17 +571,27 @@
     },
     {
      "pos": "tl",
-     "in": 0.52,
-     "out": 0.7,
-     "lbl": "Salon · 64 m²",
+     "in": 0.48,
+     "out": 0.62,
+     "lbl": "Penthouse · salon na dwóch kondygnacjach",
      "l": [
-      "Światło",
-      "z trzech stron"
+      "Ogień",
+      "<span class=\"acc\">i panorama</span>"
      ]
     },
     {
      "pos": "br",
-     "in": 0.8,
+     "in": 0.68,
+     "out": 0.78,
+     "lbl": "Sypialnia master",
+     "l": [
+      "Poranek",
+      "<span class=\"acc\">z widokiem</span>"
+     ]
+    },
+    {
+     "pos": "tl",
+     "in": 0.83,
      "out": 0.97,
      "lbl": "Taras · piętro 32",
      "l": [
@@ -716,18 +726,18 @@
     "floors": 32,
     "height": 118,
     "journey": {
-     "count": 162,
+     "count": 267,
      "floors": [
       [
        0,
        0
       ],
       [
-       0.22,
+       0.27,
        0
       ],
       [
-       0.48,
+       0.42,
        32
       ],
       [
@@ -774,6 +784,11 @@
       "top": 0.075,
       "bottom": 0.7
      }
+    },
+    "cam": {
+     "src": "bd3",
+     "lbl": "Kamera 02 · żuraw",
+     "alt": "Podgląd z kamery na budowie: żuraw montuje szklaną elewację"
     }
    }
   }
