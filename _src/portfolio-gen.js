@@ -9,7 +9,7 @@ for (const s of P.sites) {
   const m = `/portfolio/${s.slug}`;
   const cards = s.cards.map((c, i) => `
       <article class="card"><div class="card-in">${s.lux ? `<span class="acc-n" aria-hidden="true">${String(i + 1).padStart(2, '0')}</span>` : ''}
-        <div class="card-img"><img src="${m}/g${i + 5}.webp" alt="${esc(c.alt)}" loading="lazy" width="1080" height="1350">${s.video && s.video.cards ? `<video class="card-vid" muted playsinline loop preload="none" aria-hidden="true" data-auto poster="${m}/g${i + 5}.webp"><source src="${m}/k${i + 1}.webm" type="video/webm"><source src="${m}/k${i + 1}.mp4" type="video/mp4"></video>` : ''}</div>
+        <div class="card-img">${s.tower ? `<img class="plan" src="${m}/p${i + 1}.webp" alt="Rzut: ${esc(c.t)}" loading="lazy" width="1080" height="1350"><img class="render" src="${m}/r${i + 1}.webp" alt="${esc(c.alt)}" loading="lazy" width="1080" height="1350"><span class="pr-tog" aria-hidden="true"><i>Rzut</i><i>Wizualizacja</i></span>` : ''}<img src="${m}/g${i + 5}.webp" alt="${esc(c.alt)}" loading="lazy" width="1080" height="1350">${s.video && s.video.cards ? `<video class="card-vid" muted playsinline loop preload="none" aria-hidden="true" data-auto poster="${m}/g${i + 5}.webp"><source src="${m}/k${i + 1}.webm" type="video/webm"><source src="${m}/k${i + 1}.mp4" type="video/mp4"></video>` : ''}</div>
         <div class="card-b"><div><h3>${esc(c.t)}</h3><p>${esc(c.d)}</p></div><span class="pr">${esc(c.p)}</span></div>
       </div></article>`).join('');
   const words = (ws) => ws.map(w => `<div class="sw ${w.pos}" data-in="${w.in}" data-out="${w.out}"><div class="lbl">${w.lbl}</div><div class="giant">${lines(w.l)}</div></div>`).join('');
@@ -36,13 +36,13 @@ for (const s of P.sites) {
 </head>
 <body>
 <a class="skip" href="#tresc">Przejdź do treści</a>
-<div id="loader" role="status" aria-live="polite"><div class="l-txt">${esc(s.loader)}</div><div class="l-num"><span>00</span><b>/100</b></div><div class="l-bar"><i></i></div></div>
+<div id="loader" role="status" aria-live="polite"${s.tower ? ` data-max="${s.tower.floors}"` : ''}><div class="l-txt">${esc(s.loader)}</div><div class="l-num"><span>00</span><b>/100</b></div><div class="l-bar"><i></i></div></div>
 ${s.noParticles ? '' : '<canvas id="pf-gl" aria-hidden="true"></canvas>\n<div class="beams" aria-hidden="true"><i></i><i></i><i></i></div>'}
 
 <header class="pf-nav"><a class="pf-brand" href="#top">${esc(s.name)}</a><a class="pf-back" href="/#portfolio">← QuantumFlow</a></header>
 
 <main id="tresc">
-  <section class="hero${s.heroFrame ? ' hero--frame' : ''}${s.lux ? ' hero--liquid' : ''}" id="top" data-fx="${s.fx || ''}">
+  <section class="hero${s.heroFrame ? ' hero--frame' : ''}${s.lux ? ' hero--liquid' : ''}${s.tower ? ' hero--blueprint' : ''}" id="top" data-fx="${s.fx || ''}">
     <div class="hero-media" aria-hidden="true">
       <video muted loop playsinline preload="auto" poster="${m}/hero.webp"><source src="${m}/hero.webm" type="video/webm"><source src="${m}/hero.mp4" type="video/mp4"></video>${s.lux ? '<canvas class="hero-gl"></canvas>' : ''}
     </div>
@@ -73,7 +73,7 @@ ${s.noParticles ? '' : '<canvas id="pf-gl" aria-hidden="true"></canvas>\n<div cl
 
   <section class="cards-sec wrap" id="oferta">
     <div class="cards-head"><h2 class="giant" style="font-size:clamp(48px,8vw,150px)">${lines(s.cardsTitle)}</h2><span class="lbl"><b>04/</b> ${esc(s.cardsLbl)}</span></div>
-    <div class="cards${s.lux ? ' cards--acc' : ''}">${cards}
+    <div class="cards${s.lux ? ' cards--acc' : ''}${s.tower ? ' cards--plan' : ''}">${cards}
     </div>
   </section>
 
@@ -122,7 +122,59 @@ ${s.noParticles ? '' : '<canvas id="pf-gl" aria-hidden="true"></canvas>\n<div cl
 </body>
 </html>
 `;
-  fs.writeFileSync(`portfolio/${s.slug}.html`, html);
+  let out = html;
+  if (s.tower) {
+    const T = s.tower;
+    out = out.replace(/\/100<\/b>/, `/${T.floors}</b>`);
+    const journey = `  <section class="seq journey" data-src="${m}/podroz" data-count="${T.journey.count}" data-fallback="tower" data-ext="webp" aria-label="${esc(s.seqLabel)}" data-floors='${JSON.stringify(T.journey.floors)}' data-fmax="${T.floors}" data-hmax="${T.height}">
+    <div class="seq-sticky">
+      <canvas aria-hidden="true"></canvas>
+      <div class="seq-hud"><span class="lbl"><b>02/</b> ${esc(s.seqLabel)}</span><span class="lbl jr-coord">54°21′N · 18°39′E</span></div>
+      <div class="lift" aria-hidden="true"><div class="lift-shaft">${Array.from({ length: T.floors + 1 }, (_, i) => `<i${i % 4 === 0 ? ' class="big"' : ''}></i>`).join('')}<b class="lift-car"></b></div><div class="lift-read"><span class="lbl">Piętro</span><strong class="lift-fl">00</strong><span class="lbl lift-h">0,0 m</span></div></div>
+      <div class="seq-words">${words(s.seqWords)}</div>
+      <div class="jr-bar" aria-hidden="true"><i></i></div>
+    </div>
+  </section>
+`;
+    out = out.replace(/  <section class="seq" data-src[\s\S]*?<\/section>\n/, () => journey);
+    const st = T.build.map((b, i) => `<figure class="bd-st" data-pct="${b.pct}" data-lbl="${esc(b.lbl)}" data-date="${esc(b.date)}"><img src="${m}/${b.img}.webp" alt="${esc(b.alt)}" loading="lazy" width="1920" height="1080"></figure>`).join('');
+    const nodes = T.build.map((b, i) => `<li><b>${esc(b.date)}</b><span>${esc(b.lbl)}</span></li>`).join('');
+    const build = `  <section class="build" aria-label="Postęp budowy">
+    <div class="bd-sticky">
+      ${st}
+      <div class="bd-line" aria-hidden="true"></div>
+      <div class="bd-hud"><span class="lbl"><b>05/</b> Budowa na żywo</span><span class="lbl bd-date">${esc(T.build[0].date)}</span></div>
+      <div class="bd-read"><div class="lbl bd-lbl">${esc(T.build[0].lbl)}</div><div class="bd-pct"><span>0</span><b>%</b></div><div class="lbl">zaawansowania prac</div></div>
+      <ol class="bd-tl">${nodes}</ol>
+    </div>
+  </section>
+`;
+    const fl = `  <section class="floors wrap" id="pietra" aria-label="Wybór piętra">
+    <div class="cards-head"><h2 class="giant" style="font-size:clamp(48px,8vw,150px)"><span class="ln s1"><span>Wybierz</span></span><span class="ln s2"><span><span class="acc">piętro</span></span></span></h2><span class="lbl"><b>06/</b> Najedź na budynek</span></div>
+    <div class="fl-grid">
+      <div class="fl-pic"><img src="${m}/${T.pick.img}.webp" alt="Wieża MONOLIT, wybór piętra" loading="lazy" width="1920" height="1080"><svg class="fl-svg" viewBox="0 0 1000 1000" preserveAspectRatio="none" data-box='${JSON.stringify(T.pick.box)}' data-floors="${T.floors}"></svg></div>
+      <div class="fl-info glass"><div>
+        <div class="lbl">Piętro</div><div class="fl-n">--</div>
+        <dl><div><dt>Apartamenty</dt><dd class="fl-u">--</dd></div><div><dt>Wolne</dt><dd class="fl-f">--</dd></div><div><dt>Cena od</dt><dd class="fl-p">--</dd></div><div><dt>Widok</dt><dd class="fl-v">--</dd></div></dl>
+        <a class="btn" href="#cta">Zapytaj o piętro</a>
+      </div></div>
+    </div>
+  </section>
+`;
+    out = out.replace(/  <section class="seq short[\s\S]*?<\/section>\n/, () => build + fl);
+    const dn = `  <section class="daynight" aria-label="${esc(s.panoAlt)}">
+    <div class="dn-sticky">
+      <img class="dn-day" src="${m}/w1.webp" alt="${esc(s.panoAlt)} w dzień" loading="lazy" width="1920" height="1080">
+      <img class="dn-night" src="${m}/w2.webp" alt="${esc(s.panoAlt)} nocą" loading="lazy" width="1920" height="1080">
+      <div class="dn-hud"><span class="lbl"><b>07/</b> Widok z 32. piętra</span><span class="dn-clock">12:00</span></div>
+      <h2 class="giant">${lines(s.pano)}</h2>
+      <div class="dn-tog" role="group" aria-label="Pora dnia"><button type="button" data-v="0" aria-pressed="true">Dzień</button><button type="button" data-v="1" aria-pressed="false">Noc</button><i></i></div>
+    </div>
+  </section>
+`;
+    out = out.replace(/  <section class="pano[\s\S]*?<\/section>\n/, () => dn);
+  }
+  fs.writeFileSync(`portfolio/${s.slug}.html`, out);
   fs.mkdirSync(`portfolio/${s.slug}`, { recursive: true });
   console.log('portfolio/' + s.slug + '.html');
 }

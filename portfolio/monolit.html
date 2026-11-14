@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>MONOLIT: apartamenty premium | Portfolio QuantumFlow</title>
-<meta name="description" content="MONOLIT: koncepcja immersyjnej strony 3D dla dewelopera. Wieża składająca się z cząsteczek przy scrollu, wnętrza apartamentów i kalkulator raty. Projekt QuantumFlow AI Agency.">
+<meta name="description" content="MONOLIT: koncepcja immersyjnej strony 3D dla dewelopera. Podróż z drona do apartamentu, budowa na żywo, wybór piętra na budynku, rzuty mieszkań i widok dzień/noc. Projekt QuantumFlow AI Agency.">
 <meta name="robots" content="index,follow">
 <link rel="canonical" href="https://quantumflow.agency/portfolio/monolit">
 <meta property="og:title" content="MONOLIT: koncepcja strony 3D od QuantumFlow">
-<meta property="og:description" content="MONOLIT: koncepcja immersyjnej strony 3D dla dewelopera. Wieża składająca się z cząsteczek przy scrollu, wnętrza apartamentów i kalkulator raty. Projekt QuantumFlow AI Agency.">
+<meta property="og:description" content="MONOLIT: koncepcja immersyjnej strony 3D dla dewelopera. Podróż z drona do apartamentu, budowa na żywo, wybór piętra na budynku, rzuty mieszkań i widok dzień/noc. Projekt QuantumFlow AI Agency.">
 <meta property="og:image" content="https://quantumflow.agency/portfolio/monolit/hero.webp">
 <meta name="theme-color" content="#050505">
 <link rel="icon" href="/emblem.webp">
@@ -19,14 +19,13 @@
 </head>
 <body>
 <a class="skip" href="#tresc">Przejdź do treści</a>
-<div id="loader" role="status" aria-live="polite"><div class="l-txt">Wznosimy wieżę</div><div class="l-num"><span>00</span><b>/100</b></div><div class="l-bar"><i></i></div></div>
-<canvas id="pf-gl" aria-hidden="true"></canvas>
-<div class="beams" aria-hidden="true"><i></i><i></i><i></i></div>
+<div id="loader" role="status" aria-live="polite" data-max="32"><div class="l-txt">Wznosimy wieżę</div><div class="l-num"><span>00</span><b>/32</b></div><div class="l-bar"><i></i></div></div>
+
 
 <header class="pf-nav"><a class="pf-brand" href="#top">MONOLIT</a><a class="pf-back" href="/#portfolio">← QuantumFlow</a></header>
 
 <main id="tresc">
-  <section class="hero" id="top" data-fx="blueprint">
+  <section class="hero hero--blueprint" id="top" data-fx="">
     <div class="hero-media" aria-hidden="true">
       <video muted loop playsinline preload="auto" poster="/portfolio/monolit/hero.webp"><source src="/portfolio/monolit/hero.webm" type="video/webm"><source src="/portfolio/monolit/hero.mp4" type="video/mp4"></video>
     </div>
@@ -40,12 +39,13 @@
     <div class="hero-marq" aria-hidden="true"><div class="mq-track"><span>Apartamenty premium</span><i>✦</i><span>Taras na dachu</span><i>✦</i><span>Widok na całe miasto</span><i>✦</i><span>Inteligentny dom</span><i>✦</i><span>Garaż w cenie</span><i>✦</i><span>Klucze w 2027</span><i>✦</i><span>Apartamenty premium</span><i>✦</i><span>Taras na dachu</span><i>✦</i><span>Widok na całe miasto</span><i>✦</i><span>Inteligentny dom</span><i>✦</i><span>Garaż w cenie</span><i>✦</i><span>Klucze w 2027</span><i>✦</i></div></div>
   </section>
 
-  <section class="seq" data-src="/portfolio/monolit/obrot" data-count="121" data-fallback="tower" aria-label="Wieża · 118 m">
+  <section class="seq journey" data-src="/portfolio/monolit/podroz" data-count="162" data-fallback="tower" data-ext="webp" aria-label="Podróż do apartamentu" data-floors='[[0,0],[0.22,0],[0.48,32],[1,32]]' data-fmax="32" data-hmax="118">
     <div class="seq-sticky">
-      <div class="glow" aria-hidden="true"></div>
       <canvas aria-hidden="true"></canvas>
-      <div class="seq-hud"><span class="lbl"><b>02/</b> Wieża · 118 m</span><span class="lbl">(<span class="cnt">00</span>)</span></div>
-      <div class="seq-words"><div class="sw tl" data-in="0.06" data-out="0.32"><div class="lbl"><b>32</b> piętra</div><div class="giant"><span class="ln s1"><span>118</span></span><span class="ln s2"><span>metrów</span></span></div></div><div class="sw br" data-in="0.38" data-out="0.64"><div class="lbl"><b>148</b> apartamentów</div><div class="giant"><span class="ln s1"><span>Każdy</span></span><span class="ln s2"><span><span class="acc">z widokiem</span></span></span></div></div><div class="sw tl" data-in="0.7" data-out="0.97"><div class="lbl">Taras na dachu</div><div class="giant"><span class="ln s1"><span>Basen</span></span><span class="ln s2"><span>nad miastem</span></span></div></div></div>
+      <div class="seq-hud"><span class="lbl"><b>02/</b> Podróż do apartamentu</span><span class="lbl jr-coord">54°21′N · 18°39′E</span></div>
+      <div class="lift" aria-hidden="true"><div class="lift-shaft"><i class="big"></i><i></i><i></i><i></i><i class="big"></i><i></i><i></i><i></i><i class="big"></i><i></i><i></i><i></i><i class="big"></i><i></i><i></i><i></i><i class="big"></i><i></i><i></i><i></i><i class="big"></i><i></i><i></i><i></i><i class="big"></i><i></i><i></i><i></i><i class="big"></i><i></i><i></i><i></i><i class="big"></i><b class="lift-car"></b></div><div class="lift-read"><span class="lbl">Piętro</span><strong class="lift-fl">00</strong><span class="lbl lift-h">0,0 m</span></div></div>
+      <div class="seq-words"><div class="sw tl" data-in="0.03" data-out="0.2"><div class="lbl">Gdańsk · Młode Miasto</div><div class="giant"><span class="ln s1"><span>Nad</span></span><span class="ln s2"><span><span class="acc">Motławą</span></span></span></div></div><div class="sw br" data-in="0.27" data-out="0.45"><div class="lbl"><b>118</b> m wysokości</div><div class="giant"><span class="ln s1"><span>Piętro</span></span><span class="ln s2"><span><span class="acc">po piętrze</span></span></span></div></div><div class="sw tl" data-in="0.52" data-out="0.7"><div class="lbl">Salon · 64 m²</div><div class="giant"><span class="ln s1"><span>Światło</span></span><span class="ln s2"><span>z trzech stron</span></span></div></div><div class="sw br" data-in="0.8" data-out="0.97"><div class="lbl">Taras · piętro 32</div><div class="giant"><span class="ln s1"><span>Basen</span></span><span class="ln s2"><span><span class="acc">nad miastem</span></span></span></div></div></div>
+      <div class="jr-bar" aria-hidden="true"><i></i></div>
     </div>
   </section>
 
@@ -56,36 +56,52 @@
   </section>
 
   <section class="cards-sec wrap" id="oferta">
-    <div class="cards-head"><h2 class="giant" style="font-size:clamp(48px,8vw,150px)"><span class="ln s1"><span>Wnę</span></span><span class="ln s2"><span><span class="acc">trza</span></span></span></h2><span class="lbl"><b>04/</b> Standard</span></div>
-    <div class="cards">
+    <div class="cards-head"><h2 class="giant" style="font-size:clamp(48px,8vw,150px)"><span class="ln s1"><span>Miesz</span></span><span class="ln s2"><span><span class="acc">kania</span></span></span></h2><span class="lbl"><b>04/</b> Rzut i wizualizacja</span></div>
+    <div class="cards cards--plan">
       <article class="card"><div class="card-in">
-        <div class="card-img"><img src="/portfolio/monolit/g5.webp" alt="Łazienka z czarnego marmuru z wanną" loading="lazy" width="1080" height="1350"></div>
-        <div class="card-b"><div><h3>Łazienka</h3><p>Czarny marmur, wolnostojąca wanna</p></div><span class="pr">w standardzie</span></div>
+        <div class="card-img"><img class="plan" src="/portfolio/monolit/p1.webp" alt="Rzut: 2 pokoje · 48 m²" loading="lazy" width="1080" height="1350"><img class="render" src="/portfolio/monolit/r1.webp" alt="Wizualizacja salonu mieszkania 48 m²" loading="lazy" width="1080" height="1350"><span class="pr-tog" aria-hidden="true"><i>Rzut</i><i>Wizualizacja</i></span><img src="/portfolio/monolit/g5.webp" alt="Wizualizacja salonu mieszkania 48 m²" loading="lazy" width="1080" height="1350"></div>
+        <div class="card-b"><div><h3>2 pokoje · 48 m²</h3><p>Balkon, widok na Motławę</p></div><span class="pr">od 689 000 zł</span></div>
       </div></article>
       <article class="card"><div class="card-in">
-        <div class="card-img"><img src="/portfolio/monolit/g6.webp" alt="Basen na dachu nocą" loading="lazy" width="1080" height="1350"></div>
-        <div class="card-b"><div><h3>Taras na dachu</h3><p>Basen infinity dla mieszkańców</p></div><span class="pr">piętro 32</span></div>
+        <div class="card-img"><img class="plan" src="/portfolio/monolit/p2.webp" alt="Rzut: 3 pokoje · 74 m²" loading="lazy" width="1080" height="1350"><img class="render" src="/portfolio/monolit/r2.webp" alt="Wizualizacja narożnego salonu mieszkania 74 m²" loading="lazy" width="1080" height="1350"><span class="pr-tog" aria-hidden="true"><i>Rzut</i><i>Wizualizacja</i></span><img src="/portfolio/monolit/g6.webp" alt="Wizualizacja narożnego salonu mieszkania 74 m²" loading="lazy" width="1080" height="1350"></div>
+        <div class="card-b"><div><h3>3 pokoje · 74 m²</h3><p>Narożny salon i taras</p></div><span class="pr">od 1 090 000 zł</span></div>
       </div></article>
       <article class="card"><div class="card-in">
-        <div class="card-img"><img src="/portfolio/monolit/g7.webp" alt="Złota klamka na czarnym drewnie" loading="lazy" width="1080" height="1350"></div>
-        <div class="card-b"><div><h3>Detal</h3><p>Mosiądz, ryflowany dąb</p></div><span class="pr">pakiet Gold</span></div>
+        <div class="card-img"><img class="plan" src="/portfolio/monolit/p3.webp" alt="Rzut: Penthouse · 162 m²" loading="lazy" width="1080" height="1350"><img class="render" src="/portfolio/monolit/r3.webp" alt="Wizualizacja salonu penthouse'u" loading="lazy" width="1080" height="1350"><span class="pr-tog" aria-hidden="true"><i>Rzut</i><i>Wizualizacja</i></span><img src="/portfolio/monolit/g7.webp" alt="Wizualizacja salonu penthouse'u" loading="lazy" width="1080" height="1350"></div>
+        <div class="card-b"><div><h3>Penthouse · 162 m²</h3><p>Taras z basenem, 32. piętro</p></div><span class="pr">od 4 900 000 zł</span></div>
       </div></article>
     </div>
   </section>
 
-  <section class="seq short" data-src="/portfolio/monolit/przejscie" data-count="100" data-fallback="burst" data-scale="1.1" aria-label="Składanie wieży">
-    <div class="seq-sticky">
-      <canvas aria-hidden="true"></canvas>
-      <div class="seq-hud"><span class="lbl"><b>05/</b> Składanie wieży</span><span class="lbl">(<span class="cnt">00</span>)</span></div>
-      <div class="seq-words"><div class="sw br" data-in="0.15" data-out="0.85"><div class="lbl">Od wizji do kluczy</div><div class="giant"><span class="ln s1"><span>Piętro</span></span><span class="ln s2"><span><span class="acc">po piętrze</span></span></span></div></div></div>
+  <section class="build" aria-label="Postęp budowy">
+    <div class="bd-sticky">
+      <figure class="bd-st" data-pct="8" data-lbl="Wykop i fundamenty" data-date="III kw. 2025"><img src="/portfolio/monolit/s1.webp" alt="Wykop i fundamenty wieży MONOLIT" loading="lazy" width="1920" height="1080"></figure><figure class="bd-st" data-pct="46" data-lbl="Stan surowy, 16. piętro" data-date="II kw. 2026"><img src="/portfolio/monolit/s2.webp" alt="Stan surowy wieży z dźwigami" loading="lazy" width="1920" height="1080"></figure><figure class="bd-st" data-pct="78" data-lbl="Elewacja ze szkła" data-date="IV kw. 2026"><img src="/portfolio/monolit/s3.webp" alt="Montaż szklanej elewacji wieży" loading="lazy" width="1920" height="1080"></figure><figure class="bd-st" data-pct="100" data-lbl="Klucze dla mieszkańców" data-date="IV kw. 2027"><img src="/portfolio/monolit/a1.webp" alt="Gotowa wieża MONOLIT o zmierzchu" loading="lazy" width="1920" height="1080"></figure>
+      <div class="bd-line" aria-hidden="true"></div>
+      <div class="bd-hud"><span class="lbl"><b>05/</b> Budowa na żywo</span><span class="lbl bd-date">III kw. 2025</span></div>
+      <div class="bd-read"><div class="lbl bd-lbl">Wykop i fundamenty</div><div class="bd-pct"><span>0</span><b>%</b></div><div class="lbl">zaawansowania prac</div></div>
+      <ol class="bd-tl"><li><b>III kw. 2025</b><span>Wykop i fundamenty</span></li><li><b>II kw. 2026</b><span>Stan surowy, 16. piętro</span></li><li><b>IV kw. 2026</b><span>Elewacja ze szkła</span></li><li><b>IV kw. 2027</b><span>Klucze dla mieszkańców</span></li></ol>
+    </div>
+  </section>
+  <section class="floors wrap" id="pietra" aria-label="Wybór piętra">
+    <div class="cards-head"><h2 class="giant" style="font-size:clamp(48px,8vw,150px)"><span class="ln s1"><span>Wybierz</span></span><span class="ln s2"><span><span class="acc">piętro</span></span></span></h2><span class="lbl"><b>06/</b> Najedź na budynek</span></div>
+    <div class="fl-grid">
+      <div class="fl-pic"><img src="/portfolio/monolit/a1.webp" alt="Wieża MONOLIT, wybór piętra" loading="lazy" width="1920" height="1080"><svg class="fl-svg" viewBox="0 0 1000 1000" preserveAspectRatio="none" data-box='{"x1":0.628,"x2":0.818,"top":0.075,"bottom":0.7}' data-floors="32"></svg></div>
+      <div class="fl-info glass"><div>
+        <div class="lbl">Piętro</div><div class="fl-n">--</div>
+        <dl><div><dt>Apartamenty</dt><dd class="fl-u">--</dd></div><div><dt>Wolne</dt><dd class="fl-f">--</dd></div><div><dt>Cena od</dt><dd class="fl-p">--</dd></div><div><dt>Widok</dt><dd class="fl-v">--</dd></div></dl>
+        <a class="btn" href="#cta">Zapytaj o piętro</a>
+      </div></div>
     </div>
   </section>
 
-  <section class="pano" aria-label="Ciemny salon penthouse'u z widokiem na nocne miasto">
-    <img src="/portfolio/monolit/g4.webp" alt="Ciemny salon penthouse'u z widokiem na nocne miasto" loading="lazy" width="1920" height="1080">
-    
-    
-    <h2 class="giant"><span class="ln s1"><span>Penthouse</span></span><span class="ln s2"><span>32. piętro</span></span></h2>
+  <section class="daynight" aria-label="Widok z okna penthouse'u na Stare Miasto w Gdańsku">
+    <div class="dn-sticky">
+      <img class="dn-day" src="/portfolio/monolit/w1.webp" alt="Widok z okna penthouse'u na Stare Miasto w Gdańsku w dzień" loading="lazy" width="1920" height="1080">
+      <img class="dn-night" src="/portfolio/monolit/w2.webp" alt="Widok z okna penthouse'u na Stare Miasto w Gdańsku nocą" loading="lazy" width="1920" height="1080">
+      <div class="dn-hud"><span class="lbl"><b>07/</b> Widok z 32. piętra</span><span class="dn-clock">12:00</span></div>
+      <h2 class="giant"><span class="ln s1"><span>Penthouse</span></span><span class="ln s2"><span>32. piętro</span></span></h2>
+      <div class="dn-tog" role="group" aria-label="Pora dnia"><button type="button" data-v="0" aria-pressed="true">Dzień</button><button type="button" data-v="1" aria-pressed="false">Noc</button><i></i></div>
+    </div>
   </section>
 
   <section class="calc-sec wrap" id="cta">

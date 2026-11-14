@@ -536,7 +536,7 @@
     "przejscie": 100
    },
    "title": "apartamenty premium",
-   "desc": "MONOLIT: koncepcja immersyjnej strony 3D dla dewelopera. Wieża składająca się z cząsteczek przy scrollu, wnętrza apartamentów i kalkulator raty. Projekt QuantumFlow AI Agency.",
+   "desc": "MONOLIT: koncepcja immersyjnej strony 3D dla dewelopera. Podróż z drona do apartamentu, budowa na żywo, wybór piętra na budynku, rzuty mieszkań i widok dzień/noc. Projekt QuantumFlow AI Agency.",
    "loader": "Wznosimy wieżę",
    "kicker": "Apartamenty premium",
    "city": "Gdańsk · Młode Miasto",
@@ -547,64 +547,74 @@
    ],
    "lead": "32 piętra, 148 apartamentów i widok na Motławę z każdego salonu. Oddanie: IV kwartał 2027.",
    "cta": "Wybierz apartament",
-   "seqLabel": "Wieża · 118 m",
+   "seqLabel": "Podróż do apartamentu",
    "seqWords": [
     {
      "pos": "tl",
-     "in": 0.06,
-     "out": 0.32,
-     "lbl": "<b>32</b> piętra",
+     "in": 0.03,
+     "out": 0.2,
+     "lbl": "Gdańsk · Młode Miasto",
      "l": [
-      "118",
-      "metrów"
+      "Nad",
+      "<span class=\"acc\">Motławą</span>"
      ]
     },
     {
      "pos": "br",
-     "in": 0.38,
-     "out": 0.64,
-     "lbl": "<b>148</b> apartamentów",
+     "in": 0.27,
+     "out": 0.45,
+     "lbl": "<b>118</b> m wysokości",
      "l": [
-      "Każdy",
-      "<span class=\"acc\">z widokiem</span>"
+      "Piętro",
+      "<span class=\"acc\">po piętrze</span>"
      ]
     },
     {
      "pos": "tl",
-     "in": 0.7,
+     "in": 0.52,
+     "out": 0.7,
+     "lbl": "Salon · 64 m²",
+     "l": [
+      "Światło",
+      "z trzech stron"
+     ]
+    },
+    {
+     "pos": "br",
+     "in": 0.8,
      "out": 0.97,
-     "lbl": "Taras na dachu",
+     "lbl": "Taras · piętro 32",
      "l": [
       "Basen",
-      "nad miastem"
+      "<span class=\"acc\">nad miastem</span>"
      ]
     }
    ],
    "manifestLbl": "Idea",
    "manifest": "Zaprojektowaliśmy budynek, który nocą świeci jak bursztyn, a za dnia znika w odbiciach nieba. Wewnątrz tylko kamień, drewno, mosiądz i cisza.",
    "cardsTitle": [
-    "Wnę",
-    "<span class=\"acc\">trza</span>"
+    "Miesz",
+    "<span class=\"acc\">kania</span>"
    ],
-   "cardsLbl": "Standard",
+   "cardsLbl": "Rzut i wizualizacja",
    "cards": [
     {
-     "t": "Łazienka",
-     "d": "Czarny marmur, wolnostojąca wanna",
-     "p": "w standardzie",
-     "alt": "Łazienka z czarnego marmuru z wanną"
+     "t": "2 pokoje · 48 m²",
+     "d": "Balkon, widok na Motławę",
+     "p": "od 689 000 zł",
+     "alt": "Wizualizacja salonu mieszkania 48 m²"
     },
     {
-     "t": "Taras na dachu",
-     "d": "Basen infinity dla mieszkańców",
-     "p": "piętro 32",
-     "alt": "Basen na dachu nocą"
+     "t": "3 pokoje · 74 m²",
+     "d": "Narożny salon i taras",
+     "p": "od 1 090 000 zł",
+     "alt": "Wizualizacja narożnego salonu mieszkania 74 m²"
     },
     {
-     "t": "Detal",
-     "d": "Mosiądz, ryflowany dąb",
-     "p": "pakiet Gold",
-     "alt": "Złota klamka na czarnym drewnie"
+     "t": "Penthouse · 162 m²",
+     "d": "Taras z basenem, 32. piętro",
+     "p": "od 4 900 000 zł",
+     "alt": "Wizualizacja salonu penthouse'u"
     }
    ],
    "transLabel": "Składanie wieży",
@@ -624,7 +634,7 @@
     "Penthouse",
     "32. piętro"
    ],
-   "panoAlt": "Ciemny salon penthouse'u z widokiem na nocne miasto",
+   "panoAlt": "Widok z okna penthouse'u na Stare Miasto w Gdańsku",
    "calc": {
     "title": [
      "Twoja",
@@ -692,7 +702,7 @@
    "footAddr": "Biuro sprzedaży: ul. Wiślna 3, Gdańsk · pn–sob 10:00–19:00",
    "pillCta": "Oferta",
    "transScale": 1.1,
-   "fx": "blueprint",
+   "fx": "",
    "marq": [
     "Apartamenty premium",
     "Taras na dachu",
@@ -700,7 +710,72 @@
     "Inteligentny dom",
     "Garaż w cenie",
     "Klucze w 2027"
-   ]
+   ],
+   "noParticles": true,
+   "tower": {
+    "floors": 32,
+    "height": 118,
+    "journey": {
+     "count": 162,
+     "floors": [
+      [
+       0,
+       0
+      ],
+      [
+       0.22,
+       0
+      ],
+      [
+       0.48,
+       32
+      ],
+      [
+       1,
+       32
+      ]
+     ]
+    },
+    "build": [
+     {
+      "img": "s1",
+      "lbl": "Wykop i fundamenty",
+      "pct": 8,
+      "date": "III kw. 2025",
+      "alt": "Wykop i fundamenty wieży MONOLIT"
+     },
+     {
+      "img": "s2",
+      "lbl": "Stan surowy, 16. piętro",
+      "pct": 46,
+      "date": "II kw. 2026",
+      "alt": "Stan surowy wieży z dźwigami"
+     },
+     {
+      "img": "s3",
+      "lbl": "Elewacja ze szkła",
+      "pct": 78,
+      "date": "IV kw. 2026",
+      "alt": "Montaż szklanej elewacji wieży"
+     },
+     {
+      "img": "a1",
+      "lbl": "Klucze dla mieszkańców",
+      "pct": 100,
+      "date": "IV kw. 2027",
+      "alt": "Gotowa wieża MONOLIT o zmierzchu"
+     }
+    ],
+    "pick": {
+     "img": "a1",
+     "box": {
+      "x1": 0.628,
+      "x2": 0.818,
+      "top": 0.075,
+      "bottom": 0.7
+     }
+    }
+   }
   }
  ]
 }

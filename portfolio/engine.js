@@ -14,13 +14,14 @@ const LIGHT = document.documentElement.dataset.theme === 'light';
 /* ---------- loader ---------- */
 const loader = $('#loader'), lNum = $('#loader .l-num span'), lBar = $('#loader .l-bar i');
 const tasks = []; let shown = 0, target = 0;
+const LMAX = +(loader && loader.dataset.max) || 100;
 const track = p => { tasks.push(p); p.finally(() => { target = tasks.filter(t => t.done).length; }); p.then(() => (p.done = true), () => (p.done = true)); return p; };
 function loaderTick() {
   const real = tasks.length ? tasks.filter(t => t.done).length / tasks.length : 0;
   shown += (real * 100 - shown) * 0.12 + 0.25; shown = Math.min(shown, real * 100);
   const v = Math.round(shown);
-  lNum.textContent = String(v).padStart(2, '0'); lBar.style.width = v + '%';
-  if (real >= 1 && v >= 99) { lNum.textContent = '100'; lBar.style.width = '100%'; setTimeout(start, 250); return; }
+  lNum.textContent = String(Math.round(v * LMAX / 100)).padStart(2, '0'); lBar.style.width = v + '%';
+  if (real >= 1 && v >= 99) { lNum.textContent = String(LMAX); lBar.style.width = '100%'; setTimeout(start, 250); return; }
   requestAnimationFrame(loaderTick);
 }
 
@@ -464,6 +465,7 @@ function start() {
   if (reduce) return;
   if (framed) { cinematicIntro(); return; }
   if (liquid) { liquidIntro(); return; }
+  if (hero && hero.classList.contains('hero--blueprint')) { blueprintIntro(); return; }
   heroIntro();
   gsap.from('.hero .lbl, .hero p.lead, .hero .btn', { opacity: 0, y: 20, duration: 1, stagger: .06, delay: .6 });
 }
@@ -569,6 +571,139 @@ if (!reduce) $$('.pano.iris').forEach(p => {
     .to(img, { scale: 1, ease: 'none', duration: 1.2 }, 0)
     .to(ring, { opacity: 0, duration: .15 }, .9)
     .fromTo(h, { letterSpacing: '-.05em', opacity: 1, filter: 'blur(0px)' }, { letterSpacing: '.35em', opacity: 0, filter: 'blur(10px)', ease: 'power1.in', duration: .6 }, .05);
+});
+
+
+/* ================= MONOLIT: efekty dewelopera ================= */
+const NS = 'http://www.w3.org/2000/svg';
+const svgEl = (tag, at, parent) => { const e = document.createElementNS(NS, tag); for (const k in at) e.setAttribute(k, at[k]); if (parent) parent.appendChild(e); return e; };
+const plFmt = n => n.toLocaleString('pl-PL');
+
+/* wejście: rysunek techniczny wieży kreśli się liniami, potem budynek „wyrasta” od dołu */
+function blueprintIntro() {
+  loader.classList.add('done');
+  const w = hero.clientWidth, h = hero.clientHeight, wide = w > 860;
+  const L = wide ? w * .6 : w * .56, R = wide ? w * .73 : w * .86, T = h * .1, B = h * .86, F = 32;
+  const svg = svgEl('svg', { class: 'bp', viewBox: `0 0 ${w} ${h}`, 'aria-hidden': 'true' }); hero.appendChild(svg);
+  const g = svgEl('g', { fill: 'none', stroke: 'currentColor', 'stroke-width': 1 }, svg);
+  const lines = [];
+  const ln = (x1, y1, x2, y2, cls) => lines.push(svgEl('line', { x1, y1, x2, y2, class: cls || '' }, g));
+  ln(w * .04, B, w * .96, B, 'gr');
+  ln(L, B, L, T, 'st'); ln(R, B, R, T, 'st'); ln(L, T, R, T, 'st');
+  for (let i = 1; i < F; i++) { const y = B - (B - T) * i / F; ln(L, y, R, y, 'fl'); }
+  for (let i = 1; i < 6; i++) { const x = L + (R - L) * i / 6; ln(x, T, x, B, 'fn'); }
+  // wymiar wysokości
+  const dx = R + (wide ? 46 : 18); ln(dx, B, dx, T, 'dm'); ln(dx - 8, B, dx + 8, B, 'dm'); ln(dx - 8, T, dx + 8, T, 'dm');
+  // dźwig
+  const cx = L - (wide ? 70 : 26), cy = T - 34;
+  ln(cx, B, cx, cy, 'cr'); ln(cx + 10, B, cx + 10, cy, 'cr');
+  ln(cx - (wide ? 110 : 50), cy, cx + (wide ? 260 : 120), cy, 'cr'); ln(cx - (wide ? 110 : 50), cy + 10, cx + (wide ? 260 : 120), cy + 10, 'cr');
+  ln(cx + 5, cy - 40, cx - (wide ? 110 : 50), cy, 'cr'); ln(cx + 5, cy - 40, cx + (wide ? 260 : 120), cy, 'cr');
+  ln(cx + (wide ? 200 : 90), cy + 10, cx + (wide ? 200 : 90), cy + 90, 'cr');
+  const tx = (x, y, s, cls) => { const t = svgEl('text', { x, y, class: 'bp-t ' + (cls || '') }, svg); t.textContent = s; return t; };
+  const labels = [tx(dx + 12, (T + B) / 2, '118,00 m', 'v'), tx(R + 8, T - 8, '+118.00'), tx(R + 8, B - 8, '±0.00'), tx(L, B + 22, 'MONOLIT · RZUT A-01 · 1:500'), tx(L, T - 14, '32 KONDYGNACJE')];
+  lines.forEach(l => { const len = Math.hypot(l.x2.baseVal.value - l.x1.baseVal.value, l.y2.baseVal.value - l.y1.baseVal.value) || 1; l.style.strokeDasharray = len; l.style.strokeDashoffset = len; });
+  const media = $('.hero-media', hero), scan = document.createElement('div'); scan.className = 'bp-scan'; hero.appendChild(scan);
+  const others = $$('.hero-top .lbl, .hero p.lead, .hero .btn', hero), mq = $('.hero-marq', hero);
+  gsap.set(media, { clipPath: 'inset(100% 0% 0% 0%)' });
+  gsap.set(heroChars, { scaleY: 0, transformOrigin: '50% 100%', opacity: 0 });
+  gsap.set(others, { opacity: 0, y: 20 }); gsap.set(mq, { opacity: 0 }); gsap.set(labels, { opacity: 0 });
+  const fl = lines.filter(l => l.classList.contains('fl'));
+  gsap.timeline()
+    .to(lines.filter(l => !l.classList.contains('fl')), { strokeDashoffset: 0, duration: 1.1, ease: 'power2.inOut', stagger: .03 }, .1)
+    .to(fl, { strokeDashoffset: 0, duration: .5, ease: 'power2.out', stagger: { each: .025, from: 'start' } }, .4)
+    .to(labels, { opacity: 1, duration: .5, stagger: .08 }, 1)
+    .fromTo(scan, { top: '100%', opacity: 1 }, { top: '0%', duration: 1.7, ease: 'power3.inOut' }, 1.6)
+    .to(media, { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.7, ease: 'power3.inOut' }, '<')
+    .to(svg, { opacity: .14, duration: 1.4, ease: 'power2.out' }, '<.6')
+    .to(scan, { opacity: 0, duration: .3 }, '>-.2')
+    .to(heroChars, { scaleY: 1, opacity: 1, duration: .9, ease: 'expo.out', stagger: .035, onComplete: () => { introDone = true; } }, '<-.6')
+    .to(others, { opacity: 1, y: 0, duration: 1, ease: 'power3.out', stagger: .07 }, '<.4')
+    .to(mq, { opacity: 1, duration: 1 }, '<.3')
+    .add(() => scan.remove());
+  ScrollTrigger.create({ trigger: hero, start: 'top top', end: 'bottom top', scrub: true, onUpdate: s => { svg.style.transform = `translateY(${-s.progress * 120}px)`; } });
+}
+
+/* celownik architekta z współrzędnymi */
+if (!reduce && finePtr && $('.hero--blueprint')) {
+  const xh = document.createElement('div'); xh.className = 'xh'; xh.setAttribute('aria-hidden', 'true'); xh.innerHTML = '<i class="xh-h"></i><i class="xh-v"></i><span class="xh-t"></span>'; document.body.appendChild(xh);
+  const t = $('.xh-t', xh), qx = gsap.quickTo(xh, 'x', { duration: .25, ease: 'power3' }), qy = gsap.quickTo(xh, 'y', { duration: .25, ease: 'power3' });
+  addEventListener('pointermove', e => { qx(e.clientX); qy(e.clientY); xh.classList.add('on'); t.textContent = `X ${(e.clientX / innerWidth * 240).toFixed(1)} · Y ${((1 - e.clientY / innerHeight) * 118).toFixed(1)} m`; }, { passive: true });
+  document.addEventListener('pointerleave', () => xh.classList.remove('on'));
+}
+
+/* podróż: winda z licznikiem pięter i wysokości */
+$$('.seq.journey').forEach(sec => {
+  const pts = JSON.parse(sec.dataset.floors || '[[0,0],[1,0]]'), fmax = +sec.dataset.fmax || 32, hmax = +sec.dataset.hmax || 118;
+  const car = $('.lift-car', sec), fl = $('.lift-fl', sec), hh = $('.lift-h', sec), bar = $('.jr-bar i', sec), ticks = $$('.lift-shaft i', sec);
+  const at = p => { for (let i = 1; i < pts.length; i++) if (p <= pts[i][0]) { const [a, fa] = pts[i - 1], [b, fb] = pts[i], k = (p - a) / Math.max(1e-6, b - a), e = k * k * (3 - 2 * k); return fa + (fb - fa) * e; } return pts[pts.length - 1][1]; };
+  ScrollTrigger.create({ trigger: sec, start: 'top top', end: 'bottom bottom', onUpdate: s => {
+    const f = at(s.progress), n = Math.round(f);
+    car.style.bottom = (f / fmax * 100) + '%'; fl.textContent = String(n).padStart(2, '0');
+    hh.textContent = (f / fmax * hmax).toFixed(1).replace('.', ',') + ' m'; bar.style.transform = `scaleX(${s.progress})`;
+    ticks.forEach((t, i) => t.classList.toggle('on', i <= n));
+  } });
+});
+
+/* budowa na żywo: ten sam kadr, wieża rośnie przy przewijaniu */
+$$('.build').forEach(sec => {
+  const st = $$('.bd-st', sec), line = $('.bd-line', sec), pct = $('.bd-pct span', sec), lbl = $('.bd-lbl', sec), date = $('.bd-date', sec), nodes = $$('.bd-tl li', sec), n = st.length;
+  st.forEach((f, i) => { if (i) f.style.clipPath = 'inset(100% 0 0 0)'; });
+  const upd = p => {
+    const seg = Math.min(n - 1 - 1e-6, p * (n - 1)), i = Math.floor(seg), f = seg - i, e = f < .15 ? 0 : f > .85 ? 1 : (f - .15) / .7;
+    st.forEach((fig, k) => { fig.style.clipPath = k <= i ? 'inset(0 0 0 0)' : k === i + 1 ? `inset(${((1 - e) * 100).toFixed(2)}% 0 0 0)` : 'inset(100% 0 0 0)'; });
+    line.style.top = ((1 - e) * 100) + '%'; line.style.opacity = e > 0 && e < 1 ? 1 : 0;
+    const a = +st[i].dataset.pct, b = +st[i + 1].dataset.pct; pct.textContent = Math.round(a + (b - a) * e);
+    const cur = st[e > .5 ? i + 1 : i]; lbl.textContent = cur.dataset.lbl; date.textContent = cur.dataset.date;
+    nodes.forEach((li, k) => li.classList.toggle('on', k <= (e > .5 ? i + 1 : i)));
+  };
+  upd(0);
+  if (reduce) { st.forEach(f => (f.style.clipPath = 'inset(0 0 0 0)')); upd(1); return; }
+  ScrollTrigger.create({ trigger: sec, start: 'top top', end: '+=260%', pin: true, scrub: true, onUpdate: s => upd(s.progress) });
+});
+
+/* wybór piętra: pasy na budynku, panel z danymi */
+$$('.fl-svg').forEach(svg => {
+  const box = JSON.parse(svg.dataset.box), F = +svg.dataset.floors, sec = svg.closest('.floors');
+  const n = $('.fl-n', sec), u = $('.fl-u', sec), fr = $('.fl-f', sec), pr = $('.fl-p', sec), v = $('.fl-v', sec);
+  const x1 = box.x1 * 1000, x2 = box.x2 * 1000, t = box.top * 1000, b = box.bottom * 1000, hgt = (b - t) / F;
+  const strips = [];
+  for (let f = 1; f <= F; f++) { const y = b - f * hgt; strips.push(svgEl('rect', { x: x1, y: y + hgt * .08, width: x2 - x1, height: hgt * .84, class: 'fl-r', 'data-f': f }, svg)); }
+  let cur = 0;
+  const show = f => { if (f === cur) return; cur = f; strips.forEach((r, k) => r.classList.toggle('on', k === f - 1));
+    const units = f >= 31 ? 1 : f >= 21 ? 3 : 4, free = Math.max(0, units - ((f * 7) % 3)), price = f >= 31 ? 4900000 : 689000 + (f - 1) * 36000;
+    n.textContent = String(f).padStart(2, '0'); u.textContent = units === 1 ? '1 penthouse' : units + ' apartamenty'; fr.textContent = free ? String(free) : 'sprzedane';
+    pr.textContent = plFmt(price) + ' zł'; v.textContent = f < 8 ? 'Ogród i rzeka' : f < 20 ? 'Motława, Stare Miasto' : 'Panorama Gdańska i zatoki';
+    gsap.fromTo(n, { yPercent: 40, opacity: 0 }, { yPercent: 0, opacity: 1, duration: .4, ease: 'power3.out' }); };
+  strips.forEach(r => { r.addEventListener('pointerenter', () => show(+r.dataset.f)); r.addEventListener('pointerdown', () => show(+r.dataset.f)); });
+  show(18);
+  if (!reduce) ScrollTrigger.create({ trigger: sec, start: 'top 60%', once: true, onEnter: () => { const o = { f: 1 }; gsap.to(o, { f: 18, duration: 1.8, ease: 'power2.inOut', onUpdate: () => show(Math.round(o.f)) }); } });
+});
+
+/* karty mieszkań: rzut 2D przechodzi w wizualizację od miejsca kursora */
+$$('.cards--plan .card').forEach(c => {
+  const img = $('.card-img', c), r = $('.render', c); if (!r) return;
+  const st = { r: 0 }; let x = 50, y = 50;
+  const draw = () => { r.style.clipPath = `circle(${st.r}% at ${x}% ${y}%)`; img.classList.toggle('rend', st.r > 40); };
+  draw();
+  const go = to => gsap.to(st, { r: to, duration: to ? 1.1 : .7, ease: to ? 'power3.inOut' : 'power3.out', onUpdate: draw });
+  const pos = e => { const b = img.getBoundingClientRect(); x = (e.clientX - b.left) / b.width * 100; y = (e.clientY - b.top) / b.height * 100; };
+  c.addEventListener('pointerenter', e => { if (e.pointerType !== 'mouse') return; pos(e); go(150); });
+  c.addEventListener('pointerleave', e => { if (e.pointerType !== 'mouse') return; pos(e); go(0); });
+  c.addEventListener('click', e => { if (e.pointerType === 'mouse') return; pos(e); go(st.r > 40 ? 0 : 150); });
+});
+
+/* widok z okna: dzień przechodzi w noc przy przewijaniu, zegar i przełącznik */
+$$('.daynight').forEach(sec => {
+  const night = $('.dn-night', sec), clock = $('.dn-clock', sec), bt = $$('.dn-tog button', sec), knob = $('.dn-tog i', sec);
+  const upd = p => { const k = Math.max(0, Math.min(1, (p - .15) / .7)); night.style.opacity = k;
+    const mins = 12 * 60 + Math.round(k * 600 / 10) * 10; clock.textContent = `${Math.floor(mins / 60)}:${String(mins % 60).padStart(2, '0')}`;
+    const isN = k > .5; bt[0].setAttribute('aria-pressed', String(!isN)); bt[1].setAttribute('aria-pressed', String(isN)); knob.style.transform = `translateX(${k * 100}%)`; };
+  upd(0);
+  if (reduce) { bt.forEach(b => b.addEventListener('click', () => upd(+b.dataset.v))); return; }
+  const stt = ScrollTrigger.create({ trigger: sec, start: 'top top', end: '+=140%', pin: true, scrub: true, onUpdate: s => upd(s.progress) });
+  gsap.fromTo($('.dn-day', sec), { scale: 1.12 }, { scale: 1, ease: 'none', scrollTrigger: { trigger: sec, start: 'top top', end: '+=140%', scrub: true } });
+  bt.forEach(b => b.addEventListener('click', () => { const y = stt.start + (stt.end - stt.start) * (+b.dataset.v ? .9 : .1); lenis ? lenis.scrollTo(y, { duration: 1.6 }) : scrollTo({ top: y, behavior: 'smooth' }); }));
 });
 
 /* filmy: pętle grają tylko na ekranie, manifest odtwarza się raz po wejściu */
