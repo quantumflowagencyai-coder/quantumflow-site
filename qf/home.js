@@ -356,6 +356,20 @@
     }
   }
   // światło pod kursorem na kartach
+  // światło ramek: kursor podświetla krawędzie sąsiednich kart (styl huly)
+  const ucg = $('.uc-grid');
+  if (ucg && matchMedia('(hover:hover)').matches) {
+    const cards = $$('.uc', ucg);
+    ucg.addEventListener('pointermove', e => { ucg.classList.add('lit'); cards.forEach(c => { const r = c.getBoundingClientRect(); c.style.setProperty('--gx', (e.clientX - r.left) + 'px'); c.style.setProperty('--gy', (e.clientY - r.top) + 'px'); }); });
+    ucg.addEventListener('pointerleave', () => ucg.classList.remove('lit'));
+  }
+  // etapy: linia światła rośnie przy scrollu, numery zapalają się po kolei
+  const stg = $('.stages');
+  if (stg && window.ScrollTrigger && !matchMedia('(prefers-reduced-motion:reduce)').matches) {
+    const sp = document.createElement('i'); sp.className = 'spark'; sp.setAttribute('aria-hidden', 'true'); stg.appendChild(sp);
+    const lis = $$('li', stg);
+    ScrollTrigger.create({ trigger: stg, start: 'top 85%', end: 'top 35%', scrub: .6, onUpdate: s => { const p = s.progress; stg.style.setProperty('--sp', p.toFixed(4)); stg.style.setProperty('--so', p > 0 && p < 1 ? 1 : 0); lis.forEach((li, k) => li.classList.toggle('lit', p >= k / lis.length + .02)); } });
+  }
   $$('.uc').forEach(c => c.addEventListener('pointermove', e => { const r = c.getBoundingClientRect(); c.style.setProperty('--mx', (e.clientX - r.left) + 'px'); c.style.setProperty('--my', (e.clientY - r.top) + 'px'); }));
 
   // ---------- proces: wielka cyfra zmienia się z krokiem ----------
