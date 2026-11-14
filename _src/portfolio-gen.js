@@ -8,7 +8,7 @@ const lines = (arr, cls = '') => arr.map((l, i) => `<span class="ln s${i + 1}"><
 for (const s of P.sites) {
   const m = `/portfolio/${s.slug}`;
   const cards = s.cards.map((c, i) => `
-      <article class="card"><div class="card-in">
+      <article class="card"><div class="card-in">${s.lux ? `<span class="acc-n" aria-hidden="true">${String(i + 1).padStart(2, '0')}</span>` : ''}
         <div class="card-img"><img src="${m}/g${i + 5}.webp" alt="${esc(c.alt)}" loading="lazy" width="1080" height="1350">${s.video && s.video.cards ? `<video class="card-vid" muted playsinline loop preload="none" aria-hidden="true" data-auto poster="${m}/g${i + 5}.webp"><source src="${m}/k${i + 1}.webm" type="video/webm"><source src="${m}/k${i + 1}.mp4" type="video/mp4"></video>` : ''}</div>
         <div class="card-b"><div><h3>${esc(c.t)}</h3><p>${esc(c.d)}</p></div><span class="pr">${esc(c.p)}</span></div>
       </div></article>`).join('');
@@ -42,12 +42,13 @@ ${s.noParticles ? '' : '<canvas id="pf-gl" aria-hidden="true"></canvas>\n<div cl
 <header class="pf-nav"><a class="pf-brand" href="#top">${esc(s.name)}</a><a class="pf-back" href="/#portfolio">← QuantumFlow</a></header>
 
 <main id="tresc">
-  <section class="hero${s.heroFrame ? ' hero--frame' : ''}" id="top" data-fx="${s.fx || ''}">
+  <section class="hero${s.heroFrame ? ' hero--frame' : ''}${s.lux ? ' hero--liquid' : ''}" id="top" data-fx="${s.fx || ''}">
     <div class="hero-media" aria-hidden="true">
-      <video muted loop playsinline preload="auto" poster="${m}/hero.webp"><source src="${m}/hero.webm" type="video/webm"><source src="${m}/hero.mp4" type="video/mp4"></video>
+      <video muted loop playsinline preload="auto" poster="${m}/hero.webp"><source src="${m}/hero.webm" type="video/webm"><source src="${m}/hero.mp4" type="video/mp4"></video>${s.lux ? '<canvas class="hero-gl"></canvas>' : ''}
     </div>
     <canvas class="hero-fx" aria-hidden="true"></canvas>
     <div class="hero-spot" aria-hidden="true"></div>
+    ${s.lux ? '<div class="pearl-drop" aria-hidden="true"></div>' : ''}
     ${s.heroFrame ? `<div class="hero-over" aria-hidden="true">${esc(s.name)}</div>` : ''}
     <div class="hero-top"><span class="lbl"><b>01/</b> ${esc(s.kicker)}</span><span class="lbl">${esc(s.city)}</span></div>
     <h1 class="giant">${lines(s.hero)}</h1>
@@ -64,7 +65,7 @@ ${s.noParticles ? '' : '<canvas id="pf-gl" aria-hidden="true"></canvas>\n<div cl
     </div>
   </section>
 
-  <section class="manifest wrap${s.video && s.video.manifest ? ' has-vid' : ''}">
+  <section class="manifest wrap${s.video && s.video.manifest ? ' has-vid' : ''}${s.lux ? ' scan' : ''}">
     ${s.video && s.video.manifest ? `<div class="man-vid" aria-hidden="true"><video muted playsinline preload="none" data-once poster="${m}/manifest.webp"><source src="${m}/manifest.webm" type="video/webm"><source src="${m}/manifest.mp4" type="video/mp4"></video></div>` : ''}
     <div class="lbl"><b>03/</b> ${esc(s.manifestLbl)}</div>
     <p class="big" data-words>${esc(s.manifest)}</p>
@@ -72,11 +73,11 @@ ${s.noParticles ? '' : '<canvas id="pf-gl" aria-hidden="true"></canvas>\n<div cl
 
   <section class="cards-sec wrap" id="oferta">
     <div class="cards-head"><h2 class="giant" style="font-size:clamp(48px,8vw,150px)">${lines(s.cardsTitle)}</h2><span class="lbl"><b>04/</b> ${esc(s.cardsLbl)}</span></div>
-    <div class="cards">${cards}
+    <div class="cards${s.lux ? ' cards--acc' : ''}">${cards}
     </div>
   </section>
 
-  <section class="seq short" data-src="${m}/przejscie" data-count="${s.frames.przejscie}" data-fallback="burst" data-scale="${s.transScale || 1}" aria-label="${esc(s.transLabel)}">
+  <section class="seq short${s.lux ? ' dust' : ''}" data-src="${m}/przejscie" data-count="${s.frames.przejscie}" data-fallback="burst" data-scale="${s.transScale || 1}" aria-label="${esc(s.transLabel)}">
     <div class="seq-sticky">
       <canvas aria-hidden="true"></canvas>
       <div class="seq-hud"><span class="lbl"><b>05/</b> ${esc(s.transLabel)}</span><span class="lbl">(<span class="cnt">00</span>)</span></div>
@@ -84,9 +85,10 @@ ${s.noParticles ? '' : '<canvas id="pf-gl" aria-hidden="true"></canvas>\n<div cl
     </div>
   </section>
 
-  <section class="pano${s.video && s.video.panoZoom ? ' zoom' : ''}" aria-label="${esc(s.panoAlt)}">
+  <section class="pano${s.video && s.video.panoZoom ? ' zoom' : ''}${s.lux ? ' iris' : ''}" aria-label="${esc(s.panoAlt)}">
     <img src="${m}/g4.webp" alt="${esc(s.panoAlt)}" loading="lazy" width="1920" height="1080">${s.video && s.video.pano ? `<video class="pano-vid" muted playsinline loop preload="none" aria-hidden="true" data-auto poster="${m}/g4.webp"><source src="${m}/pano.webm" type="video/webm"><source src="${m}/pano.mp4" type="video/mp4"></video>` : ''}
     ${s.video && s.video.panoZoom ? `<div class="knock" aria-hidden="true"><span>${s.pano.map(l => l.replace(/<[^>]+>/g, '')).join('<br>')}</span></div>` : ''}
+    ${s.lux ? '<div class="iris-ring" aria-hidden="true"></div>' : ''}
     <h2 class="giant">${lines(s.pano)}</h2>
   </section>
 

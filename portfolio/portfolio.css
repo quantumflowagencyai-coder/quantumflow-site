@@ -189,3 +189,50 @@ p.lead{max-width:520px;color:#c9c4bd;font-size:clamp(15px,1.15vw,18px)}
   .big .w{opacity:1}
   .hero-fx,.hero-spot{display:none}
 }
+
+/* LUMÉ: płynne hero, perła, skaner, harmonijka zabiegów, przesłona */
+.hero-gl{position:absolute;inset:0;width:100%;height:100%;display:none}
+.hero.liq-on .hero-gl{display:block}
+.pearl-drop{position:absolute;left:50%;top:0;width:34px;height:34px;margin:-17px 0 0 -17px;border-radius:50%;z-index:3;pointer-events:none;opacity:0;
+  background:radial-gradient(circle at 34% 30%,#fff 0 8%,#ffe9f0 18%,var(--acc) 58%,#9c5a72 100%);box-shadow:0 0 30px var(--acc),0 0 80px color-mix(in srgb,var(--acc) 60%,transparent),inset -4px -6px 10px rgba(80,30,50,.35)}
+.manifest.scan .big{position:relative}
+.manifest.scan .big .w{opacity:.14;filter:blur(6px);transition:color .3s}
+.manifest.scan .big .w.lit{color:var(--acc)}
+.scanline{position:absolute;left:-4vw;right:-4vw;top:0;height:2px;pointer-events:none;opacity:0;
+  background:linear-gradient(90deg,transparent,var(--acc2) 20%,#fff 50%,var(--acc2) 80%,transparent);box-shadow:0 0 22px var(--acc),0 0 60px var(--acc)}
+.scanline::after{content:"";position:absolute;left:0;right:0;bottom:2px;height:70px;background:linear-gradient(0deg,color-mix(in srgb,var(--acc) 22%,transparent),transparent)}
+.acc-n{position:absolute;top:16px;left:18px;z-index:3;font-family:var(--fd);font-size:13px;letter-spacing:.14em;color:#fff;mix-blend-mode:difference}
+@media (min-width:861px){
+  .cards.cards--acc{display:flex;gap:14px;height:76vh}
+  .cards--acc .card{flex:1 1 0;min-width:0;cursor:pointer;transition:flex-grow 1s cubic-bezier(.7,0,.2,1)}
+  .cards--acc .card.on{flex-grow:3.2}
+  .cards--acc .card-in{display:flex;flex-direction:column}
+  .cards--acc .card-img{flex:1;min-height:0;aspect-ratio:auto}
+  .cards--acc .card-img img,.cards--acc .card-vid{transition:filter 1s,opacity .8s}
+  .cards--acc .card:not(.on) .card-img img,.cards--acc .card:not(.on) .card-vid{filter:saturate(.5) brightness(.7)}
+  .cards--acc .card-b{min-height:96px}
+  .cards--acc .card-b p,.cards--acc .card-b .pr{transition:opacity .6s}
+  .cards--acc .card:not(.on) .card-b p,.cards--acc .card:not(.on) .card-b .pr{opacity:0}
+  .cards--acc .card:not(.on) .card-b h3{font-size:16px}
+  .cards--acc .card .card-b{white-space:nowrap}
+  .cards--acc .card.on .card-b{white-space:normal}
+}
+.pano.iris{height:100vh;background:var(--bg)}
+.pano.iris::after{display:none}
+.pano.iris img{height:100%;opacity:1;will-change:clip-path,transform}
+.pano.iris .giant{left:0;right:0;bottom:auto;top:50%;transform:translateY(-50%);text-align:center;white-space:nowrap}
+.iris-ring{position:absolute;left:50%;top:50%;width:0;height:0;border-radius:50%;z-index:2;pointer-events:none;transform:translate(-50%,-50%);
+  border:2px solid var(--acc2);box-shadow:0 0 30px var(--acc),inset 0 0 40px color-mix(in srgb,var(--acc) 50%,transparent)}
+.seq.dust .sw .ch{display:inline-block;will-change:transform,filter,opacity}
+@media (prefers-reduced-motion:reduce){.manifest.scan .big .w{opacity:1;filter:none}.scanline,.iris-ring,.pearl-drop{display:none}}
+.hero--liquid .hero-media::after{background:linear-gradient(90deg,color-mix(in srgb,var(--bg) 88%,transparent) 0%,color-mix(in srgb,var(--bg) 40%,transparent) 48%,transparent 72%),linear-gradient(0deg,var(--bg) 0%,color-mix(in srgb,var(--bg) 55%,transparent) 24%,transparent 48%)!important}
+@media (min-width:861px){
+  .cards-sec:has(.cards--acc){padding-block:9vh 6vh}
+  .cards-sec:has(.cards--acc) .cards-head{margin-bottom:28px}
+  .cards.cards--acc{height:62vh}
+  .cards--acc .card-b{position:absolute;left:0;right:0;bottom:0;z-index:2;min-height:0;padding:60px 24px 22px;background:linear-gradient(0deg,rgba(30,18,24,.85),transparent);white-space:normal}
+  .cards--acc .card-b h3{color:#fff}
+  .cards--acc .card:not(.on) .card-b{padding:0 0 22px 18px;background:none;justify-content:flex-start}
+  .cards--acc .card:not(.on) .card-b h3{writing-mode:vertical-rl;transform:rotate(180deg);font-size:15px;letter-spacing:.06em;white-space:nowrap}
+  .cards--acc .card:not(.on) .card-b p,.cards--acc .card:not(.on) .card-b .pr{display:none}
+}

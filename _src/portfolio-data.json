@@ -186,10 +186,10 @@
    "fallback": "sphere",
    "frames": {
     "obrot": 121,
-    "przejscie": 100
+    "przejscie": 121
    },
    "title": "klinika medycyny estetycznej",
-   "desc": "LUMÉ: koncepcja immersyjnej strony 3D dla kliniki medycyny estetycznej. Kryształowe serum przewijane scrollem, cząsteczki perłowego pyłu, zabiegi i kalkulator planu terapii. Projekt QuantumFlow AI Agency.",
+   "desc": "LUMÉ: koncepcja immersyjnej strony 3D dla kliniki medycyny estetycznej. Płynne hero z falą światła, filmy zabiegów, skaner skóry i kalkulator planu terapii. Projekt QuantumFlow AI Agency.",
    "loader": "Przygotowujemy gabinet",
    "kicker": "Medycyna estetyczna",
    "city": "Warszawa · Mokotów",
@@ -242,22 +242,22 @@
    "cardsLbl": "Zabiegi",
    "cards": [
     {
-     "t": "Mezoterapia",
-     "d": "Koktajl witamin i kwasu",
+     "t": "Mezoterapia mikroigłowa",
+     "d": "Serum z kwasem hialuronowym wprowadzane w skórę",
      "p": "od 590 zł",
-     "alt": "Dłoń w rękawiczce nakłada serum pipetą"
+     "alt": "Pen do mezoterapii mikroigłowej z kroplami serum na policzku"
     },
     {
-     "t": "Pielęgnacja",
-     "d": "Domowa kuracja po zabiegu",
-     "p": "od 240 zł",
-     "alt": "Szklane butelki kosmetyków na czarnym kamieniu"
+     "t": "Laser frakcyjny",
+     "d": "Siatka mikrowiązek, odnowa i wygładzenie skóry",
+     "p": "od 890 zł",
+     "alt": "Głowica lasera frakcyjnego z różową siatką światła na skórze"
     },
     {
      "t": "Skin glow",
-     "d": "Peeling, laser, rewitalizacja",
-     "p": "od 890 zł",
-     "alt": "Makro rozświetlonej skóry"
+     "d": "Hydrooczyszczanie i maska LED",
+     "p": "od 690 zł",
+     "alt": "Końcówka do hydrooczyszczania na czole pacjentki"
     }
    ],
    "transLabel": "Rozpad w pył",
@@ -265,7 +265,7 @@
     {
      "pos": "br",
      "in": 0.15,
-     "out": 0.85,
+     "out": 0.97,
      "lbl": "Efekt, który zostaje",
      "l": [
       "Lekko.",
@@ -277,7 +277,7 @@
     "Spokój",
     "po zabiegu"
    ],
-   "panoAlt": "Ciemna, luksusowa recepcja kliniki z orchideą",
+   "panoAlt": "Jasny gabinet zabiegowy z różowym pierścieniem świetlnym",
    "calc": {
     "title": [
      "Plan",
@@ -336,8 +336,8 @@
    "footAddr": "ul. Puławska 28, Warszawa · pn–sob 9:00–20:00",
    "pillCta": "Konsultacja",
    "transScale": 1,
-   "extraCss": "html,body,#loader{--bg:#3d2b33}:root{--bg:#3d2b33;--fg:#fff7f9;--mute:#ecc9d4;--line:rgba(255,255,255,.18)}body{background:radial-gradient(120% 90% at 75% 0%,#7a5663 0%,#4a343d 45%,#33252b 100%) fixed}#loader{background:radial-gradient(120% 90% at 75% 0%,#7a5663 0%,#3d2b33 70%)}.beams i{opacity:.55!important}.seq canvas{mix-blend-mode:screen;filter:brightness(1.15) saturate(1.1)}.seq .glow{background:radial-gradient(circle,rgba(255,170,200,.45),transparent 65%)}.hero-media video,.hero-media img{opacity:1;filter:brightness(1.18) saturate(1.12)}.hero-media::after{background:linear-gradient(90deg,rgba(61,43,51,.92) 0%,rgba(61,43,51,.45) 45%,rgba(61,43,51,0) 75%),linear-gradient(0deg,#3d2b33 2%,transparent 40%)}.card-in{background:#4d3740}.card-img img{filter:brightness(1.15) saturate(1.1)}.pano img{opacity:1;filter:brightness(1.3) saturate(1.1)}.pano::after{background:linear-gradient(0deg,#3d2b33,transparent 40%,transparent 70%,#3d2b33)}.glass>div{background:rgba(74,52,61,.78)}.pill{background:rgba(74,52,61,.75)}p.lead{color:#f6dfe6}.pf-foot .huge{background:linear-gradient(180deg,#ffe3ec 0%,#ff9ec0 40%,#3d2b33 95%);-webkit-background-clip:text;background-clip:text}.seq-sticky{background:radial-gradient(110% 80% at 50% 40%,#7a5663 0%,#4a343d 50%,#33252b 100%)}",
-   "fx": "pearls",
+   "extraCss": "html,body,#loader{--bg:#3d2b33}:root{--bg:#3d2b33;--fg:#fff7f9;--mute:#ecc9d4;--line:rgba(255,255,255,.18)}body{background:radial-gradient(120% 90% at 75% 0%,#7a5663 0%,#4a343d 45%,#33252b 100%) fixed}#loader{background:radial-gradient(120% 90% at 75% 0%,#7a5663 0%,#3d2b33 70%)}.beams i{opacity:.55!important}.seq canvas{mix-blend-mode:screen;filter:brightness(1.15) saturate(1.1)}.seq .glow{background:radial-gradient(circle,rgba(255,170,200,.45),transparent 65%)}.hero-media video,.hero-media img{opacity:1;filter:brightness(1.18) saturate(1.12)}.hero-media::after{background:linear-gradient(90deg,rgba(61,43,51,.92) 0%,rgba(61,43,51,.45) 45%,rgba(61,43,51,0) 75%),linear-gradient(0deg,#3d2b33 2%,transparent 40%)}.card-in{background:#4d3740}.card-img img{filter:brightness(1.15) saturate(1.1)}.pano img{opacity:1;filter:brightness(1.3) saturate(1.1)}.pano::after{background:linear-gradient(0deg,#3d2b33,transparent 40%,transparent 70%,#3d2b33)}.glass>div{background:rgba(74,52,61,.78)}.pill{background:rgba(74,52,61,.75)}p.lead{color:#f6dfe6}.pf-foot .huge{background:linear-gradient(180deg,#ffe3ec 0%,#ff9ec0 40%,#3d2b33 95%);-webkit-background-clip:text;background-clip:text}.seq-sticky{background:radial-gradient(110% 80% at 50% 40%,#7a5663 0%,#4a343d 50%,#33252b 100%)}.seq.dust canvas{mix-blend-mode:normal;filter:none}.seq.dust .seq-sticky{background:#f3d9df}.seq.dust{color:#3d2b33}.seq.dust .lbl{color:#8a5e6c}.seq.dust .acc{color:#c2577b}.hero--liquid .hero-media video,.hero--liquid .hero-media img{filter:none}",
+   "fx": "",
    "marq": [
     "Mezoterapia",
     "Skin glow",
@@ -345,7 +345,12 @@
     "Lekarz medycyny estetycznej",
     "Efekt naturalny",
     "Pierwsza konsultacja"
-   ]
+   ],
+   "lux": true,
+   "noParticles": true,
+   "video": {
+    "cards": true
+   }
   },
   {
    "slug": "ironclad",

@@ -310,6 +310,88 @@ const heroFx = (function () {
   return E;
 })();
 
+/* płynne hero (LUMÉ): film rysowany w WebGL z falami od kropli, odsłanianie falą, skurcz w perłę przy scrollu */
+const liquid = (function () {
+  if (!hero || !hero.classList.contains('hero--liquid') || reduce || innerWidth <= 860) return null;
+  const cv = $('.hero-gl', hero), vid = $('.hero-media video', hero); if (!cv || !vid) return null;
+  const gl = cv.getContext('webgl', { alpha: false, antialias: false, premultipliedAlpha: false }); if (!gl) return null;
+  const sh = (type, src) => { const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); return s; };
+  const pr = gl.createProgram();
+  gl.attachShader(pr, sh(gl.VERTEX_SHADER, 'attribute vec2 p;varying vec2 v;void main(){v=p*.5+.5;gl_Position=vec4(p,0.,1.);}'));
+  gl.attachShader(pr, sh(gl.FRAGMENT_SHADER, `precision highp float;varying vec2 v;
+uniform sampler2D tx;uniform vec2 res,vres;uniform float t,rev,pearl,ready;uniform vec3 acc,acc2,bg;uniform vec4 dr[10];
+vec2 cover(vec2 u){float ra=res.x/res.y,va=vres.x/vres.y;vec2 s=ra>va?vec2(1.,va/ra):vec2(ra/va,1.);return (u-.5)*s+.5;}
+vec3 vidc(vec2 u){u=clamp(u,.001,.999);return mix(bg,texture2D(tx,cover(u)).rgb,ready);}
+void main(){
+  vec2 asp=vec2(res.x/res.y,1.),uv=v,off=vec2(0.);float hl=0.;
+  for(int i=0;i<10;i++){vec4 d=dr[i];float age=t-d.z;if(d.w<=0.||age<0.||age>5.)continue;
+    vec2 dd=(uv-d.xy)*asp;float r=length(dd),fr=age*.32,x=r-fr;
+    float w=sin(x*70.)*exp(-x*x*260.)*exp(-age*.9)*d.w;off+=dd/(r+1e-4)*w*.011;hl+=max(w,0.)*.35;}
+  vec2 c=mix(vec2(.5),vec2(.73,.5),pearl);float R=mix(rev*1.25*asp.x,.2,pearl);
+  vec2 q=(uv-c)*asp;float dist=length(q),edge=R-dist;
+  float lens=pearl*.42*(1.-clamp(dist*dist/(R*R),0.,1.));vec2 u2=c+(uv-c)*(1.-lens)+off;
+  vec3 col=vec3(vidc(u2+off*.25).r,vidc(u2).g,vidc(u2-off*.25).b)+acc2*hl;
+  float m=smoothstep(-.003,.003,edge);
+  float ring=exp(-abs(edge)*70.)*(rev<.999?1.:pearl*.9);
+  vec2 hq=q/max(R,1e-3)-vec2(-.34,.38);float spec=exp(-dot(hq,hq)*9.)*pearl*.75;
+  float rim=pearl*smoothstep(.72,1.,dist/max(R,1e-3))*.55;
+  vec3 o=mix(bg,col,m)+acc*ring*.9+(vec3(1.)*spec+acc2*rim)*m;
+  gl_FragColor=vec4(o,1.);}`));
+  gl.linkProgram(pr); if (!gl.getProgramParameter(pr, gl.LINK_STATUS)) return null;
+  gl.useProgram(pr);
+  const buf = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, buf); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+  const ap = gl.getAttribLocation(pr, 'p'); gl.enableVertexAttribArray(ap); gl.vertexAttribPointer(ap, 2, gl.FLOAT, false, 0, 0);
+  const tex = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, tex);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+  gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+  const U = n => gl.getUniformLocation(pr, n), u = { res: U('res'), vres: U('vres'), t: U('t'), rev: U('rev'), pearl: U('pearl'), ready: U('ready'), acc: U('acc'), acc2: U('acc2'), bg: U('bg'), dr: U('dr') };
+  const col = h => hexRgb(h).map(x => x / 255);
+  const bgc = css.getPropertyValue('--bg').trim() || '#3d2b33';
+  gl.uniform3fv(u.acc, col(ACC)); gl.uniform3fv(u.acc2, col(ACC2)); gl.uniform3fv(u.bg, col(bgc));
+  const drops = new Float32Array(40); let di = 0;
+  const S = { rev: 0, pearl: 0 }, t0 = performance.now();
+  const now = () => (performance.now() - t0) / 1000;
+  const drop = (x, y, a) => { drops.set([x, y, now(), a], di * 4); di = (di + 1) % 10; };
+  const size = () => { const w = hero.clientWidth, h = hero.clientHeight; cv.width = Math.round(w * DPR); cv.height = Math.round(h * DPR); gl.viewport(0, 0, cv.width, cv.height); gl.uniform2f(u.res, cv.width, cv.height); };
+  addEventListener('resize', size); size();
+  let ready = 0, lx = -1, ly = -1, lt = 0;
+  hero.addEventListener('pointermove', e => { const r = hero.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top, tt = performance.now();
+    if (Math.hypot(x - lx, y - ly) > 70 && tt - lt > 90 && S.rev > .95 && S.pearl < .05) { drop(x / r.width, 1 - y / r.height, .32); lx = x; ly = y; lt = tt; } });
+  hero.addEventListener('pointerdown', e => { const r = hero.getBoundingClientRect(); if (S.rev > .95 && S.pearl < .05) drop((e.clientX - r.left) / r.width, 1 - (e.clientY - r.top) / r.height, 1); });
+  gsap.ticker.add(() => {
+    if (hero.getBoundingClientRect().bottom < 0) return;
+    if (vid.readyState >= 2) { gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, vid); if (!ready) gl.uniform2f(u.vres, vid.videoWidth, vid.videoHeight); ready = Math.min(1, ready + .05); }
+    gl.uniform1f(u.ready, ready); gl.uniform1f(u.t, now()); gl.uniform1f(u.rev, S.rev); gl.uniform1f(u.pearl, S.pearl); gl.uniform4fv(u.dr, drops);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+  });
+  hero.classList.add('liq-on');
+  return { S, drop };
+})();
+// wejście: perłowa kropla spada, fala odsłania film, litery wyostrzają się jak w obiektywie
+function liquidIntro() {
+  const d = $('.pearl-drop', hero), others = $$('.hero-top .lbl, .hero p.lead, .hero .btn', hero), mq = $('.hero-marq', hero);
+  gsap.set(heroChars, { opacity: 0, filter: 'blur(22px)', scale: 1.35, yPercent: 10 });
+  gsap.set(others, { opacity: 0, y: 24 }); gsap.set(mq, { opacity: 0 });
+  gsap.timeline()
+    .fromTo(d, { y: -60, opacity: 1 }, { y: hero.clientHeight * .5, duration: 1, ease: 'power2.in' }, .2)
+    .to(d, { scaleY: .55, scaleX: 1.5, duration: .08, ease: 'power1.out' })
+    .add(() => { liquid.drop(.5, .5, 1.6); setTimeout(() => liquid.drop(.5, .5, .8), 260); })
+    .to(d, { opacity: 0, scale: 2.4, duration: .35, ease: 'power2.out' })
+    .to(liquid.S, { rev: 1, duration: 2.6, ease: 'expo.out' }, '<')
+    .to(heroChars, { opacity: 1, filter: 'blur(0px)', scale: 1, yPercent: 0, duration: 1.6, ease: 'expo.out', stagger: { each: .045, from: 'center' },
+      onComplete: () => { introDone = true; gsap.set(heroChars, { clearProps: 'filter' }); } }, '<.25')
+    .to(others, { opacity: 1, y: 0, duration: 1, ease: 'power3.out', stagger: .07 }, '<.6')
+    .to(mq, { opacity: 1, duration: 1 }, '<.3');
+}
+// scroll: film kurczy się w lśniącą perłę, tytuł rozmywa się
+function liquidScroll() {
+  gsap.timeline({ scrollTrigger: { trigger: hero, start: 'top top', end: '+=110%', scrub: 1, pin: true, refreshPriority: 1 } })
+    .to(liquid.S, { pearl: 1, ease: 'power2.inOut', duration: 1 }, 0)
+    .to(heroChars, { opacity: 0, filter: 'blur(14px)', xPercent: -30, ease: 'power1.in', duration: .45, stagger: { each: .01, from: 'end' } }, 0)
+    .to($$('.hero-top, .hero-meta, .hero-marq', hero), { y: -50, opacity: 0, ease: 'power1.in', duration: .35 }, 0)
+    .to($('.hero-spot', hero), { opacity: 0, duration: .4 }, 0);
+}
+
 /* światło kursora, paralaksa, magnetyczne litery, pasek haseł, wyjście przy scrollu */
 if (hero && !reduce) {
   const spot = $('.hero-spot', hero), media = $('.hero-media', hero), lns = $$('.ln', heroH1 || hero);
@@ -327,7 +409,7 @@ if (hero && !reduce) {
     sx += (tx - sx) * .08; sy += (ty - sy) * .08;
     if (spot) { spot.style.setProperty('--mx', (sx * 100).toFixed(2) + '%'); spot.style.setProperty('--my', (sy * 100).toFixed(2) + '%'); }
     const nx = sx - .5, ny = sy - .5;
-    if (!hero.classList.contains('hero--frame')) { mqx(-nx * 40); mqy(-ny * 26); }
+    if (!hero.classList.contains('hero--frame') && !liquid) { mqx(-nx * 40); mqy(-ny * 26); }
     lq.forEach((q, i) => q(nx * (14 + i * 14)));
     if (introDone && finePtr && mouse.on) {
       const R = 180;
@@ -351,7 +433,8 @@ if (hero && !reduce) {
       .fromTo($('.hero-over', hero), { opacity: 0, scale: .82, letterSpacing: '.1em' }, { opacity: 1, scale: 1, letterSpacing: '-.05em', ease: 'expo.out', duration: .4 }, .55)
       .to($('.hero-over', hero), { opacity: 0, yPercent: -30, ease: 'power1.in', duration: .15 }, .9)
       .to($('.hero-fx', hero), { opacity: .5, ease: 'none', duration: 1 }, 0);
-  } else gsap.timeline({ scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: true } })
+  } else if (liquid) liquidScroll();
+  else gsap.timeline({ scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: true } })
     .to(vid, { scale: 1.22, ease: 'none' }, 0)
     .to(heroH1, { yPercent: -18, scale: .94, opacity: .1, transformOrigin: '0% 100%', ease: 'none' }, 0)
     .to($$('.hero-top, .hero-meta', hero), { y: -70, opacity: 0, ease: 'none' }, 0)
@@ -380,6 +463,7 @@ function start() {
   if (!framed) loader.classList.add('done');
   if (reduce) return;
   if (framed) { cinematicIntro(); return; }
+  if (liquid) { liquidIntro(); return; }
   heroIntro();
   gsap.from('.hero .lbl, .hero p.lead, .hero .btn', { opacity: 0, y: 20, duration: 1, stagger: .06, delay: .6 });
 }
@@ -421,7 +505,7 @@ if (!reduce) {
   // manifest: słowa zapalają się przy scrollu
   $$('.big[data-words]').forEach(b => {
     b.innerHTML = b.textContent.trim().split(/\s+/).map(w => `<span class="w">${w}</span> `).join('');
-    gsap.to($$('.w', b), { opacity: 1, stagger: .1, ease: 'none', scrollTrigger: { trigger: b, start: 'top 80%', end: 'bottom 45%', scrub: true } });
+    if (!b.closest('.scan')) gsap.to($$('.w', b), { opacity: 1, stagger: .1, ease: 'none', scrollTrigger: { trigger: b, start: 'top 80%', end: 'bottom 45%', scrub: true } });
   });
   // karty
   $$('.cards').forEach(c => gsap.from($$('.card', c), { y: 80, opacity: 0, duration: 1.1, ease: 'expo.out', stagger: .1, scrollTrigger: { trigger: c, start: 'top 80%' } }));
@@ -431,6 +515,61 @@ if (!reduce) {
   $$('.pf-foot .huge').forEach(h => gsap.from(h, { yPercent: 40, opacity: 0, ease: 'expo.out', duration: 1.6, scrollTrigger: { trigger: h, start: 'top 95%' } }));
 }
 
+
+
+/* LUMÉ: skaner w manifeście (linia światła wyostrza słowa, które przeskanowała) */
+if (!reduce) $$('.manifest.scan .big').forEach(b => {
+  const line = document.createElement('div'); line.className = 'scanline'; line.setAttribute('aria-hidden', 'true'); b.appendChild(line);
+  const ws = $$('.w', b);
+  ScrollTrigger.create({ trigger: b, start: 'top 72%', end: 'bottom 38%', scrub: .4, onUpdate: s => {
+    const h = b.offsetHeight, y = s.progress * h;
+    line.style.transform = `translateY(${y}px)`; line.style.opacity = s.progress > .01 && s.progress < .99 ? 1 : 0;
+    for (const w of ws) { const wy = w.offsetTop + w.offsetHeight * .5, d = wy - y, k = Math.max(0, Math.min(1, .5 - d / (w.offsetHeight * 1.1)));
+      w.style.opacity = .14 + .86 * k; w.style.filter = k >= 1 ? 'none' : `blur(${((1 - k) * 6).toFixed(2)}px)`; w.classList.toggle('lit', Math.abs(d) < w.offsetHeight * .55); }
+  } });
+});
+
+/* LUMÉ: harmonijka zabiegów (przypięta; scroll otwiera kolejne panele, film gra tylko w otwartym) */
+$$('.cards--acc').forEach(box => {
+  const cs = $$('.card', box), vs = cs.map(c => $('video', c));
+  vs.forEach(v => v && v.removeAttribute('data-auto'));
+  if (reduce || innerWidth <= 860) { vs.forEach(v => v && v.setAttribute('data-auto', '')); return; }
+  let cur = -1;
+  const open = i => { if (i === cur) return; cur = i; cs.forEach((c, k) => c.classList.toggle('on', k === i));
+    vs.forEach((v, k) => { if (!v) return; if (k === i) { v.preload = 'auto'; v.currentTime = 0; v.play().then(() => v.classList.add('on')).catch(() => {}); } else v.pause(); }); };
+  open(0);
+  cs.forEach((c, i) => { c.addEventListener('pointerenter', () => open(i)); c.addEventListener('click', () => open(i)); });
+  ScrollTrigger.create({ trigger: box.closest('.cards-sec'), start: 'top top', end: '+=140%', pin: true, scrub: true,
+    onUpdate: s => open(Math.min(cs.length - 1, Math.floor(s.progress * cs.length * .999))),
+    onLeave: () => vs.forEach(v => v && v.pause()), onLeaveBack: () => vs.forEach(v => v && v.pause()),
+    onEnter: () => { const v = vs[cur]; v && v.play().catch(() => {}); }, onEnterBack: () => { const v = vs[cur]; v && v.play().catch(() => {}); } });
+});
+
+/* LUMÉ: napis rozpada się w pył razem z perłą */
+if (!reduce) $$('.seq.dust').forEach(sec => {
+  const chs = [];
+  $$('.sw .giant .ln>span', sec).forEach(sp => { const walk = n => [...n.childNodes].forEach(c => { if (c.nodeType === 1) return walk(c); if (c.nodeType !== 3) return;
+    const f = document.createDocumentFragment(); for (const ch of c.textContent) { if (ch === ' ') { f.appendChild(document.createTextNode(' ')); continue; } const s = document.createElement('span'); s.className = 'ch'; s.textContent = ch; f.appendChild(s); chs.push(s); } c.replaceWith(f); }); walk(sp); });
+  const dir = chs.map(() => [rnd(-1, 1) * 260, rnd(-1.2, .3) * 220, rnd(-60, 60)]);
+  ScrollTrigger.create({ trigger: sec, start: 'top top', end: 'bottom bottom', scrub: true, onUpdate: s => {
+    const k = Math.max(0, Math.min(1, (s.progress - .45) / .38)), e = k * k;
+    chs.forEach((c, i) => { const [x, y, r] = dir[i], kk = Math.max(0, Math.min(1, e * 1.4 - (i / chs.length) * .4));
+      c.style.transform = `translate(${x * kk}px,${y * kk}px) rotate(${r * kk}deg) scale(${1 - kk * .4})`; c.style.filter = kk ? `blur(${(kk * 12).toFixed(1)}px)` : ''; c.style.opacity = 1 - kk; });
+  } });
+});
+
+/* LUMÉ: przesłona w panoramie (pierścień światła otwiera gabinet, napis rozsuwa się) */
+if (!reduce) $$('.pano.iris').forEach(p => {
+  const img = $('img', p), ring = $('.iris-ring', p), h = $('.giant', p);
+  const hyp = () => Math.hypot(p.clientWidth, p.clientHeight) / 2 + 20;
+  gsap.set(img, { clipPath: 'circle(0px at 50% 50%)', scale: 1.3 });
+  gsap.timeline({ scrollTrigger: { trigger: p, start: 'top top', end: '+=150%', scrub: 1, pin: true, invalidateOnRefresh: true } })
+    .fromTo(ring, { width: 6, height: 6, opacity: 1 }, { width: () => hyp() * 2, height: () => hyp() * 2, ease: 'power2.in', duration: 1 }, 0)
+    .to(img, { clipPath: () => `circle(${hyp()}px at 50% 50%)`, ease: 'power2.in', duration: 1 }, 0)
+    .to(img, { scale: 1, ease: 'none', duration: 1.2 }, 0)
+    .to(ring, { opacity: 0, duration: .15 }, .9)
+    .fromTo(h, { letterSpacing: '-.05em', opacity: 1, filter: 'blur(0px)' }, { letterSpacing: '.35em', opacity: 0, filter: 'blur(10px)', ease: 'power1.in', duration: .6 }, .05);
+});
 
 /* filmy: pętle grają tylko na ekranie, manifest odtwarza się raz po wejściu */
 if (!reduce) {
@@ -454,6 +593,7 @@ if (!reduce) $$('.pano.zoom').forEach(p => {
 });
 /* karty: przechył 3D i odblask za kursorem */
 if (!reduce && matchMedia('(pointer:fine)').matches) $$('.card').forEach(c => {
+  if (c.closest('.cards--acc')) return;
   const inn = $('.card-in', c); if (!inn) return;
   const g = document.createElement('i'); g.className = 'glare'; inn.appendChild(g);
   const rx = gsap.quickTo(inn, 'rotationX', { duration: .7, ease: 'power3' }), ry = gsap.quickTo(inn, 'rotationY', { duration: .7, ease: 'power3' });
